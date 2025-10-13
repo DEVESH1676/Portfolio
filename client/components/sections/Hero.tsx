@@ -27,7 +27,7 @@ export const HeroSection = () => {
               <a href="#publications">View Publications</a>
             </Button>
             <Button asChild variant="outline" size="lg">
-              <a href="/documents/dr-ghuge-cv.pdf" download>
+              <a href={CV_DOWNLOAD_URL} target="_blank" rel="noreferrer">
                 Download CV
               </a>
             </Button>
