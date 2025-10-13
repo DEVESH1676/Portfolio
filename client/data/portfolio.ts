@@ -1,3 +1,7 @@
+export const CV_DOWNLOAD_URL = "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf";
+
+export const RESEARCH_SUMMARY_URL = "https://unec.edu.az/application/uploads/2014/12/pdf-sample.pdf";
+
 export const NAV_ITEMS = [
   { label: "Home", href: "#home" },
   { label: "About", href: "#about" },
