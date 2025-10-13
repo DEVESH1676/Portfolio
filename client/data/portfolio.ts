@@ -140,7 +140,7 @@ export const GALLERY_IMAGES = [
     alt: "Conference keynote session",
   },
   {
-    src: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=900&q=80",
+    src: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=900&q=80",
     alt: "Panel discussion with peers",
   },
   {
