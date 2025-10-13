@@ -120,4 +120,12 @@
   h6 {
     font-family: "Inter", sans-serif;
   }
+
+  .font-heading {
+    font-family: "Inter", sans-serif;
+  }
+
+  .font-body {
+    font-family: "Roboto", sans-serif;
+  }
 }
