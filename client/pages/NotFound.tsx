@@ -1,5 +1,9 @@
-import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+
+import { Footer } from "@/components/layout/Footer";
+import { Navbar } from "@/components/layout/Navbar";
+import { Button } from "@/components/ui/button";
 
 const NotFound = () => {
   const location = useLocation();
@@ -12,14 +16,24 @@ const NotFound = () => {
   }, [location.pathname]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">404</h1>
-        <p className="text-xl text-gray-600 mb-4">Oops! Page not found</p>
-        <a href="/" className="text-blue-500 hover:text-blue-700 underline">
-          Return to Home
-        </a>
-      </div>
+    <div className="min-h-screen bg-background text-foreground">
+      <Navbar />
+      <main className="flex min-h-[70vh] items-center justify-center px-6 pt-24">
+        <div className="max-w-lg rounded-3xl border border-primary/20 bg-primary/5 p-12 text-center shadow-xl">
+          <h1 className="font-heading text-4xl font-semibold text-primary">
+            Page not found
+          </h1>
+          <p className="mt-4 text-base text-foreground/80">
+            The page you are looking for may have moved or is currently being curated. Please return to the homepage to explore Dr. Ghuge’s academic portfolio.
+          </p>
+          <div className="mt-8 flex justify-center">
+            <Button asChild size="lg">
+              <a href="/">Go to Homepage</a>
+            </Button>
+          </div>
+        </div>
+      </main>
+      <Footer />
     </div>
   );
 };
