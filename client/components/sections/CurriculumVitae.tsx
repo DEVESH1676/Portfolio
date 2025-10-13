@@ -14,12 +14,12 @@ export const CurriculumVitaeSection = () => {
           </p>
           <div className="mt-8 flex flex-wrap gap-4">
             <Button asChild size="lg">
-              <a href="/documents/dr-ghuge-cv.pdf" download>
+              <a href={CV_DOWNLOAD_URL} target="_blank" rel="noreferrer">
                 Download CV
               </a>
             </Button>
             <Button asChild variant="outline" size="lg">
-              <a href="/documents/dr-ghuge-research-summary.pdf" download>
+              <a href={RESEARCH_SUMMARY_URL} target="_blank" rel="noreferrer">
                 Research Summary
               </a>
             </Button>
