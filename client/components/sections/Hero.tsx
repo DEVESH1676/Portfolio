@@ -1,4 +1,4 @@
-import { HERO_IMAGE_URL } from "@/data/portfolio";
+import { CV_DOWNLOAD_URL, HERO_IMAGE_URL } from "@/data/portfolio";
 import { Button } from "@/components/ui/button";
 
 export const HeroSection = () => {
