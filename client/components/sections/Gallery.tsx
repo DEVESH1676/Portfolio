@@ -10,7 +10,7 @@ export const GallerySection = () => {
     activeIndex !== null ? GALLERY_IMAGES[activeIndex] : GALLERY_IMAGES[0];
 
   return (
-    <section id="gallery" className="bg-secondary/40 py-24">
+    <section id="gallery" className="bg-secondary/40 py-24 scroll-mt-24">
       <div className="mx-auto max-w-6xl px-6">
         <div className="mb-12 max-w-3xl">
           <h2 className="font-heading text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
