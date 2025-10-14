@@ -2,7 +2,7 @@ import { EDUCATION_TIMELINE } from "@/data/portfolio";
 
 export const EducationSection = () => {
   return (
-    <section id="education" className="bg-secondary/40 py-24">
+    <section id="education" className="bg-secondary/40 py-24 scroll-mt-24">
       <div className="mx-auto max-w-6xl px-6">
         <div className="mb-12">
           <h2 className="font-heading text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
