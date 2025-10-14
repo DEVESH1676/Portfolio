@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { CONTACT_LINKS } from "@/data/portfolio";
+import { motion } from "framer-motion";
 
 const iconMap = {
   linkedin: Linkedin,
@@ -13,6 +14,15 @@ const iconMap = {
 };
 
 const emailRecipient = "chandrashekar.ghuge@moderncoe.edu.in";
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 24 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] },
+  }),
+};
 
 export const ContactSection = () => {
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -24,14 +34,29 @@ export const ContactSection = () => {
     const message = formData.get("message")?.toString().trim() ?? "";
 
     const mailSubject = subject || "Portfolio Enquiry";
-    const bodyLines = [`Name: ${name}`, `Email: ${email}`, "", message];
-    const mailto = `mailto:${emailRecipient}?subject=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(bodyLines.join("\n"))}`;
+    const bodyLines = [
+      `Name: ${name}`,
+      `Email: ${email}`,
+      "",
+      message,
+    ];
+    const mailto = `mailto:${emailRecipient}?subject=${encodeURIComponent(
+      mailSubject
+    )}&body=${encodeURIComponent(bodyLines.join("\n"))}`;
     window.location.href = mailto;
     event.currentTarget.reset();
   };
 
   return (
-    <section id="contact" className="bg-background py-24 scroll-mt-24">
+    <motion.section
+      id="contact"
+      className="bg-background py-24 scroll-mt-24"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.3 }}
+      variants={fadeInUp}
+      custom={0}
+    >
       <div className="mx-auto max-w-6xl px-6">
         <div className="grid gap-10 lg:grid-cols-[1.1fr_1fr]">
           <div>
@@ -40,7 +65,7 @@ export const ContactSection = () => {
             </h2>
             <p className="mt-4 text-base leading-relaxed text-foreground/80 md:text-lg">
               For collaboration, student supervision, or speaking engagements,
-              please contact:{" "}
+              please contact: {" "}
               <a
                 href={`mailto:${emailRecipient}`}
                 className="text-primary underline underline-offset-4"
@@ -59,7 +84,7 @@ export const ContactSection = () => {
                     href={link.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-primary/30 bg-primary/5 text-primary transition hover:-translate-y-1 hover:border-primary hover:bg-primary hover:text-primary-foreground"
+                    className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-primary/30 bg-primary/5 text-primary transition hover:-translate-y-1 hover:border-primary/70 hover:bg-primary/10"
                     aria-label={link.label}
                   >
                     <IconComponent className="h-5 w-5" aria-hidden />
@@ -136,6 +161,6 @@ export const ContactSection = () => {
           </div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };

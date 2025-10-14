@@ -1,5 +1,16 @@
 import { CV_DOWNLOAD_URL, HERO_IMAGE_URL } from "@/data/portfolio";
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
+
+// Reusable fade-in-up animation variant
+const fadeInUp = {
+  hidden: { opacity: 0, y: 24 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] },
+  }),
+};
 
 export const HeroSection = () => {
   return (
@@ -8,37 +19,99 @@ export const HeroSection = () => {
       className="relative overflow-hidden bg-secondary/40 pb-24 pt-36 scroll-mt-24"
     >
       <div className="absolute inset-0 -z-10 bg-gradient-to-br from-primary/15 via-background to-background" />
+
       <div className="mx-auto flex max-w-6xl flex-col items-center gap-16 px-6 md:flex-row md:items-start">
-        <div className="w-full md:w-3/5">
-          <span className="inline-flex items-center rounded-full bg-primary/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+        {/* Text Section */}
+        <div className="w-full md:w-3/5 flex flex-col items-center md:items-start">
+          <motion.span
+            custom={0}
+            variants={fadeInUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.7 }}
+            className="inline-flex items-center rounded-full bg-primary/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-primary"
+          >
             Professional Academic Portfolio
-          </span>
-          <h1 className="mt-6 font-heading text-4xl font-semibold tracking-tight text-foreground md:text-5xl lg:text-6xl">
+          </motion.span>
+
+          <motion.h1
+            custom={1}
+            variants={fadeInUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.7 }}
+            className="mt-6 font-heading text-4xl font-semibold tracking-tight text-foreground md:text-5xl lg:text-6xl text-center md:text-left"
+          >
             Dr. Chandrashekhar Arvind Ghuge (Dr. C. A. Ghuge)
-          </h1>
-          <p className="mt-4 text-lg font-medium text-primary md:text-xl">
-            Associate Professor · Computer Vision Researcher · Ph.D., K L
-            University (2023)
-          </p>
-          <p className="mt-6 max-w-2xl text-base leading-relaxed text-foreground/80 md:text-lg">
+          </motion.h1>
+
+          <motion.p
+            custom={2}
+            variants={fadeInUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.7 }}
+            className="mt-4 text-lg font-medium text-primary md:text-xl text-center md:text-left"
+          >
+            Associate Professor · Computer Vision Researcher · Ph.D., K L University (2023)
+          </motion.p>
+
+          <motion.p
+            custom={3}
+            variants={fadeInUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.7 }}
+            className="mt-6 max-w-2xl text-base leading-relaxed text-foreground/80 md:text-lg text-center md:text-left"
+          >
             Dr. C. A. Ghuge is an Associate Professor and researcher in computer
             vision and machine learning, focusing on video object retrieval and
             object tracking. He has published in peer-reviewed journals and
             leads research and student projects at P.E.S.’s Modern College of
             Engineering, Pune.
-          </p>
-          <div className="mt-8 flex flex-wrap items-center gap-4">
-            <Button asChild size="lg">
+          </motion.p>
+
+          <motion.div
+            custom={4}
+            variants={fadeInUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.7 }}
+            className="mt-8 flex flex-wrap items-center gap-4 justify-center md:justify-start"
+          >
+            <Button
+              asChild
+              size="lg"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
               <a href="#publications">View Publications</a>
             </Button>
-            <Button asChild variant="outline" size="lg">
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
               <a href={CV_DOWNLOAD_URL} target="_blank" rel="noreferrer">
                 Download CV
               </a>
             </Button>
-          </div>
+          </motion.div>
         </div>
-        <div className="w-full md:w-2/5">
+
+        {/* Image Section */}
+        <motion.div
+          custom={5}
+          variants={fadeInUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.7 }}
+          className="w-full md:w-2/5 flex justify-center md:justify-end"
+        >
           <div className="relative mx-auto aspect-[3/4] max-w-sm overflow-hidden rounded-3xl border border-primary/20 bg-background shadow-2xl">
             <div className="absolute inset-0 bg-gradient-to-b from-primary/30 via-primary/10 to-transparent" />
             <img
@@ -51,7 +124,7 @@ export const HeroSection = () => {
               Dedicated to advancing intelligent vision systems
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
