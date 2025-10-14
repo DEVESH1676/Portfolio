@@ -12,16 +12,27 @@ export const AboutSection = () => {
             </h2>
             <div className="mt-6 space-y-4 text-base leading-relaxed text-foreground/80 md:text-lg">
               <p>
-                Dr. Chandrashekhar Arvind Ghuge completed his Ph.D. from K L University in 2023. He holds an M.E. from D. Y. Patil, Akurdi, and a B.E. from a college in Dhule. He currently serves as Associate Professor and Head of AI &amp; Machine Learning (Information Technology) at P.E.S.’s Modern College of Engineering, Pune.
+                Dr. Chandrashekhar Arvind Ghuge completed his Ph.D. from K L
+                University in 2023. He holds an M.E. from D. Y. Patil, Akurdi,
+                and a B.E. from a college in Dhule. He currently serves as
+                Associate Professor and Head of AI &amp; Machine Learning
+                (Information Technology) at P.E.S.’s Modern College of
+                Engineering, Pune.
               </p>
               <p>
-                His research interests include Computer Vision, Video Retrieval, Object Tracking, and Machine Learning. He collaborates with multidisciplinary teams to deliver impactful research outcomes and to mentor the next generation of engineers and scientists.
+                His research interests include Computer Vision, Video Retrieval,
+                Object Tracking, and Machine Learning. He collaborates with
+                multidisciplinary teams to deliver impactful research outcomes
+                and to mentor the next generation of engineers and scientists.
               </p>
             </div>
           </div>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
             {QUICK_FACTS.map((fact) => (
-              <Card key={fact.title} className="border border-primary/20 bg-primary/5 p-6 shadow-lg">
+              <Card
+                key={fact.title}
+                className="border border-primary/20 bg-primary/5 p-6 shadow-lg"
+              >
                 <h3 className="font-heading text-lg font-semibold text-primary">
                   {fact.title}
                 </h3>

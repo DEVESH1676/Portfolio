@@ -17,10 +17,15 @@ export const HeroSection = () => {
             Dr. Chandrashekhar Arvind Ghuge (Dr. C. A. Ghuge)
           </h1>
           <p className="mt-4 text-lg font-medium text-primary md:text-xl">
-            Associate Professor · Computer Vision Researcher · Ph.D., K L University (2023)
+            Associate Professor · Computer Vision Researcher · Ph.D., K L
+            University (2023)
           </p>
           <p className="mt-6 max-w-2xl text-base leading-relaxed text-foreground/80 md:text-lg">
-            Dr. C. A. Ghuge is an Associate Professor and researcher in computer vision and machine learning, focusing on video object retrieval and object tracking. He has published in peer-reviewed journals and leads research and student projects at P.E.S.’s Modern College of Engineering, Pune.
+            Dr. C. A. Ghuge is an Associate Professor and researcher in computer
+            vision and machine learning, focusing on video object retrieval and
+            object tracking. He has published in peer-reviewed journals and
+            leads research and student projects at P.E.S.’s Modern College of
+            Engineering, Pune.
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-4">
             <Button asChild size="lg">

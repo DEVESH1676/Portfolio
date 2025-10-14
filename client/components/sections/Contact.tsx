@@ -1,10 +1,5 @@
 import { FormEvent } from "react";
-import {
-  GraduationCap,
-  Linkedin,
-  Mail,
-  Network,
-} from "lucide-react";
+import { GraduationCap, Linkedin, Mail, Network } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -29,12 +24,7 @@ export const ContactSection = () => {
     const message = formData.get("message")?.toString().trim() ?? "";
 
     const mailSubject = subject || "Portfolio Enquiry";
-    const bodyLines = [
-      `Name: ${name}`,
-      `Email: ${email}`,
-      "",
-      message,
-    ];
+    const bodyLines = [`Name: ${name}`, `Email: ${email}`, "", message];
     const mailto = `mailto:${emailRecipient}?subject=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(bodyLines.join("\n"))}`;
     window.location.href = mailto;
     event.currentTarget.reset();
@@ -49,11 +39,20 @@ export const ContactSection = () => {
               Contact
             </h2>
             <p className="mt-4 text-base leading-relaxed text-foreground/80 md:text-lg">
-              For collaboration, student supervision, or speaking engagements, please contact: <a href={`mailto:${emailRecipient}`} className="text-primary underline underline-offset-4">{emailRecipient}</a>.
+              For collaboration, student supervision, or speaking engagements,
+              please contact:{" "}
+              <a
+                href={`mailto:${emailRecipient}`}
+                className="text-primary underline underline-offset-4"
+              >
+                {emailRecipient}
+              </a>
+              .
             </p>
             <div className="mt-8 flex gap-3">
               {CONTACT_LINKS.map((link) => {
-                const IconComponent = iconMap[link.icon as keyof typeof iconMap] ?? Mail;
+                const IconComponent =
+                  iconMap[link.icon as keyof typeof iconMap] ?? Mail;
                 return (
                   <a
                     key={link.label}
@@ -73,13 +72,24 @@ export const ContactSection = () => {
             <form className="space-y-5" onSubmit={handleSubmit}>
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="space-y-2">
-                  <label htmlFor="name" className="text-sm font-semibold text-foreground/80">
+                  <label
+                    htmlFor="name"
+                    className="text-sm font-semibold text-foreground/80"
+                  >
                     Name
                   </label>
-                  <Input id="name" name="name" placeholder="Your name" required />
+                  <Input
+                    id="name"
+                    name="name"
+                    placeholder="Your name"
+                    required
+                  />
                 </div>
                 <div className="space-y-2">
-                  <label htmlFor="email" className="text-sm font-semibold text-foreground/80">
+                  <label
+                    htmlFor="email"
+                    className="text-sm font-semibold text-foreground/80"
+                  >
                     Email
                   </label>
                   <Input
@@ -92,13 +102,23 @@ export const ContactSection = () => {
                 </div>
               </div>
               <div className="space-y-2">
-                <label htmlFor="subject" className="text-sm font-semibold text-foreground/80">
+                <label
+                  htmlFor="subject"
+                  className="text-sm font-semibold text-foreground/80"
+                >
                   Subject
                 </label>
-                <Input id="subject" name="subject" placeholder="How can Dr. Ghuge help?" />
+                <Input
+                  id="subject"
+                  name="subject"
+                  placeholder="How can Dr. Ghuge help?"
+                />
               </div>
               <div className="space-y-2">
-                <label htmlFor="message" className="text-sm font-semibold text-foreground/80">
+                <label
+                  htmlFor="message"
+                  className="text-sm font-semibold text-foreground/80"
+                >
                   Message
                 </label>
                 <Textarea

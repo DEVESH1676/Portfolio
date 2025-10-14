@@ -10,7 +10,10 @@ export const ResearchSection = () => {
               Research Interests
             </h2>
             <p className="mt-4 text-base leading-relaxed text-foreground/80 md:text-lg">
-              My research focuses on computer vision and video analytics — object detection and tracking across frames, query-based video retrieval, hybrid machine learning models, and practical deployment of intelligent vision systems.
+              My research focuses on computer vision and video analytics —
+              object detection and tracking across frames, query-based video
+              retrieval, hybrid machine learning models, and practical
+              deployment of intelligent vision systems.
             </p>
           </div>
           <div className="flex flex-wrap gap-3">

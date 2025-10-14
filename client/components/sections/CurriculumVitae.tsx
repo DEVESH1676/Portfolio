@@ -10,7 +10,9 @@ export const CurriculumVitaeSection = () => {
             Curriculum Vitae
           </h2>
           <p className="mt-4 max-w-2xl text-base text-foreground/80 md:text-lg">
-            Download CV (PDF) — updated 2025. Explore a consolidated summary of academic milestones, teaching experience, research supervision, and collaborations.
+            Download CV (PDF) — updated 2025. Explore a consolidated summary of
+            academic milestones, teaching experience, research supervision, and
+            collaborations.
           </p>
           <div className="mt-8 flex flex-wrap gap-4">
             <Button asChild size="lg">

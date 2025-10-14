@@ -9,11 +9,16 @@ export const EducationSection = () => {
             Education
           </h2>
           <p className="mt-4 max-w-2xl text-base text-foreground/75 md:text-lg">
-            A progressive academic journey grounded in Computer Engineering, culminating in a doctoral degree focused on advancing intelligent video analytics.
+            A progressive academic journey grounded in Computer Engineering,
+            culminating in a doctoral degree focused on advancing intelligent
+            video analytics.
           </p>
         </div>
         <div className="relative ml-2 border-l-2 border-primary/30 pl-8">
-          <div className="absolute left-[-0.3rem] top-0 h-4 w-4 rounded-full bg-primary" aria-hidden />
+          <div
+            className="absolute left-[-0.3rem] top-0 h-4 w-4 rounded-full bg-primary"
+            aria-hidden
+          />
           {EDUCATION_TIMELINE.map((entry, index) => (
             <div key={entry.degree} className="relative pb-12 last:pb-0">
               <div className="absolute -left-[2.3rem] top-2 h-3 w-3 rounded-full border-2 border-background bg-primary shadow-[0_0_0_6px] shadow-primary/20" />
@@ -34,7 +39,10 @@ export const EducationSection = () => {
                 </p>
               </div>
               {index === EDUCATION_TIMELINE.length - 1 ? null : (
-                <div className="absolute left-[-0.05rem] top-full h-full w-[2px] bg-gradient-to-b from-primary/40 to-transparent" aria-hidden />
+                <div
+                  className="absolute left-[-0.05rem] top-full h-full w-[2px] bg-gradient-to-b from-primary/40 to-transparent"
+                  aria-hidden
+                />
               )}
             </div>
           ))}

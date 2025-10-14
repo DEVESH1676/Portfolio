@@ -24,7 +24,9 @@ const NotFound = () => {
             Page not found
           </h1>
           <p className="mt-4 text-base text-foreground/80">
-            The page you are looking for may have moved or is currently being curated. Please return to the homepage to explore Dr. Ghuge’s academic portfolio.
+            The page you are looking for may have moved or is currently being
+            curated. Please return to the homepage to explore Dr. Ghuge’s
+            academic portfolio.
           </p>
           <div className="mt-8 flex justify-center">
             <Button asChild size="lg">

@@ -80,8 +80,7 @@ export const Navbar = () => {
             orientation === "horizontal"
               ? "text-foreground/80 hover:text-foreground"
               : "text-base text-foreground",
-            activeSection === item.href &&
-              "text-primary font-semibold",
+            activeSection === item.href && "text-primary font-semibold",
           )}
         >
           {item.label}
@@ -119,16 +118,26 @@ export const Navbar = () => {
                   type="button"
                   className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border/70 text-foreground transition hover:border-primary/60 hover:text-primary"
                 >
-                  {isSheetOpen ? <X aria-hidden className="h-5 w-5" /> : <Menu aria-hidden className="h-5 w-5" />}
+                  {isSheetOpen ? (
+                    <X aria-hidden className="h-5 w-5" />
+                  ) : (
+                    <Menu aria-hidden className="h-5 w-5" />
+                  )}
                   <span className="sr-only">Toggle navigation</span>
                 </button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-full max-w-xs border-l border-border bg-background/95 backdrop-blur">
+              <SheetContent
+                side="right"
+                className="w-full max-w-xs border-l border-border bg-background/95 backdrop-blur"
+              >
                 <div className="mt-12 flex flex-col gap-8">
                   <NavLinks orientation="vertical" />
                   <div className="flex flex-col gap-3">
                     <Button asChild variant="outline" size="lg">
-                      <a href="#publications" onClick={() => setIsSheetOpen(false)}>
+                      <a
+                        href="#publications"
+                        onClick={() => setIsSheetOpen(false)}
+                      >
                         View Publications
                       </a>
                     </Button>
