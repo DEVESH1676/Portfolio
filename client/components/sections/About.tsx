@@ -3,7 +3,7 @@ import { Card } from "@/components/ui/card";
 
 export const AboutSection = () => {
   return (
-    <section id="about" className="bg-background py-24">
+    <section id="about" className="bg-background py-24 scroll-mt-24">
       <div className="mx-auto max-w-6xl px-6">
         <div className="grid gap-12 lg:grid-cols-[1.2fr_1fr] lg:items-start">
           <div>
