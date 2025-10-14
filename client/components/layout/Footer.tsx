@@ -2,7 +2,14 @@ import { NAV_ITEMS } from "@/data/portfolio";
 
 export const Footer = () => {
   const footerLinks = NAV_ITEMS.filter((item) =>
-    ["#home", "#about", "#publications", "#projects", "#cv", "#contact"].includes(item.href),
+    [
+      "#home",
+      "#about",
+      "#publications",
+      "#projects",
+      "#cv",
+      "#contact",
+    ].includes(item.href),
   );
 
   return (
@@ -13,7 +20,9 @@ export const Footer = () => {
             Dr. Chandrashekhar A. Ghuge
           </p>
           <p className="max-w-lg text-sm text-background/80">
-            Associate Professor &amp; Computer Vision Researcher — advancing video object retrieval and intelligent vision systems at P.E.S.’s Modern College of Engineering, Pune.
+            Associate Professor &amp; Computer Vision Researcher — advancing
+            video object retrieval and intelligent vision systems at P.E.S.’s
+            Modern College of Engineering, Pune.
           </p>
         </div>
         <nav className="flex flex-wrap gap-4">
@@ -32,7 +41,10 @@ export const Footer = () => {
         <div className="mx-auto flex max-w-6xl flex-col gap-4 px-6 py-6 text-sm text-background/70 md:flex-row md:items-center md:justify-between">
           <span>© 2025 Dr. C. A. Ghuge — All rights reserved.</span>
           <span className="inline-flex items-center gap-2">
-            <span className="h-6 w-6 rounded-full bg-background/20" aria-hidden />
+            <span
+              className="h-6 w-6 rounded-full bg-background/20"
+              aria-hidden
+            />
             <span>P.E.S.’s Modern College of Engineering</span>
           </span>
         </div>

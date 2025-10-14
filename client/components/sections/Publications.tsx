@@ -1,4 +1,7 @@
-import { ADDITIONAL_PUBLICATIONS, FEATURED_PUBLICATION } from "@/data/portfolio";
+import {
+  ADDITIONAL_PUBLICATIONS,
+  FEATURED_PUBLICATION,
+} from "@/data/portfolio";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ExternalLink } from "lucide-react";
@@ -12,7 +15,8 @@ export const PublicationsSection = () => {
             Selected Publications
           </h2>
           <p className="mt-4 text-base text-foreground/75 md:text-lg">
-            Below are selected peer-reviewed publications. For the complete and updated list, visit Dr. Ghuge’s Google Scholar profile.
+            Below are selected peer-reviewed publications. For the complete and
+            updated list, visit Dr. Ghuge’s Google Scholar profile.
           </p>
         </div>
         <div className="grid gap-10 lg:grid-cols-[1.2fr_0.8fr]">
@@ -36,7 +40,11 @@ export const PublicationsSection = () => {
                 {FEATURED_PUBLICATION.abstract}
               </p>
               <Button asChild variant="outline" className="w-fit">
-                <a href={FEATURED_PUBLICATION.doiUrl} target="_blank" rel="noreferrer">
+                <a
+                  href={FEATURED_PUBLICATION.doiUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   {FEATURED_PUBLICATION.doiLabel}
                   <ExternalLink className="h-4 w-4" aria-hidden />
                 </a>
@@ -49,7 +57,10 @@ export const PublicationsSection = () => {
             </h3>
             <ul className="mt-4 space-y-4 text-sm text-foreground/85">
               {ADDITIONAL_PUBLICATIONS.map((publication) => (
-                <li key={publication.title} className="flex items-start justify-between gap-4">
+                <li
+                  key={publication.title}
+                  className="flex items-start justify-between gap-4"
+                >
                   <span className="block leading-snug">
                     {publication.title}
                   </span>

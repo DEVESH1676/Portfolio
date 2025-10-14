@@ -17,7 +17,8 @@ export const GallerySection = () => {
             Gallery
           </h2>
           <p className="mt-4 text-base text-foreground/75 md:text-lg">
-            Highlights from conferences, workshops, collaborations, and award ceremonies led or attended by Dr. Ghuge.
+            Highlights from conferences, workshops, collaborations, and award
+            ceremonies led or attended by Dr. Ghuge.
           </p>
         </div>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -41,7 +42,10 @@ export const GallerySection = () => {
             </button>
           ))}
         </div>
-        <Dialog open={activeIndex !== null} onOpenChange={(open) => !open && setActiveIndex(null)}>
+        <Dialog
+          open={activeIndex !== null}
+          onOpenChange={(open) => !open && setActiveIndex(null)}
+        >
           <DialogContent className="max-w-3xl border-none bg-transparent p-0 shadow-none">
             <div className="overflow-hidden rounded-3xl">
               <img

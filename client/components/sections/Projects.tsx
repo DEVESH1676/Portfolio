@@ -10,7 +10,10 @@ export const ProjectsSection = () => {
             Projects &amp; Supervision
           </h2>
           <p className="mt-4 text-base text-foreground/75 md:text-lg">
-            Guiding research projects and final-year students in the domains of machine learning, deep learning, and computer vision. Past works include hybrid tracking systems, object recognition models, and intelligent video analysis tools.
+            Guiding research projects and final-year students in the domains of
+            machine learning, deep learning, and computer vision. Past works
+            include hybrid tracking systems, object recognition models, and
+            intelligent video analysis tools.
           </p>
         </div>
         <div className="mt-12 grid gap-8 md:grid-cols-2 xl:grid-cols-3">
