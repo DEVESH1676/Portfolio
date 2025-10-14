@@ -5,7 +5,7 @@ export const HeroSection = () => {
   return (
     <section
       id="home"
-      className="relative overflow-hidden bg-secondary/40 pb-24 pt-36"
+      className="relative overflow-hidden bg-secondary/40 pb-24 pt-36 scroll-mt-24"
     >
       <div className="absolute inset-0 -z-10 bg-gradient-to-br from-primary/15 via-background to-background" />
       <div className="mx-auto flex max-w-6xl flex-col items-center gap-16 px-6 md:flex-row md:items-start">
