@@ -5,10 +5,28 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ExternalLink } from "lucide-react";
+import { motion } from "framer-motion";
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 24 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] },
+  }),
+};
 
 export const PublicationsSection = () => {
   return (
-    <section id="publications" className="bg-secondary/40 py-24 scroll-mt-24">
+    <motion.section
+      id="publications"
+      className="bg-secondary/40 py-24 scroll-mt-24"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.3 }}
+      variants={fadeInUp}
+      custom={0}
+    >
       <div className="mx-auto max-w-6xl px-6">
         <div className="mb-12 max-w-3xl">
           <h2 className="font-heading text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
@@ -76,6 +94,6 @@ export const PublicationsSection = () => {
           </Card>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
