@@ -3,7 +3,7 @@ import { CV_DOWNLOAD_URL, RESEARCH_SUMMARY_URL } from "@/data/portfolio";
 
 export const CurriculumVitaeSection = () => {
   return (
-    <section id="cv" className="bg-background py-24">
+    <section id="cv" className="bg-background py-24 scroll-mt-24">
       <div className="mx-auto max-w-6xl px-6">
         <div className="rounded-3xl border border-primary/20 bg-primary/5 px-8 py-12 shadow-xl">
           <h2 className="font-heading text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
