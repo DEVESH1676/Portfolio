@@ -1,8 +1,26 @@
 import { RESEARCH_TAGS } from "@/data/portfolio";
+import { motion } from "framer-motion";
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 24 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] },
+  }),
+};
 
 export const ResearchSection = () => {
   return (
-    <section id="research" className="bg-background py-24 scroll-mt-24">
+    <motion.section
+      id="research"
+      className="bg-background py-24 scroll-mt-24"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.3 }}
+      variants={fadeInUp}
+      custom={0}
+    >
       <div className="mx-auto max-w-6xl px-6">
         <div className="grid gap-10 lg:grid-cols-[1.1fr_1fr] lg:items-center">
           <div>
@@ -28,6 +46,6 @@ export const ResearchSection = () => {
           </div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
