@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { useEffect, useMemo, useState } from "react";
+import * as React from "react";
 import { Menu, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -8,10 +8,10 @@ import { cn } from "@/lib/utils";
 import { NAV_ITEMS } from "@/data/portfolio";
 
 export const Navbar = () => {
-  const [activeSection, setActiveSection] = useState<string>("#home");
-  const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const [activeSection, setActiveSection] = React.useState<string>("#home");
+  const [isSheetOpen, setIsSheetOpen] = React.useState(false);
 
-  const observerEntries = useMemo(
+  const observerEntries = React.useMemo(
     () =>
       NAV_ITEMS.map((item) => ({
         id: item.href.replace("#", ""),
@@ -20,7 +20,7 @@ export const Navbar = () => {
     [],
   );
 
-  useEffect(() => {
+  React.useEffect(() => {
     const sections = observerEntries
       .map((entry) => document.getElementById(entry.id))
       .filter((section): section is HTMLElement => Boolean(section));
