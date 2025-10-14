@@ -2,7 +2,7 @@ import { RESEARCH_TAGS } from "@/data/portfolio";
 
 export const ResearchSection = () => {
   return (
-    <section id="research" className="bg-background py-24">
+    <section id="research" className="bg-background py-24 scroll-mt-24">
       <div className="mx-auto max-w-6xl px-6">
         <div className="grid gap-10 lg:grid-cols-[1.1fr_1fr] lg:items-center">
           <div>
