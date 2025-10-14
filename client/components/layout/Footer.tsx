@@ -1,6 +1,8 @@
 import { NAV_ITEMS } from "@/data/portfolio";
 
 export const Footer = () => {
+import { CV_DOWNLOAD_URL } from "@/data/portfolio";
+
   const footerLinks = NAV_ITEMS.filter((item) =>
     ["#home", "#about", "#publications", "#projects", "#cv", "#contact"].includes(item.href),
   );
