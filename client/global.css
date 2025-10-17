@@ -12,51 +12,51 @@
    * A different format will require also updating the theme in tailwind.config.ts.
   */
   :root {
-    --background: 0 0% 100%;
-    --foreground: 201 20% 23%;
+    --background: 0 0% 98%;
+    --foreground: 210 12% 18%;
 
     --card: 0 0% 100%;
-    --card-foreground: 201 20% 23%;
+    --card-foreground: 210 12% 18%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 201 20% 23%;
+    --popover-foreground: 210 12% 18%;
 
-    --primary: 207 88% 37%;
+    --primary: 210 90% 35%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 205 82% 94%;
-    --secondary-foreground: 207 64% 24%;
+    --secondary: 210 60% 96%;
+    --secondary-foreground: 210 10% 20%;
 
-    --muted: 205 32% 92%;
-    --muted-foreground: 201 20% 34%;
+    --muted: 210 30% 94%;
+    --muted-foreground: 210 12% 40%;
 
-    --accent: 37 91% 55%;
-    --accent-foreground: 206 35% 16%;
+    --accent: 40 95% 52%;
+    --accent-foreground: 208 20% 14%;
 
-    --destructive: 0 72% 45%;
+    --destructive: 355 70% 45%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 205 35% 86%;
-    --input: 205 35% 86%;
-    --ring: 207 88% 37%;
+    --border: 210 30% 92%;
+    --input: 210 30% 92%;
+    --ring: 210 90% 35%;
 
     --radius: 0.75rem;
 
-    --sidebar-background: 207 88% 37%;
+    --sidebar-background: 210 90% 35%;
 
     --sidebar-foreground: 0 0% 100%;
 
-    --sidebar-primary: 37 91% 55%;
+    --sidebar-primary: 40 95% 52%;
 
-    --sidebar-primary-foreground: 206 35% 16%;
+    --sidebar-primary-foreground: 208 20% 14%;
 
-    --sidebar-accent: 205 82% 94%;
+    --sidebar-accent: 210 60% 96%;
 
-    --sidebar-accent-foreground: 207 64% 24%;
+    --sidebar-accent-foreground: 210 10% 20%;
 
-    --sidebar-border: 205 35% 86%;
+    --sidebar-border: 210 30% 92%;
 
-    --sidebar-ring: 207 88% 37%;
+    --sidebar-ring: 210 90% 35%;
   }
 
   .dark {
