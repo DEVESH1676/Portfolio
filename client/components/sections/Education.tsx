@@ -1,5 +1,8 @@
 import { EDUCATION_TIMELINE } from "@/data/portfolio";
 
+import { EDUCATION_TIMELINE } from "@/data/portfolio";
+import Container from "@/components/ui/container";
+
 export const EducationSection = () => {
   return (
     <section id="education" className="bg-secondary/40 py-24 scroll-mt-24">
