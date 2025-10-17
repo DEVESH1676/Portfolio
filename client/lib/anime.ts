@@ -1,5 +1,9 @@
 // Dynamically import anime.js and run the animation factory
 async function runAnime(params: any) {
+  if (typeof window !== "undefined" && window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    // respect reduced motion preference
+    return Promise.resolve();
+  }
   const mod = await import("animejs");
   const anime = (mod as any).default ?? mod;
   return anime(params as any);
@@ -16,6 +20,32 @@ export const ANIME = {
     pulse: 1200,
     entrance: 600,
   },
+};
+
+export const prefersReducedMotion = () => {
+  if (typeof window === "undefined") return false;
+  try {
+    return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  } catch {
+    return false;
+  }
+};
+
+export const animateHoverEnter = async (el: HTMLElement, opts?: { scale?: number; duration?: number }) => {
+  if (!el || prefersReducedMotion()) return;
+  const scale = opts?.scale ?? 1.04;
+  const duration = opts?.duration ?? 180;
+  const mod = await import("animejs");
+  const a = (mod as any).default ?? mod;
+  a({ targets: el, scale, duration, easing: ANIME.fastEasing });
+};
+
+export const animateHoverLeave = async (el: HTMLElement, opts?: { duration?: number }) => {
+  if (!el || prefersReducedMotion()) return;
+  const duration = opts?.duration ?? 180;
+  const mod = await import("animejs");
+  const a = (mod as any).default ?? mod;
+  a({ targets: el, scale: 1, duration, easing: ANIME.fastEasing });
 };
 
 export const animateLineDraw = async (
