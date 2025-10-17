@@ -18,9 +18,14 @@ export const EducationSection = () => {
         </div>
 
         {/* Timeline Container */}
-        <div className="">
+        <div className="relative">
+          {/* Continuous vertical line for timeline (visible on md+) */}
+          <div className="hidden md:block absolute left-14 top-6 bottom-6 z-0">
+            <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-primary/30 to-transparent" aria-hidden />
+          </div>
+
           {/* Timeline Entries - each row has a left column for dot/line and right column for content */}
-          <div className="flex flex-col">
+          <div className="flex flex-col relative z-10">
             {EDUCATION_TIMELINE.map((entry, index) => {
               const isLast = index === EDUCATION_TIMELINE.length - 1;
               const isCurrent = (entry as any).current ?? index === 0;
@@ -29,14 +34,14 @@ export const EducationSection = () => {
                   key={entry.degree}
                   className="mb-12 last:mb-0 md:grid md:grid-cols-[64px_1fr] md:items-center md:gap-6 py-4"
                 >
-                  {/* Left column: dot and connecting line */}
-                  <div className="flex md:justify-center">
+                  {/* Left column: dot and spacer (dot centered over the continuous line) */}
+                  <div className="flex md:justify-center md:items-start">
                     <div className="flex flex-col items-center h-full">
                       <div
                         className={
-                          "flex items-center justify-center rounded-full transition-transform duration-200 " +
+                          "flex items-center justify-center rounded-full transition-transform duration-200 transform-gpu z-20 " +
                           (isCurrent
-                            ? "h-7 w-7 bg-primary/60 ring-2 ring-primary/70 shadow-[0_6px_18px_rgba(59,130,246,0.12)]"
+                            ? "h-7 w-7 bg-primary/60 ring-2 ring-primary/70 shadow-[0_8px_24px_rgba(59,130,246,0.12)]"
                             : "h-6 w-6 bg-primary/10 ring-2 ring-primary/30")
                         }
                         aria-hidden
@@ -47,15 +52,6 @@ export const EducationSection = () => {
                           }
                         />
                       </div>
-
-                      {/* connecting line */}
-                      <div
-                        className={
-                          "hidden md:block w-px bg-gradient-to-b from-primary/30 to-transparent mt-3 flex-1 " +
-                          (isLast ? "opacity-0" : "opacity-70")
-                        }
-                        aria-hidden
-                      />
                     </div>
                   </div>
 
