@@ -122,7 +122,9 @@ export const Navbar = () => {
               <SheetTrigger asChild>
                 <button
                   type="button"
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border/70 text-foreground transition hover:border-primary/60 hover:text-primary"
+                  aria-expanded={isSheetOpen}
+                  aria-label={isSheetOpen ? "Close menu" : "Open menu"}
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border/70 bg-background/50 text-foreground transition hover:border-primary/60 hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
                 >
                   {isSheetOpen ? (
                     <X aria-hidden className="h-5 w-5" />
