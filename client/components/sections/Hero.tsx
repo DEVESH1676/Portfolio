@@ -31,45 +31,29 @@ export const HeroSection = () => {
       <Container className="flex flex-col items-center gap-16 md:flex-row md:items-start">
         {/* Text Section */}
         <div className="w-full md:w-3/5 flex flex-col items-center md:items-start">
-          <motion.span
-            custom={0}
-            variants={fadeInUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.7 }}
+          <span
+            ref={subtitleRef}
             className="inline-flex items-center rounded-full bg-primary/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-primary"
           >
             Professional Academic Portfolio
-          </motion.span>
+          </span>
 
-          <motion.h1
-            custom={1}
-            variants={fadeInUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.7 }}
+          <h1
+            ref={titleRef}
             className="mt-6 font-heading text-4xl font-semibold tracking-tight text-foreground md:text-5xl lg:text-6xl text-center md:text-left"
           >
             Dr. Chandrashekhar Arvind Ghuge
-          </motion.h1>
+          </h1>
 
-          <motion.p
-            custom={2}
-            variants={fadeInUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.7 }}
+          <p
+            ref={subtitleRef}
             className="mt-4 text-lg font-medium text-primary md:text-xl text-center md:text-left"
           >
             Associate Professor · Computer Vision Researcher · Ph.D., K L University (2023)
-          </motion.p>
+          </p>
 
-          <motion.p
-            custom={3}
-            variants={fadeInUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.7 }}
+          <p
+            ref={descRef}
             className="mt-6 max-w-2xl text-base leading-relaxed text-foreground/80 md:text-lg text-center md:text-left"
           >
             Dr. C. A. Ghuge is an Associate Professor and researcher in computer
@@ -77,39 +61,31 @@ export const HeroSection = () => {
             object tracking. He has published in peer-reviewed journals and
             leads research and student projects at P.E.S.’s Modern College of
             Engineering, Pune.
-          </motion.p>
+          </p>
 
-          <motion.div
-            custom={4}
-            variants={fadeInUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.7 }}
+          <div
+            ref={ctasRef}
             className="mt-8 flex flex-wrap items-center gap-4 justify-center md:justify-start"
           >
             <Button asChild size="lg">
-              <motion.a
+              <a
                 href="#publications"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ type: "spring", stiffness: 300 }}
+                className="transform transition-all duration-200 hover:scale-105"
               >
                 View Publications
-              </motion.a>
+              </a>
             </Button>
             <Button asChild variant="outline" size="lg">
-              <motion.a
+              <a
                 href={CV_DOWNLOAD_URL}
                 target="_blank"
                 rel="noreferrer"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ type: "spring", stiffness: 300 }}
+                className="transform transition-all duration-200 hover:scale-105"
               >
                 Download CV
-              </motion.a>
+              </a>
             </Button>
-          </motion.div>
+          </div>
         </div>
 
         {/* Image Section */}
