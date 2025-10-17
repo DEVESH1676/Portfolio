@@ -79,14 +79,15 @@ export const HeroSection = () => {
             viewport={{ once: true, amount: 0.7 }}
             className="mt-8 flex flex-wrap items-center gap-4 justify-center md:justify-start"
           >
-            <Button
-              asChild
-              size="lg"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              <a href="#publications">View Publications</a>
+            <Button asChild size="lg">
+              <motion.a
+                href="#publications"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
+                View Publications
+              </motion.a>
             </Button>
             <Button
               asChild
