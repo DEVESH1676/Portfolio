@@ -112,6 +112,10 @@ export const Navbar = () => {
             <a href="#cv">Download CV</a>
           </Button>
 
+          <div className="hidden lg:flex">
+            <ThemeToggle />
+          </div>
+
           <div className="flex lg:hidden">
             <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
               <SheetTrigger asChild>
