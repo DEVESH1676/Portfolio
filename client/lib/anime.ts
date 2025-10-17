@@ -23,8 +23,8 @@ export const animateLineDraw = async (
   opts?: { duration?: number; easing?: string },
 ) => {
   if (!el) return;
-  const duration = opts?.duration ?? 900;
-  const easing = opts?.easing ?? "easeInOutQuad";
+  const duration = opts?.duration ?? ANIME.durations.line;
+  const easing = opts?.easing ?? ANIME.easing;
   // ensure transform origin
   el.style.transformOrigin = "top";
   el.style.transform = "scaleY(0)";
