@@ -89,17 +89,17 @@ export const HeroSection = () => {
                 View Publications
               </motion.a>
             </Button>
-            <Button
-              asChild
-              variant="outline"
-              size="lg"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              <a href={CV_DOWNLOAD_URL} target="_blank" rel="noreferrer">
+            <Button asChild variant="outline" size="lg">
+              <motion.a
+                href={CV_DOWNLOAD_URL}
+                target="_blank"
+                rel="noreferrer"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
                 Download CV
-              </a>
+              </motion.a>
             </Button>
           </motion.div>
         </div>
