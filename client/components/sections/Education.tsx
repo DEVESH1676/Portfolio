@@ -1,4 +1,5 @@
 import { EDUCATION_TIMELINE } from "@/data/portfolio";
+import { motion } from "framer-motion";
 import Container from "@/components/ui/container";
 
 export const EducationSection = () => {
