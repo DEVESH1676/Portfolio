@@ -65,12 +65,12 @@ export const animatePulse = async (
 ) => {
   if (!el) return;
   const scale = opts?.scale ?? [1, 1.06];
-  const duration = opts?.duration ?? 1200;
+  const duration = opts?.duration ?? ANIME.durations.pulse;
   return runAnime({
     targets: el,
     scale,
     duration,
-    easing: "easeInOutSine",
+    easing: ANIME.pulseEasing,
     direction: "alternate",
     loop: true,
   });
