@@ -4,7 +4,6 @@ import { AboutSection } from "@/components/sections/About";
 import { ContactSection } from "@/components/sections/Contact";
 import { CurriculumVitaeSection } from "@/components/sections/CurriculumVitae";
 import { EducationSection } from "@/components/sections/Education";
-import { GallerySection } from "@/components/sections/Gallery";
 import { HeroSection } from "@/components/sections/Hero";
 import { ProjectsSection } from "@/components/sections/Projects";
 import { PublicationsSection } from "@/components/sections/Publications";
@@ -21,7 +20,6 @@ export default function Index() {
         <ResearchSection />
         <PublicationsSection />
         <ProjectsSection />
-        <GallerySection />
         <CurriculumVitaeSection />
         <ContactSection />
       </main>
