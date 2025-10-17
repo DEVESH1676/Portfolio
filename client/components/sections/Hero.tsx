@@ -10,6 +10,7 @@ export const HeroSection = () => {
   const subtitleRef = React.useRef<HTMLParagraphElement | null>(null);
   const descRef = React.useRef<HTMLParagraphElement | null>(null);
   const ctasRef = React.useRef<HTMLDivElement | null>(null);
+  const ctaRefs = React.useRef<Array<HTMLAnchorElement | null>>([]);
 
   React.useEffect(() => {
     // animate hero entrance with anime.js staggered sequence
