@@ -14,12 +14,14 @@ export const EducationSection = () => {
     const container = lineContainerRef.current;
     if (!container || !lineEl) return;
 
+    const animeLib = (anime as any).default ?? (anime as any);
+
     const obs = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             // Animate line drawing with anime.js
-            anime({
+            animeLib({
               targets: lineEl,
               scaleY: [0, 1],
               duration: 900,
