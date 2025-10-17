@@ -22,7 +22,15 @@ export const EducationSection = () => {
         <div className="relative">
           {/* Continuous vertical line for timeline (visible on md+) */}
           <div className="hidden md:block absolute left-14 top-6 bottom-6 z-0">
-            <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-primary/30 to-transparent" aria-hidden />
+            <motion.div
+              initial={{ scaleY: 0 }}
+              whileInView={{ scaleY: 1 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.9, ease: "easeInOut" }}
+              style={{ transformOrigin: "top" }}
+              className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-primary/30 to-transparent"
+              aria-hidden
+            />
           </div>
 
           {/* Timeline Entries - each row has a left column for dot/line and right column for content */}
