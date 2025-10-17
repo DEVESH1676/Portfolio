@@ -5,6 +5,19 @@ async function runAnime(params: any) {
   return anime(params as any);
 }
 
+// Global animation configuration
+export const ANIME = {
+  easing: "easeInOutQuad",
+  fastEasing: "easeOutExpo",
+  pulseEasing: "easeInOutSine",
+  durations: {
+    line: 900,
+    dot: 520,
+    pulse: 1200,
+    entrance: 600,
+  },
+};
+
 export const animateLineDraw = async (
   el: HTMLElement,
   opts?: { duration?: number; easing?: string },
