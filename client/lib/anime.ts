@@ -44,8 +44,8 @@ export const animateEntrance = async (
   if (!el) return;
   const translateY = opts?.translateY ?? 16;
   const opacity = opts?.opacity ?? [0, 1];
-  const duration = opts?.duration ?? 600;
-  const easing = opts?.easing ?? "easeOutExpo";
+  const duration = opts?.duration ?? ANIME.durations.entrance;
+  const easing = opts?.easing ?? ANIME.fastEasing;
   const delay = opts?.delay ?? 0;
 
   el.style.opacity = String(opacity[0]);
