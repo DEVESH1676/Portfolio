@@ -1,6 +1,4 @@
 import { EDUCATION_TIMELINE } from "@/data/portfolio";
-
-import { EDUCATION_TIMELINE } from "@/data/portfolio";
 import Container from "@/components/ui/container";
 
 export const EducationSection = () => {
