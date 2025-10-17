@@ -16,26 +16,23 @@ export const EducationSection = () => {
           </p>
         </div>
 
-        {/* Timeline container */}
-        <div className="relative pl-12">
-          {/* Vertical line */}
-          <div
-            className="absolute left-6 top-0 bottom-0 w-1 bg-gradient-to-b from-primary/40 to-transparent"
-            aria-hidden
-          />
+        {/* Timeline Container */}
+        <div className="relative">
+          {/* Vertical Line */}
+          <div className="absolute left-8 top-0 bottom-0 w-1 bg-gradient-to-b from-primary/40 to-transparent" aria-hidden />
 
-          {/* Timeline entries */}
+          {/* Timeline Entries */}
           {EDUCATION_TIMELINE.map((entry, index) => (
             <div key={entry.degree} className="relative mb-12 last:mb-0 flex items-start">
               {/* Dot + Ring */}
-              <div className="absolute left-6 top-1/2 -translate-y-1/2 flex h-6 w-6 items-center justify-center">
+              <div className="absolute left-8 top-1/2 -translate-y-1/2 flex h-6 w-6 items-center justify-center">
                 <div className="h-6 w-6 rounded-full bg-primary/20 ring-2 ring-primary/40 flex items-center justify-center">
                   <div className="h-3 w-3 rounded-full bg-primary" />
                 </div>
               </div>
 
               {/* Card */}
-              <div className="ml-12 rounded-2xl bg-background p-6 shadow-lg ring-1 ring-primary/10 flex-1">
+              <div className="ml-16 rounded-2xl bg-background p-6 shadow-lg ring-1 ring-primary/10 flex-1">
                 <div className="flex flex-wrap items-baseline justify-between gap-4">
                   <h3 className="font-heading text-2xl font-semibold text-primary">
                     {entry.degree}
