@@ -1,16 +1,8 @@
 import { CV_DOWNLOAD_URL, HERO_IMAGE_URL } from "@/data/portfolio";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-
-// Reusable fade-in-up animation variant
-const fadeInUp = {
-  hidden: { opacity: 0, y: 24 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
-  }),
-};
+import Container from "@/components/ui/container";
+import { fadeInUp } from "@/lib/animations";
 
 export const HeroSection = () => {
   return (
@@ -20,7 +12,7 @@ export const HeroSection = () => {
     >
       <div className="absolute inset-0 -z-10 bg-gradient-to-br from-primary/15 via-background to-background" />
 
-      <div className="mx-auto flex max-w-6xl flex-col items-center gap-16 px-6 md:flex-row md:items-start">
+      <Container className="flex flex-col items-center gap-16 md:flex-row md:items-start">
         {/* Text Section */}
         <div className="w-full md:w-3/5 flex flex-col items-center md:items-start">
           <motion.span
@@ -126,7 +118,7 @@ export const HeroSection = () => {
             </div>
           </div>
         </motion.div>
-      </div>
+      </Container>
     </section>
   );
 };
