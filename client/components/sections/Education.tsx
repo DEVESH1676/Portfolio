@@ -46,7 +46,10 @@ export const EducationSection = () => {
                   {/* Left column: dot and spacer (dot centered over the continuous line) */}
                   <div className="flex md:justify-center md:items-start">
                     <div className="flex flex-col items-center h-full">
-                      <div
+                      <motion.div
+                        whileHover={{ scale: 1.08 }}
+                        animate={isCurrent ? { scale: [1, 1.06, 1] } : undefined}
+                        transition={isCurrent ? { duration: 1.6, repeat: Infinity } : { duration: 0.2 }}
                         className={
                           "flex items-center justify-center rounded-full transition-transform duration-200 transform-gpu z-20 " +
                           (isCurrent
@@ -60,7 +63,7 @@ export const EducationSection = () => {
                             "rounded-full " + (isCurrent ? "h-3 w-3 bg-primary/90" : "h-3 w-3 bg-primary/60")
                           }
                         />
-                      </div>
+                      </motion.div>
                     </div>
                   </div>
 
