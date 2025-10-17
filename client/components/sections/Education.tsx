@@ -23,6 +23,7 @@ export const EducationSection = () => {
           <div className="flex flex-col">
             {EDUCATION_TIMELINE.map((entry, index) => {
               const isLast = index === EDUCATION_TIMELINE.length - 1;
+              const isCurrent = (entry as any).current ?? index === 0;
               return (
                 <div
                   key={entry.degree}
