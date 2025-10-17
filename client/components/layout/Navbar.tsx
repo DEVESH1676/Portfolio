@@ -76,8 +76,9 @@ export const Navbar = () => {
           key={item.href}
           href={item.href}
           onClick={() => handleNavClick(item.href)}
+          aria-current={activeSection === item.href ? "page" : undefined}
           className={cn(
-            "text-sm font-medium transition-colors duration-200",
+            "text-sm font-medium transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2 rounded",
             orientation === "horizontal"
               ? "text-foreground/80 hover:text-foreground"
               : "text-base text-foreground",
