@@ -1,18 +1,23 @@
 import { RESEARCH_TAGS } from "@/data/portfolio";
-import { motion } from "framer-motion";
-import { fadeInUp } from "@/lib/animations";
+import * as React from "react";
+import { RESEARCH_TAGS } from "@/data/portfolio";
 
 export const ResearchSection = () => {
+  const tagRefs = React.useRef<Array<HTMLSpanElement | null>>([]);
+
+  React.useEffect(() => {
+    const tags = tagRefs.current.filter(Boolean) as HTMLElement[];
+    if (!tags.length) return;
+    import("@/lib/anime").then((mod) => {
+      const { animateEntrance } = mod;
+      tags.forEach((el, i) => {
+        animateEntrance(el, { translateY: 12, duration: 480, delay: i * 60 });
+      });
+    });
+  }, []);
+
   return (
-    <motion.section
-      id="research"
-      className="bg-background py-24 scroll-mt-24"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.3 }}
-      variants={fadeInUp}
-      custom={0}
-    >
+    <section id="research" className="bg-background py-24 scroll-mt-24">
       <div className="mx-auto max-w-6xl px-6">
         <div className="grid gap-10 lg:grid-cols-[1.1fr_1fr] lg:items-center">
           <div>
@@ -27,9 +32,10 @@ export const ResearchSection = () => {
             </p>
           </div>
           <div className="flex flex-wrap gap-3">
-            {RESEARCH_TAGS.map((tag) => (
+            {RESEARCH_TAGS.map((tag, i) => (
               <span
                 key={tag}
+                ref={(el) => (tagRefs.current[i] = el)}
                 className="rounded-full border border-primary/30 bg-primary/10 px-4 py-2 text-sm font-semibold text-primary shadow-sm"
               >
                 {tag}
@@ -38,6 +44,6 @@ export const ResearchSection = () => {
           </div>
         </div>
       </div>
-    </motion.section>
+    </section>
   );
 };
