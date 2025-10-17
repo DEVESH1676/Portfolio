@@ -125,45 +125,6 @@ export const PROJECTS = [
   },
 ];
 
-export const GALLERY_IMAGES = [
-  {
-    src: "https://images.unsplash.com/photo-1532619675605-74347256bdf4?auto=format&fit=crop&w=900&q=80",
-    alt: "Delivering an academic lecture",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=80",
-    alt: "Research collaboration meeting",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=900&q=80",
-    alt: "Mentoring students in a lab",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?auto=format&fit=crop&w=900&q=80",
-    alt: "Conference keynote session",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=900&q=80",
-    alt: "Panel discussion with peers",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=900&q=80",
-    alt: "Receiving an academic award",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=900&q=80",
-    alt: "Hosting a workshop",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80",
-    alt: "Team collaboration and planning",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=900&q=80",
-    alt: "Research presentation overview",
-  },
-];
-
 export const CONTACT_LINKS = [
   {
     label: "LinkedIn",
