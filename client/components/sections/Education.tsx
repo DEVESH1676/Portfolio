@@ -1,32 +1,65 @@
 import { EDUCATION_TIMELINE } from "@/data/portfolio";
+import { motion } from "framer-motion";
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 24 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] },
+  }),
+};
 
 export const EducationSection = () => {
   return (
-    <section id="education" className="bg-secondary/40 py-24 scroll-mt-24">
+    <motion.section
+      id="education"
+      className="bg-secondary/40 py-24 scroll-mt-24"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.3 }}
+      variants={fadeInUp}
+      custom={0}
+    >
       <div className="mx-auto max-w-6xl px-6">
-        <div className="mb-12">
-          <h2 className="font-heading text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
-            Education
-          </h2>
-          <p className="mt-4 max-w-2xl text-base text-foreground/75 md:text-lg">
-            A progressive academic journey grounded in Computer Engineering,
-            culminating in a doctoral degree focused on advancing intelligent
-            video analytics.
-          </p>
-        </div>
+        {/* Header */}
+        <motion.div custom={0} variants={fadeInUp}>
+          <div className="mb-12">
+            <h2 className="font-heading text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
+              Education
+            </h2>
+            <p className="mt-4 max-w-2xl text-base text-foreground/75 md:text-lg">
+              A progressive academic journey grounded in Computer Engineering,
+              culminating in a doctoral degree focused on advancing intelligent
+              video analytics.
+            </p>
+          </div>
+        </motion.div>
 
+        {/* Timeline */}
         <div className="relative ml-2 pl-8">
           {/* Vertical line */}
-          <div className="absolute left-1.5 top-6 bottom-6 w-1 bg-gradient-to-b from-primary/40 to-transparent" aria-hidden />
+          <div
+            className="absolute left-1.5 top-6 bottom-0 w-1 bg-gradient-to-b from-primary/40 to-transparent"
+            aria-hidden
+          />
 
           {EDUCATION_TIMELINE.map((entry, index) => (
-            <div key={entry.degree} className="relative pb-12 last:pb-0">
+            <motion.div
+              key={entry.degree}
+              className="relative pb-12 last:pb-0"
+              custom={index}
+              variants={fadeInUp}
+            >
               {/* Dot + shadow */}
               <div className="absolute left-0 top-6 flex h-6 w-6 -translate-x-1/2 items-center justify-center">
+                {/* Outer hollow circle (shadow) */}
                 <div className="h-6 w-6 rounded-full bg-primary/20 ring-2 ring-primary/40" />
+                {/* Inner solid dot */}
                 <div className="absolute h-3 w-3 rounded-full bg-primary" />
               </div>
 
+              {/* Card */}
               <div className="rounded-2xl bg-background p-6 shadow-lg ring-1 ring-primary/10">
                 <div className="flex flex-wrap items-baseline justify-between gap-4">
                   <h3 className="font-heading text-2xl font-semibold text-primary">
@@ -43,10 +76,10 @@ export const EducationSection = () => {
                   {entry.highlight}
                 </p>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
