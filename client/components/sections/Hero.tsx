@@ -97,19 +97,23 @@ export const HeroSection = () => {
                 className="transform transition-all duration-200"
                 onMouseEnter={() => {
                   const el = ctaRefs.current[0] as HTMLElement | null;
-                  if (el) import("@/lib/anime").then((m) => m.animateHoverEnter(el));
+                  if (el)
+                    import("@/lib/anime").then((m) => m.animateHoverEnter(el));
                 }}
                 onMouseLeave={() => {
                   const el = ctaRefs.current[0] as HTMLElement | null;
-                  if (el) import("@/lib/anime").then((m) => m.animateHoverLeave(el));
+                  if (el)
+                    import("@/lib/anime").then((m) => m.animateHoverLeave(el));
                 }}
                 onFocus={() => {
                   const el = ctaRefs.current[0] as HTMLElement | null;
-                  if (el) import("@/lib/anime").then((m) => m.animateHoverEnter(el));
+                  if (el)
+                    import("@/lib/anime").then((m) => m.animateHoverEnter(el));
                 }}
                 onBlur={() => {
                   const el = ctaRefs.current[0] as HTMLElement | null;
-                  if (el) import("@/lib/anime").then((m) => m.animateHoverLeave(el));
+                  if (el)
+                    import("@/lib/anime").then((m) => m.animateHoverLeave(el));
                 }}
               >
                 View Publications
@@ -124,19 +128,23 @@ export const HeroSection = () => {
                 className="transform transition-all duration-200"
                 onMouseEnter={() => {
                   const el = ctaRefs.current[1] as HTMLElement | null;
-                  if (el) import("@/lib/anime").then((m) => m.animateHoverEnter(el));
+                  if (el)
+                    import("@/lib/anime").then((m) => m.animateHoverEnter(el));
                 }}
                 onMouseLeave={() => {
                   const el = ctaRefs.current[1] as HTMLElement | null;
-                  if (el) import("@/lib/anime").then((m) => m.animateHoverLeave(el));
+                  if (el)
+                    import("@/lib/anime").then((m) => m.animateHoverLeave(el));
                 }}
                 onFocus={() => {
                   const el = ctaRefs.current[1] as HTMLElement | null;
-                  if (el) import("@/lib/anime").then((m) => m.animateHoverEnter(el));
+                  if (el)
+                    import("@/lib/anime").then((m) => m.animateHoverEnter(el));
                 }}
                 onBlur={() => {
                   const el = ctaRefs.current[1] as HTMLElement | null;
-                  if (el) import("@/lib/anime").then((m) => m.animateHoverLeave(el));
+                  if (el)
+                    import("@/lib/anime").then((m) => m.animateHoverLeave(el));
                 }}
               >
                 Download CV

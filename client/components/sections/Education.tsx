@@ -166,22 +166,38 @@ export const EducationSection = () => {
                   {/* Right column: content */}
                   <div className="mt-4 md:mt-0 md:ml-6">
                     <div
-                      ref={(el) => (cardRefs.current[index] = el as HTMLDivElement)}
+                      ref={(el) =>
+                        (cardRefs.current[index] = el as HTMLDivElement)
+                      }
                       onMouseEnter={() => {
-                        const dot = dotRefs.current[index] as HTMLElement | null;
+                        const dot = dotRefs.current[
+                          index
+                        ] as HTMLElement | null;
                         if (dot) {
                           import("animejs").then((mod) => {
                             const a = (mod as any).default ?? mod;
-                            a({ targets: dot, scale: 1.12, duration: 220, easing: "easeOutQuad" });
+                            a({
+                              targets: dot,
+                              scale: 1.12,
+                              duration: 220,
+                              easing: "easeOutQuad",
+                            });
                           });
                         }
                       }}
                       onMouseLeave={() => {
-                        const dot = dotRefs.current[index] as HTMLElement | null;
+                        const dot = dotRefs.current[
+                          index
+                        ] as HTMLElement | null;
                         if (dot) {
                           import("animejs").then((mod) => {
                             const a = (mod as any).default ?? mod;
-                            a({ targets: dot, scale: 1, duration: 220, easing: "easeOutQuad" });
+                            a({
+                              targets: dot,
+                              scale: 1,
+                              duration: 220,
+                              easing: "easeOutQuad",
+                            });
                           });
                         }
                       }}
