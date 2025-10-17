@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { NAV_ITEMS } from "@/data/portfolio";
+import ThemeToggle from "@/components/ui/theme-toggle";
 
 export const Navbar = () => {
   const [activeSection, setActiveSection] = React.useState<string>("#home");
