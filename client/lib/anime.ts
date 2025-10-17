@@ -1,10 +1,8 @@
-import type { AnimeParams } from "animejs";
-
 // Dynamically import anime.js and run the animation factory
 async function runAnime(params: any) {
   const mod = await import("animejs");
   const anime = (mod as any).default ?? mod;
-  return anime(params as AnimeParams);
+  return anime(params as any);
 }
 
 export const animateLineDraw = async (el: HTMLElement, opts?: { duration?: number; easing?: string }) => {
