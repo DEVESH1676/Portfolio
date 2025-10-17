@@ -144,4 +144,4 @@ export const CONTACT_LINKS = [
 ];
 
 export const HERO_IMAGE_URL =
-#  "https://imagehs.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=900&q=80";
+  "https://imagehs.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=900&q=80";
