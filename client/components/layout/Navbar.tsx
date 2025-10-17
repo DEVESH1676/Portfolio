@@ -152,6 +152,9 @@ export const Navbar = () => {
                         Download CV
                       </a>
                     </Button>
+                    <div className="mt-2">
+                      <ThemeToggle />
+                    </div>
                   </div>
                 </div>
               </SheetContent>
