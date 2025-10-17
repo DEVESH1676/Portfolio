@@ -103,7 +103,7 @@ export const EducationSection = () => {
             <div
               ref={(el) => (lineRef.current = el)}
               style={{ transformOrigin: "top", transform: "scaleY(0)" }}
-              className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-primary/30 to-transparent"
+              className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-primary/30 to-transparent timeline-line"
               aria-hidden
             />
           </div>
