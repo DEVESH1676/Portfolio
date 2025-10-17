@@ -21,7 +21,10 @@ const Card = React.forwardRef<
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             import("@/lib/anime").then((mod) => {
-              mod.animateEntrance(el as HTMLElement, { translateY: 14, duration: 600 });
+              mod.animateEntrance(el as HTMLElement, {
+                translateY: 14,
+                duration: 600,
+              });
             });
             observer?.disconnect();
           }
@@ -38,7 +41,16 @@ const Card = React.forwardRef<
     if (!el) return;
     import("animejs").then((mod) => {
       const a = (mod as any).default ?? mod;
-      a({ targets: el, scale: 1.02, boxShadow: ["0 4px 6px rgba(0,0,0,0.06)", "0 12px 30px rgba(0,0,0,0.12)"], duration: 220, easing: "easeOutQuad" });
+      a({
+        targets: el,
+        scale: 1.02,
+        boxShadow: [
+          "0 4px 6px rgba(0,0,0,0.06)",
+          "0 12px 30px rgba(0,0,0,0.12)",
+        ],
+        duration: 220,
+        easing: "easeOutQuad",
+      });
     });
   };
 
@@ -47,7 +59,16 @@ const Card = React.forwardRef<
     if (!el) return;
     import("animejs").then((mod) => {
       const a = (mod as any).default ?? mod;
-      a({ targets: el, scale: 1, boxShadow: ["0 12px 30px rgba(0,0,0,0.12)", "0 4px 6px rgba(0,0,0,0.06)"], duration: 220, easing: "easeOutQuad" });
+      a({
+        targets: el,
+        scale: 1,
+        boxShadow: [
+          "0 12px 30px rgba(0,0,0,0.12)",
+          "0 4px 6px rgba(0,0,0,0.06)",
+        ],
+        duration: 220,
+        easing: "easeOutQuad",
+      });
     });
   };
 

@@ -1,6 +1,10 @@
 // Dynamically import anime.js and run the animation factory
 async function runAnime(params: any) {
-  if (typeof window !== "undefined" && window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  if (
+    typeof window !== "undefined" &&
+    window.matchMedia &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  ) {
     // respect reduced motion preference
     return Promise.resolve();
   }
@@ -25,13 +29,19 @@ export const ANIME = {
 export const prefersReducedMotion = () => {
   if (typeof window === "undefined") return false;
   try {
-    return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    return (
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    );
   } catch {
     return false;
   }
 };
 
-export const animateHoverEnter = async (el: HTMLElement, opts?: { scale?: number; duration?: number }) => {
+export const animateHoverEnter = async (
+  el: HTMLElement,
+  opts?: { scale?: number; duration?: number },
+) => {
   if (!el || prefersReducedMotion()) return;
   const scale = opts?.scale ?? 1.04;
   const duration = opts?.duration ?? 180;
@@ -40,7 +50,10 @@ export const animateHoverEnter = async (el: HTMLElement, opts?: { scale?: number
   a({ targets: el, scale, duration, easing: ANIME.fastEasing });
 };
 
-export const animateHoverLeave = async (el: HTMLElement, opts?: { duration?: number }) => {
+export const animateHoverLeave = async (
+  el: HTMLElement,
+  opts?: { duration?: number },
+) => {
   if (!el || prefersReducedMotion()) return;
   const duration = opts?.duration ?? 180;
   const mod = await import("animejs");
@@ -115,8 +128,10 @@ export const animateHoverPop = async (
   const scale = opts?.scale ?? 1.04;
   const duration = opts?.duration ?? 180;
   return {
-    onEnter: () => runAnime({ targets: el, scale, duration, easing: ANIME.fastEasing }),
-    onLeave: () => runAnime({ targets: el, scale: 1, duration, easing: ANIME.fastEasing }),
+    onEnter: () =>
+      runAnime({ targets: el, scale, duration, easing: ANIME.fastEasing }),
+    onLeave: () =>
+      runAnime({ targets: el, scale: 1, duration, easing: ANIME.fastEasing }),
   };
 };
 
