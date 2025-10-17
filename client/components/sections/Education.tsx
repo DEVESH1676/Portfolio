@@ -14,14 +14,19 @@ export const EducationSection = () => {
             video analytics.
           </p>
         </div>
-        <div className="relative ml-2 border-l-2 border-primary/30 pl-8">
-          <div
-            className="absolute left-[-0.3rem] top-0 h-4 w-4 rounded-full bg-primary"
-            aria-hidden
-          />
+
+        <div className="relative ml-2 pl-8">
+          {/* Vertical line */}
+          <div className="absolute left-1.5 top-2 bottom-0 w-1 bg-gradient-to-b from-primary/40 to-transparent" aria-hidden />
+
           {EDUCATION_TIMELINE.map((entry, index) => (
             <div key={entry.degree} className="relative pb-12 last:pb-0">
-              <div className="absolute -left-[2.3rem] top-2 h-3 w-3 rounded-full border-2 border-background bg-primary shadow-[0_0_0_6px] shadow-primary/20" />
+              {/* Dot + shadow wrapper */}
+              <div className="absolute left-0 top-6 flex h-6 w-6 -translate-x-1/2 items-center justify-center">
+                <div className="h-6 w-6 rounded-full bg-primary/20 ring-2 ring-primary/40" />
+                <div className="absolute h-3 w-3 rounded-full bg-primary" />
+              </div>
+
               <div className="rounded-2xl bg-background p-6 shadow-lg ring-1 ring-primary/10">
                 <div className="flex flex-wrap items-baseline justify-between gap-4">
                   <h3 className="font-heading text-2xl font-semibold text-primary">
@@ -38,12 +43,6 @@ export const EducationSection = () => {
                   {entry.highlight}
                 </p>
               </div>
-              {index === EDUCATION_TIMELINE.length - 1 ? null : (
-                <div
-                  className="absolute left-[-0.05rem] top-full h-full w-[2px] bg-gradient-to-b from-primary/40 to-transparent"
-                  aria-hidden
-                />
-              )}
             </div>
           ))}
         </div>
