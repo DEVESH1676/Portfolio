@@ -7,6 +7,7 @@ export const EducationSection = () => {
   const lineRef = React.useRef<HTMLDivElement | null>(null);
   const lineContainerRef = React.useRef<HTMLDivElement | null>(null);
   const dotRefs = React.useRef<Array<HTMLDivElement | null>>([]);
+  const cardRefs = React.useRef<Array<HTMLDivElement | null>>([]);
 
   React.useEffect(() => {
     const lineEl = lineRef.current;
