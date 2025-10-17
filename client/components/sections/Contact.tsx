@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { CONTACT_LINKS } from "@/data/portfolio";
 import { motion } from "framer-motion";
+import { fadeInUp } from "@/lib/animations";
 
 const iconMap = {
   linkedin: Linkedin,
@@ -14,15 +15,6 @@ const iconMap = {
 };
 
 const emailRecipient = "chandrashekar.ghuge@moderncoe.edu.in";
-
-const fadeInUp = {
-  hidden: { opacity: 0, y: 24 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
-  }),
-};
 
 export const ContactSection = () => {
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
