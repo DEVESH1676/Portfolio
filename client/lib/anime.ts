@@ -85,10 +85,8 @@ export const animateHoverPop = async (
   const scale = opts?.scale ?? 1.04;
   const duration = opts?.duration ?? 180;
   return {
-    onEnter: () =>
-      runAnime({ targets: el, scale, duration, easing: "easeOutQuad" }),
-    onLeave: () =>
-      runAnime({ targets: el, scale: 1, duration, easing: "easeOutQuad" }),
+    onEnter: () => runAnime({ targets: el, scale, duration, easing: ANIME.fastEasing }),
+    onLeave: () => runAnime({ targets: el, scale: 1, duration, easing: ANIME.fastEasing }),
   };
 };
 
