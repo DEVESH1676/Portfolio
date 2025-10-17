@@ -113,7 +113,7 @@ export const Navbar = () => {
             <a href="#cv">Download CV</a>
           </Button>
 
-          <div className="hidden lg:flex">
+          <div className="flex">
             <ThemeToggle />
           </div>
 
