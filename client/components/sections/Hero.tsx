@@ -42,7 +42,7 @@ export const HeroSection = () => {
             viewport={{ once: true, amount: 0.7 }}
             className="mt-6 font-heading text-4xl font-semibold tracking-tight text-foreground md:text-5xl lg:text-6xl text-center md:text-left"
           >
-            Dr. Chandrashekhar Arvind Ghuge (Dr. C. A. Ghuge)
+            Dr. Chandrashekhar Arvind Ghuge
           </motion.h1>
 
           <motion.p
