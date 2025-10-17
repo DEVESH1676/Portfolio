@@ -1,7 +1,7 @@
 import { EDUCATION_TIMELINE } from "@/data/portfolio";
 import * as React from "react";
 import { motion } from "framer-motion";
-import anime from "animejs";
+import * as anime from "animejs";
 import Container from "@/components/ui/container";
 
 export const EducationSection = () => {
