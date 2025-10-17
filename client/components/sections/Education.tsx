@@ -23,13 +23,10 @@ export const EducationSection = () => {
         {/* Timeline Container */}
         <div className="relative">
           {/* Continuous vertical line for timeline (visible on md+) */}
-          <div className="hidden md:block absolute left-14 top-6 bottom-6 z-0">
-            <motion.div
-              initial={{ scaleY: 0 }}
-              whileInView={{ scaleY: 1 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.9, ease: "easeInOut" }}
-              style={{ transformOrigin: "top" }}
+          <div className="hidden md:block absolute left-14 top-6 bottom-6 z-0" ref={(el) => (lineContainerRef.current = el)}>
+            <div
+              ref={(el) => (lineRef.current = el)}
+              style={{ transformOrigin: "top", transform: "scaleY(0)" }}
               className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-primary/30 to-transparent"
               aria-hidden
             />
