@@ -9,7 +9,6 @@ export const NAV_ITEMS = [
   { label: "Research", href: "#research" },
   { label: "Publications", href: "#publications" },
   { label: "Projects", href: "#projects" },
-  { label: "Gallery", href: "#gallery" },
   { label: "CV", href: "#cv" },
   { label: "Contact", href: "#contact" },
 ];
