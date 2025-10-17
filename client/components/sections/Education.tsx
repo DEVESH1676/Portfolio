@@ -5,6 +5,82 @@ import anime from "animejs/lib/anime.es.js";
 import Container from "@/components/ui/container";
 
 export const EducationSection = () => {
+  const lineRef = React.useRef<HTMLDivElement | null>(null);
+  const lineContainerRef = React.useRef<HTMLDivElement | null>(null);
+  const dotRefs = React.useRef<Array<HTMLDivElement | null>>([]);
+
+  React.useEffect(() => {
+    const lineEl = lineRef.current;
+    const container = lineContainerRef.current;
+    if (!container || !lineEl) return;
+
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Animate line drawing with anime.js
+            anime({
+              targets: lineEl,
+              scaleY: [0, 1],
+              duration: 900,
+              easing: "easeInOutQuad",
+              elasticity: 300,
+            });
+            obs.disconnect();
+          }
+        });
+      },
+      { threshold: 0.05 },
+    );
+
+    obs.observe(container);
+
+    return () => obs.disconnect();
+  }, []);
+
+  React.useEffect(() => {
+    const dots = dotRefs.current.filter(Boolean) as HTMLElement[];
+    if (!dots.length) return;
+
+    const dotObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const el = entry.target as HTMLElement;
+          const i = dots.indexOf(el);
+          if (entry.isIntersecting) {
+            // Entrance animation for the dot
+            anime({
+              targets: el,
+              scale: [0.9, 1.03],
+              opacity: [0, 1],
+              duration: 520,
+              easing: "easeOutExpo",
+            });
+
+            // If it's current, add subtle pulsing (loop)
+            if ((EDUCATION_TIMELINE[i] as any).current ?? i === 0) {
+              anime({
+                targets: el,
+                scale: [1, 1.06],
+                duration: 1200,
+                easing: "easeInOutSine",
+                direction: "alternate",
+                loop: true,
+              });
+            }
+
+            dotObserver.unobserve(el);
+          }
+        });
+      },
+      { threshold: 0.35 },
+    );
+
+    dots.forEach((d) => dotObserver.observe(d));
+
+    return () => dotObserver.disconnect();
+  }, []);
+
   return (
     <section id="education" className="bg-secondary/40 py-24 scroll-mt-24">
       <Container>
