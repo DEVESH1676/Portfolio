@@ -20,7 +20,7 @@ export const EducationSection = () => {
         <div className="relative ml-4 pl-8">
           {/* Vertical Line */}
           <div
-            className="absolute left-2 w-1 bg-gradient-to-b from-primary/40 to-transparent"
+            className="absolute left-2 w-1 bg-gradient-to-b from-primary/40 to-primary/10"
             style={{
               top: "2.25rem", // aligns with first node
               bottom: "2.25rem", // stops at last node
@@ -29,19 +29,19 @@ export const EducationSection = () => {
           />
 
           {EDUCATION_TIMELINE.map((entry, index) => {
-            const isCurrent = index === 0; // Ph.D. assumed first & current
+            const isCurrent = index === 0; // Ph.D. is first & current
             return (
               <div key={entry.degree} className="relative pb-16 last:pb-0">
                 {/* Dot + Shadow */}
                 <div className="absolute left-0 top-6 flex h-6 w-6 -translate-x-1/2 items-center justify-center">
                   {isCurrent ? (
-                    <div className="h-6 w-6 rounded-full border-2 border-primary/70" />
+                    <div className="h-6 w-6 rounded-full border-2 border-primary/40 bg-secondary/40" />
                   ) : (
-                    <div className="h-6 w-6 rounded-full bg-primary/20 ring-2 ring-primary/40" />
+                    <div className="h-6 w-6 rounded-full bg-primary/70 ring-2 ring-primary/40" />
                   )}
                   <div
                     className={`absolute h-3 w-3 rounded-full ${
-                      isCurrent ? "bg-white" : "bg-primary"
+                      isCurrent ? "bg-secondary/40" : "bg-primary"
                     }`}
                   />
                 </div>
@@ -53,9 +53,7 @@ export const EducationSection = () => {
                   }`}
                 >
                   <div className="flex flex-wrap items-baseline justify-between gap-4">
-                    <h3
-                      className={`font-heading text-2xl font-semibold text-primary`}
-                    >
+                    <h3 className="font-heading text-2xl font-semibold text-primary">
                       {entry.degree}
                     </h3>
                     <span
