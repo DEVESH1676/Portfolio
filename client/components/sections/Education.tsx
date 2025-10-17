@@ -1,14 +1,12 @@
 import { EDUCATION_TIMELINE } from "@/data/portfolio";
 import * as React from "react";
 import { motion } from "framer-motion";
-import * as anime from "animejs";
 import Container from "@/components/ui/container";
 
 export const EducationSection = () => {
   const lineRef = React.useRef<HTMLDivElement | null>(null);
   const lineContainerRef = React.useRef<HTMLDivElement | null>(null);
   const dotRefs = React.useRef<Array<HTMLDivElement | null>>([]);
-  const animeLib = (anime as any).default ?? (anime as any);
 
   React.useEffect(() => {
     const lineEl = lineRef.current;
@@ -19,14 +17,18 @@ export const EducationSection = () => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            // Animate line drawing with anime.js
-            animeLib({
-              targets: lineEl,
-              scaleY: [0, 1],
-              duration: 900,
-              easing: "easeInOutQuad",
-              elasticity: 300,
+            // Animate line drawing with anime.js dynamically imported to avoid SSR issues
+            import("animejs").then((mod) => {
+              const animeLib = (mod as any).default ?? mod;
+              animeLib({
+                targets: lineEl,
+                scaleY: [0, 1],
+                duration: 900,
+                easing: "easeInOutQuad",
+                elasticity: 300,
+              });
             });
+
             obs.disconnect();
           }
         });
@@ -49,26 +51,29 @@ export const EducationSection = () => {
           const el = entry.target as HTMLElement;
           const i = dots.indexOf(el);
           if (entry.isIntersecting) {
-            // Entrance animation for the dot
-            animeLib({
-              targets: el,
-              scale: [0.9, 1.03],
-              opacity: [0, 1],
-              duration: 520,
-              easing: "easeOutExpo",
-            });
-
-            // If it's current, add subtle pulsing (loop)
-            if ((EDUCATION_TIMELINE[i] as any).current ?? i === 0) {
+            // Entrance animation for the dot using dynamic import
+            import("animejs").then((mod) => {
+              const animeLib = (mod as any).default ?? mod;
               animeLib({
                 targets: el,
-                scale: [1, 1.06],
-                duration: 1200,
-                easing: "easeInOutSine",
-                direction: "alternate",
-                loop: true,
+                scale: [0.9, 1.03],
+                opacity: [0, 1],
+                duration: 520,
+                easing: "easeOutExpo",
               });
-            }
+
+              // If it's current, add subtle pulsing (loop)
+              if ((EDUCATION_TIMELINE[i] as any).current ?? i === 0) {
+                animeLib({
+                  targets: el,
+                  scale: [1, 1.06],
+                  duration: 1200,
+                  easing: "easeInOutSine",
+                  direction: "alternate",
+                  loop: true,
+                });
+              }
+            });
 
             dotObserver.unobserve(el);
           }
