@@ -17,44 +17,34 @@ export const EducationSection = () => {
 
         <div className="relative ml-2 pl-8">
           {/* Vertical line */}
-          <div className="absolute left-3 top-6 bottom-0 w-1 bg-gradient-to-b from-primary/40 to-transparent" aria-hidden />
+          <div className="absolute left-1.5 top-6 bottom-6 w-1 bg-gradient-to-b from-primary/40 to-transparent" aria-hidden />
 
-          {EDUCATION_TIMELINE.map((entry, index) => {
-            const isCurrent = index === 0; // assuming first entry is current Ph.D.
-            return (
-              <div key={entry.degree} className="relative pb-12 last:pb-0">
-                {/* Dot + shadow wrapper */}
-                <div className="absolute left-3 top-6 flex h-6 w-6 -translate-x-1/2 items-center justify-center">
-                  {/* Outer ring */}
-                  <div
-                    className={`h-6 w-6 rounded-full ${
-                      isCurrent ? "border-2 border-primary/60 bg-secondary/40" : "bg-primary/20 ring-2 ring-primary/40"
-                    }`}
-                  />
-                  {/* Inner circle */}
-                  {!isCurrent && <div className="absolute h-3 w-3 rounded-full bg-primary" />}
-                </div>
-
-                {/* Card aligned to dot */}
-                <div className="ml-10 rounded-2xl bg-background p-6 shadow-lg ring-1 ring-primary/10">
-                  <div className="flex flex-wrap items-baseline justify-between gap-4">
-                    <h3 className="font-heading text-2xl font-semibold text-primary">
-                      {entry.degree}
-                    </h3>
-                    <span className="text-sm font-medium uppercase tracking-[0.2em] text-foreground/60">
-                      {entry.year}
-                    </span>
-                  </div>
-                  <p className="mt-2 text-lg font-medium text-foreground">
-                    {entry.institution}
-                  </p>
-                  <p className="mt-3 text-sm leading-relaxed text-foreground/75">
-                    {entry.highlight}
-                  </p>
-                </div>
+          {EDUCATION_TIMELINE.map((entry, index) => (
+            <div key={entry.degree} className="relative pb-12 last:pb-0">
+              {/* Dot + shadow */}
+              <div className="absolute left-0 top-6 flex h-6 w-6 -translate-x-1/2 items-center justify-center">
+                <div className="h-6 w-6 rounded-full bg-primary/20 ring-2 ring-primary/40" />
+                <div className="absolute h-3 w-3 rounded-full bg-primary" />
               </div>
-            );
-          })}
+
+              <div className="rounded-2xl bg-background p-6 shadow-lg ring-1 ring-primary/10">
+                <div className="flex flex-wrap items-baseline justify-between gap-4">
+                  <h3 className="font-heading text-2xl font-semibold text-primary">
+                    {entry.degree}
+                  </h3>
+                  <span className="text-sm font-medium uppercase tracking-[0.2em] text-foreground/60">
+                    {entry.year}
+                  </span>
+                </div>
+                <p className="mt-2 text-lg font-medium text-foreground">
+                  {entry.institution}
+                </p>
+                <p className="mt-3 text-sm leading-relaxed text-foreground/75">
+                  {entry.highlight}
+                </p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
