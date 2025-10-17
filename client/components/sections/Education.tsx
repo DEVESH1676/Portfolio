@@ -34,6 +34,8 @@ export const EducationSection = () => {
 
           {/* Timeline Entries - each row has a left column for dot/line and right column for content */}
           <div className="flex flex-col relative z-10">
+            {/* Refs for anime.js animations */}
+            {/* We'll animate the continuous line and each dot on scroll using anime.js */}
             {EDUCATION_TIMELINE.map((entry, index) => {
               const isLast = index === EDUCATION_TIMELINE.length - 1;
               const isCurrent = (entry as any).current ?? index === 0;
