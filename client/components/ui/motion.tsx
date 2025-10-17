@@ -6,12 +6,11 @@ interface MotionWrapperProps extends HTMLMotionProps<"div"> {
   children: React.ReactNode;
 }
 
-export const MotionWrapper: React.FC<MotionWrapperProps> = ({ children, ...props }) => {
-  return (
-    <motion.div {...props}>
-      {children}
-    </motion.div>
-  );
+export const MotionWrapper: React.FC<MotionWrapperProps> = ({
+  children,
+  ...props
+}) => {
+  return <motion.div {...props}>{children}</motion.div>;
 };
 
 export default MotionWrapper;

@@ -5,7 +5,12 @@ export interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
   size?: "sm" | "md" | "lg" | "xl";
 }
 
-export const Container = ({ className, children, size = "lg", ...props }: ContainerProps) => {
+export const Container = ({
+  className,
+  children,
+  size = "lg",
+  ...props
+}: ContainerProps) => {
   const sizes: Record<string, string> = {
     sm: "max-w-3xl",
     md: "max-w-4xl",

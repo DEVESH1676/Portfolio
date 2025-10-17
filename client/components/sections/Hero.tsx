@@ -13,12 +13,32 @@ export const HeroSection = () => {
 
   React.useEffect(() => {
     // animate hero entrance with anime.js staggered sequence
-    import('@/lib/anime').then((mod) => {
+    import("@/lib/anime").then((mod) => {
       const { animateEntrance } = mod;
-      if (titleRef.current) animateEntrance(titleRef.current, { translateY: 24, duration: 700, delay: 80 });
-      if (subtitleRef.current) animateEntrance(subtitleRef.current, { translateY: 18, duration: 600, delay: 180 });
-      if (descRef.current) animateEntrance(descRef.current, { translateY: 12, duration: 600, delay: 280 });
-      if (ctasRef.current) animateEntrance(ctasRef.current, { translateY: 8, duration: 600, delay: 360 });
+      if (titleRef.current)
+        animateEntrance(titleRef.current, {
+          translateY: 24,
+          duration: 700,
+          delay: 80,
+        });
+      if (subtitleRef.current)
+        animateEntrance(subtitleRef.current, {
+          translateY: 18,
+          duration: 600,
+          delay: 180,
+        });
+      if (descRef.current)
+        animateEntrance(descRef.current, {
+          translateY: 12,
+          duration: 600,
+          delay: 280,
+        });
+      if (ctasRef.current)
+        animateEntrance(ctasRef.current, {
+          translateY: 8,
+          duration: 600,
+          delay: 360,
+        });
     });
   }, []);
 
@@ -50,7 +70,8 @@ export const HeroSection = () => {
             ref={subtitleRef}
             className="mt-4 text-lg font-medium text-primary md:text-xl text-center md:text-left"
           >
-            Associate Professor · Computer Vision Researcher · Ph.D., K L University (2023)
+            Associate Professor · Computer Vision Researcher · Ph.D., K L
+            University (2023)
           </p>
 
           <p

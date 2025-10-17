@@ -29,11 +29,20 @@ export const staggerContainer: Variants = {
 // Card entrance
 export const cardVariants: Variants = {
   hidden: { opacity: 0, y: 12, scale: 0.98 },
-  visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.5, ease: easing } },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.5, ease: easing },
+  },
 };
 
 // Timeline dot entrance
 export const dotVariants: Variants = {
   hidden: { opacity: 0, scale: 0.9 },
-  visible: { opacity: 1, scale: 1, transition: { duration: 0.45, ease: easing } },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: { duration: 0.45, ease: easing },
+  },
 };

@@ -105,7 +105,10 @@ export const EducationSection = () => {
         {/* Timeline Container */}
         <div className="relative">
           {/* Continuous vertical line for timeline (visible on md+) */}
-          <div className="hidden md:block absolute left-14 top-6 bottom-6 z-0" ref={(el) => (lineContainerRef.current = el)}>
+          <div
+            className="hidden md:block absolute left-14 top-6 bottom-6 z-0"
+            ref={(el) => (lineContainerRef.current = el)}
+          >
             <div
               ref={(el) => (lineRef.current = el)}
               style={{ transformOrigin: "top", transform: "scaleY(0)" }}
@@ -130,9 +133,15 @@ export const EducationSection = () => {
                   <div className="flex md:justify-center md:items-start">
                     <div className="flex flex-col items-center h-full">
                       <motion.div
-                        ref={(el) => (dotRefs.current[index] = el as HTMLDivElement)}
+                        ref={(el) =>
+                          (dotRefs.current[index] = el as HTMLDivElement)
+                        }
                         whileHover={{ scale: 1.08 }}
-                        transition={isCurrent ? { duration: 1.6, repeat: Infinity } : { duration: 0.2 }}
+                        transition={
+                          isCurrent
+                            ? { duration: 1.6, repeat: Infinity }
+                            : { duration: 0.2 }
+                        }
                         className={
                           "flex items-center justify-center rounded-full transition-transform duration-200 transform-gpu z-20 " +
                           (isCurrent
@@ -143,7 +152,10 @@ export const EducationSection = () => {
                       >
                         <div
                           className={
-                            "rounded-full " + (isCurrent ? "h-3 w-3 bg-primary/90" : "h-3 w-3 bg-primary/60")
+                            "rounded-full " +
+                            (isCurrent
+                              ? "h-3 w-3 bg-primary/90"
+                              : "h-3 w-3 bg-primary/60")
                           }
                         />
                       </motion.div>
