@@ -5,6 +5,22 @@ import Container from "@/components/ui/container";
 import { fadeInUp } from "@/lib/animations";
 
 export const HeroSection = () => {
+  const titleRef = React.useRef<HTMLHeadingElement | null>(null);
+  const subtitleRef = React.useRef<HTMLParagraphElement | null>(null);
+  const descRef = React.useRef<HTMLParagraphElement | null>(null);
+  const ctasRef = React.useRef<HTMLDivElement | null>(null);
+
+  React.useEffect(() => {
+    // animate hero entrance with anime.js staggered sequence
+    import('@/lib/anime').then((mod) => {
+      const { animateEntrance } = mod;
+      if (titleRef.current) animateEntrance(titleRef.current, { translateY: 24, duration: 700, delay: 80 });
+      if (subtitleRef.current) animateEntrance(subtitleRef.current, { translateY: 18, duration: 600, delay: 180 });
+      if (descRef.current) animateEntrance(descRef.current, { translateY: 12, duration: 600, delay: 280 });
+      if (ctasRef.current) animateEntrance(ctasRef.current, { translateY: 8, duration: 600, delay: 360 });
+    });
+  }, []);
+
   return (
     <section
       id="home"
