@@ -4,6 +4,7 @@ export const EducationSection = () => {
   return (
     <section id="education" className="bg-secondary/40 py-24 scroll-mt-24">
       <div className="mx-auto max-w-6xl px-6">
+        {/* Section Header */}
         <div className="mb-12">
           <h2 className="font-heading text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
             Education
@@ -15,19 +16,28 @@ export const EducationSection = () => {
           </p>
         </div>
 
-        <div className="relative ml-2 pl-8">
-          {/* Vertical line */}
-          <div className="absolute left-1.5 top-6 bottom-6 w-1 bg-gradient-to-b from-primary/40 to-transparent" aria-hidden />
+        {/* Timeline Container */}
+        <div className="relative">
+          {/* Vertical Line */}
+          <div
+            className="absolute left-1.5 top-0 bottom-0 w-1 bg-gradient-to-b from-primary/40 to-transparent"
+            aria-hidden
+          />
 
+          {/* Timeline Entries */}
           {EDUCATION_TIMELINE.map((entry, index) => (
-            <div key={entry.degree} className="relative pb-12 last:pb-0">
-              {/* Dot + shadow */}
-              <div className="absolute left-1.5 flex h-6 w-6 -translate-x-1/2 items-center justify-center" style={{ top: `${index * 120 + 24}px` }}>
+            <div
+              key={entry.degree}
+              className="relative pb-12 last:pb-0 flex items-start"
+            >
+              {/* Dot */}
+              <div className="absolute left-1.5 top-1/2 -translate-y-1/2 flex h-6 w-6 items-center justify-center">
                 <div className="h-6 w-6 rounded-full bg-primary/20 ring-2 ring-primary/40" />
                 <div className="absolute h-3 w-3 rounded-full bg-primary" />
               </div>
 
-              <div className="rounded-2xl bg-background p-6 shadow-lg ring-1 ring-primary/10">
+              {/* Card */}
+              <div className="ml-12 rounded-2xl bg-background p-6 shadow-lg ring-1 ring-primary/10">
                 <div className="flex flex-wrap items-baseline justify-between gap-4">
                   <h3 className="font-heading text-2xl font-semibold text-primary">
                     {entry.degree}
