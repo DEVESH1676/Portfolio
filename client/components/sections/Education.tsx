@@ -22,7 +22,7 @@ export const EducationSection = () => {
           {EDUCATION_TIMELINE.map((entry, index) => (
             <div key={entry.degree} className="relative pb-12 last:pb-0">
               {/* Dot + shadow */}
-              <div className="absolute left-0 top-6 flex h-6 w-6 -translate-x-1/2 items-center justify-center">
+              <div className="absolute left-1.5 flex h-6 w-6 -translate-x-1/2 items-center justify-center" style={{ top: `${index * 120 + 24}px` }}>
                 <div className="h-6 w-6 rounded-full bg-primary/20 ring-2 ring-primary/40" />
                 <div className="absolute h-3 w-3 rounded-full bg-primary" />
               </div>
