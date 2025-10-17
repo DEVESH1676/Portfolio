@@ -8,13 +8,12 @@ export const EducationSection = () => {
   const lineRef = React.useRef<HTMLDivElement | null>(null);
   const lineContainerRef = React.useRef<HTMLDivElement | null>(null);
   const dotRefs = React.useRef<Array<HTMLDivElement | null>>([]);
+  const animeLib = (anime as any).default ?? (anime as any);
 
   React.useEffect(() => {
     const lineEl = lineRef.current;
     const container = lineContainerRef.current;
     if (!container || !lineEl) return;
-
-    const animeLib = (anime as any).default ?? (anime as any);
 
     const obs = new IntersectionObserver(
       (entries) => {
