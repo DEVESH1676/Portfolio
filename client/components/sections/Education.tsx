@@ -26,22 +26,32 @@ export const EducationSection = () => {
               return (
                 <div
                   key={entry.degree}
-                  className="mb-12 last:mb-0 md:grid md:grid-cols-[64px_1fr] md:items-start"
+                  className="mb-12 last:mb-0 md:grid md:grid-cols-[64px_1fr] md:items-center md:gap-6 py-4"
                 >
                   {/* Left column: dot and connecting line */}
                   <div className="flex md:justify-center">
-                    <div className="flex flex-col items-center">
+                    <div className="flex flex-col items-center h-full">
                       <div
-                        className="h-6 w-6 rounded-full bg-primary/20 ring-2 ring-primary/40 flex items-center justify-center transition-transform duration-200 hover:scale-105"
+                        className={
+                          "flex items-center justify-center rounded-full transition-transform duration-200 " +
+                          (isCurrent
+                            ? "h-7 w-7 bg-primary/60 ring-2 ring-primary/70 shadow-[0_6px_18px_rgba(59,130,246,0.12)]"
+                            : "h-6 w-6 bg-primary/10 ring-2 ring-primary/30")
+                        }
                         aria-hidden
                       >
-                        <div className="h-3 w-3 rounded-full bg-primary" />
+                        <div
+                          className={
+                            "rounded-full " + (isCurrent ? "h-3 w-3 bg-primary/90" : "h-3 w-3 bg-primary/60")
+                          }
+                        />
                       </div>
+
                       {/* connecting line */}
                       <div
                         className={
-                          "hidden md:block w-px bg-gradient-to-b from-primary/40 to-transparent mt-2 flex-1 " +
-                          (isLast ? "opacity-0" : "opacity-80")
+                          "hidden md:block w-px bg-gradient-to-b from-primary/30 to-transparent mt-3 flex-1 " +
+                          (isLast ? "opacity-0" : "opacity-70")
                         }
                         aria-hidden
                       />
