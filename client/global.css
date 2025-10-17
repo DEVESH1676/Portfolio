@@ -110,6 +110,9 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-family: "Roboto", sans-serif;
+    transition: background-color 300ms ease, color 300ms ease;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
   }
 
   h1,
