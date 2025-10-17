@@ -51,7 +51,7 @@ export const EducationSection = () => {
           const i = dots.indexOf(el);
           if (entry.isIntersecting) {
             // Entrance animation for the dot
-            anime({
+            animeLib({
               targets: el,
               scale: [0.9, 1.03],
               opacity: [0, 1],
@@ -61,7 +61,7 @@ export const EducationSection = () => {
 
             // If it's current, add subtle pulsing (loop)
             if ((EDUCATION_TIMELINE[i] as any).current ?? i === 0) {
-              anime({
+              animeLib({
                 targets: el,
                 scale: [1, 1.06],
                 duration: 1200,
