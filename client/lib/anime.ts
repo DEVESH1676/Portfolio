@@ -5,7 +5,10 @@ async function runAnime(params: any) {
   return anime(params as any);
 }
 
-export const animateLineDraw = async (el: HTMLElement, opts?: { duration?: number; easing?: string }) => {
+export const animateLineDraw = async (
+  el: HTMLElement,
+  opts?: { duration?: number; easing?: string },
+) => {
   if (!el) return;
   const duration = opts?.duration ?? 900;
   const easing = opts?.easing ?? "easeInOutQuad";
@@ -17,7 +20,13 @@ export const animateLineDraw = async (el: HTMLElement, opts?: { duration?: numbe
 
 export const animateEntrance = async (
   el: HTMLElement,
-  opts?: { translateY?: number; opacity?: [number, number]; duration?: number; easing?: string; delay?: number },
+  opts?: {
+    translateY?: number;
+    opacity?: [number, number];
+    duration?: number;
+    easing?: string;
+    delay?: number;
+  },
 ) => {
   if (!el) return;
   const translateY = opts?.translateY ?? 16;
@@ -27,25 +36,53 @@ export const animateEntrance = async (
   const delay = opts?.delay ?? 0;
 
   el.style.opacity = String(opacity[0]);
-  await runAnime({ targets: el, translateY: [translateY, 0], opacity, duration, easing, delay });
+  await runAnime({
+    targets: el,
+    translateY: [translateY, 0],
+    opacity,
+    duration,
+    easing,
+    delay,
+  });
 };
 
-export const animatePulse = async (el: HTMLElement, opts?: { scale?: [number, number]; duration?: number }) => {
+export const animatePulse = async (
+  el: HTMLElement,
+  opts?: { scale?: [number, number]; duration?: number },
+) => {
   if (!el) return;
   const scale = opts?.scale ?? [1, 1.06];
   const duration = opts?.duration ?? 1200;
-  return runAnime({ targets: el, scale, duration, easing: "easeInOutSine", direction: "alternate", loop: true });
+  return runAnime({
+    targets: el,
+    scale,
+    duration,
+    easing: "easeInOutSine",
+    direction: "alternate",
+    loop: true,
+  });
 };
 
-export const animateHoverPop = async (el: HTMLElement, opts?: { scale?: number; duration?: number }) => {
+export const animateHoverPop = async (
+  el: HTMLElement,
+  opts?: { scale?: number; duration?: number },
+) => {
   // anime.js not ideal for hover binding; prefer CSS or framer-motion for hover interactions
   // This helper returns a bound function that triggers a quick pop.
   const scale = opts?.scale ?? 1.04;
   const duration = opts?.duration ?? 180;
   return {
-    onEnter: () => runAnime({ targets: el, scale, duration, easing: "easeOutQuad" }),
-    onLeave: () => runAnime({ targets: el, scale: 1, duration, easing: "easeOutQuad" }),
+    onEnter: () =>
+      runAnime({ targets: el, scale, duration, easing: "easeOutQuad" }),
+    onLeave: () =>
+      runAnime({ targets: el, scale: 1, duration, easing: "easeOutQuad" }),
   };
 };
 
-export default { runAnime, animateLineDraw, animateEntrance, animatePulse, animateHoverPop };
+export default {
+  runAnime,
+  animateLineDraw,
+  animateEntrance,
+  animatePulse,
+  animateHoverPop,
+};

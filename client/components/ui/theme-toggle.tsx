@@ -10,7 +10,10 @@ export const ThemeToggle: React.FC = () => {
     try {
       const stored = localStorage.getItem(THEME_KEY);
       if (stored) return stored === "dark";
-      return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+      return (
+        window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches
+      );
     } catch {
       return false;
     }
@@ -30,13 +33,23 @@ export const ThemeToggle: React.FC = () => {
   }, [isDark]);
 
   return (
-    <Button asChild size="sm" variant="ghost" aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"} title={isDark ? "Switch to light mode" : "Switch to dark mode"}>
+    <Button
+      asChild
+      size="sm"
+      variant="ghost"
+      aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+      title={isDark ? "Switch to light mode" : "Switch to dark mode"}
+    >
       <motion.button
         onClick={() => setIsDark((v) => !v)}
         className="relative inline-flex h-8 w-14 items-center rounded-full bg-muted/40 p-1"
         aria-pressed={isDark}
         initial={false}
-        animate={{ backgroundColor: isDark ? "rgba(59,130,246,0.18)" : "rgba(0,0,0,0.04)" }}
+        animate={{
+          backgroundColor: isDark
+            ? "rgba(59,130,246,0.18)"
+            : "rgba(0,0,0,0.04)",
+        }}
         transition={{ duration: 0.35 }}
       >
         <motion.span
@@ -45,7 +58,11 @@ export const ThemeToggle: React.FC = () => {
           animate={{ x: isDark ? 22 : 0 }}
           transition={{ type: "spring", stiffness: 600, damping: 40 }}
         >
-          {isDark ? <Sun className="h-3 w-3 text-yellow-300" /> : <Moon className="h-3 w-3 text-gray-600" />}
+          {isDark ? (
+            <Sun className="h-3 w-3 text-yellow-300" />
+          ) : (
+            <Moon className="h-3 w-3 text-gray-600" />
+          )}
         </motion.span>
       </motion.button>
     </Button>

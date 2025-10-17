@@ -39,7 +39,9 @@ export const Footer = () => {
       </div>
       <div className="border-t border-border/20">
         <div className="mx-auto flex max-w-6xl flex-col gap-4 px-6 py-6 text-sm text-foreground/70 md:flex-row md:items-center md:justify-between">
-          <span className="text-foreground/70">© 2025 Dr. C. A. Ghuge — All rights reserved.</span>
+          <span className="text-foreground/70">
+            © 2025 Dr. C. A. Ghuge — All rights reserved.
+          </span>
           <span className="inline-flex items-center gap-2 text-foreground/70">
             <span
               className="h-6 w-6 rounded-full bg-background/20"

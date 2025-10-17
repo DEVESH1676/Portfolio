@@ -26,14 +26,9 @@ export const ContactSection = () => {
     const message = formData.get("message")?.toString().trim() ?? "";
 
     const mailSubject = subject || "Portfolio Enquiry";
-    const bodyLines = [
-      `Name: ${name}`,
-      `Email: ${email}`,
-      "",
-      message,
-    ];
+    const bodyLines = [`Name: ${name}`, `Email: ${email}`, "", message];
     const mailto = `mailto:${emailRecipient}?subject=${encodeURIComponent(
-      mailSubject
+      mailSubject,
     )}&body=${encodeURIComponent(bodyLines.join("\n"))}`;
     window.location.href = mailto;
     event.currentTarget.reset();
@@ -57,7 +52,7 @@ export const ContactSection = () => {
             </h2>
             <p className="mt-4 text-base leading-relaxed text-foreground/80 md:text-lg">
               For collaboration, student supervision, or speaking engagements,
-              please contact: {" "}
+              please contact:{" "}
               <a
                 href={`mailto:${emailRecipient}`}
                 className="text-primary underline underline-offset-4"

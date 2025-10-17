@@ -101,7 +101,10 @@ export const Navbar = () => {
           Dr. C. A. Ghuge
         </a>
 
-        <nav className="hidden items-center gap-10 lg:flex" aria-label="Primary navigation">
+        <nav
+          className="hidden items-center gap-10 lg:flex"
+          aria-label="Primary navigation"
+        >
           <NavLinks />
         </nav>
 
