@@ -32,4 +32,21 @@ export const EducationSection = () => {
                   <h3 className="font-heading text-2xl font-semibold text-primary">
                     {entry.degree}
                   </h3>
-                  <span className="text-sm font-medium upper
+                  <span className="text-sm font-medium uppercase tracking-[0.2em] text-foreground/60">
+                    {entry.year}
+                  </span>
+                </div>
+                <p className="mt-2 text-lg font-medium text-foreground">
+                  {entry.institution}
+                </p>
+                <p className="mt-3 text-sm leading-relaxed text-foreground/75">
+                  {entry.highlight}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
