@@ -95,7 +95,7 @@ export const HeroSection = () => {
               </a>
             </Button>
             <Button asChild variant="outline" size="lg">
-              <a href={CV_DOWNLOAD_URL} target="_blank" rel="noreferrer" className="btn-cta">
+              <a href={DOWNLOAD_CV_URL} target="_blank" rel="noreferrer" className="btn-cta">
                 Download CV
               </a>
             </Button>
