@@ -28,7 +28,7 @@ export const ContactSection = () => {
     const mailSubject = subject || "Portfolio Enquiry";
     const bodyLines = [`Name: ${name}`, `Email: ${email}`, "", message];
     const mailto = `mailto:${emailRecipient}?subject=${encodeURIComponent(
-      mailSubject
+      mailSubject,
     )}&body=${encodeURIComponent(bodyLines.join("\n"))}`;
     window.location.href = mailto;
     event.currentTarget.reset();
@@ -37,7 +37,7 @@ export const ContactSection = () => {
   return (
     <motion.section
       id="contact"
-      className="bg-background/40 py-24 scroll-mt-24" // fixed typo
+      className="bg-secondary/40 py-24 scroll-mt-24"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.3 }}

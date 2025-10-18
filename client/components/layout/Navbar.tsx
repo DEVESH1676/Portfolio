@@ -25,9 +25,7 @@ export const Navbar = () => {
       .map((entry) => document.getElementById(entry.id))
       .filter((section): section is HTMLElement => Boolean(section));
 
-    if (sections.length === 0) {
-      return;
-    }
+    if (sections.length === 0) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -38,19 +36,13 @@ export const Navbar = () => {
         if (visible.length > 0) {
           const topMost = visible[0].target.getAttribute("id");
           const matched = observerEntries.find((entry) => entry.id === topMost);
-          if (matched) {
-            setActiveSection(matched.href);
-          }
+          if (matched) setActiveSection(matched.href);
         }
       },
-      {
-        rootMargin: "-50% 0px -45% 0px",
-        threshold: [0, 0.2, 0.4, 0.6, 0.8, 1],
-      },
+      { rootMargin: "-50% 0px -45% 0px", threshold: [0, 0.2, 0.4, 0.6, 0.8, 1] },
     );
 
     sections.forEach((section) => observer.observe(section));
-
     return () => observer.disconnect();
   }, [observerEntries]);
 
@@ -59,11 +51,7 @@ export const Navbar = () => {
     setIsSheetOpen(false);
   };
 
-  const NavLinks = ({
-    orientation = "horizontal",
-  }: {
-    orientation?: "horizontal" | "vertical";
-  }) => (
+  const NavLinks = ({ orientation = "horizontal" }: { orientation?: "horizontal" | "vertical" }) => (
     <div
       className={cn(
         orientation === "horizontal"
@@ -112,9 +100,6 @@ export const Navbar = () => {
           <Button asChild variant="outline" size="sm">
             <a href="#publications">View Publications</a>
           </Button>
-          <Button asChild size="sm">
-            <a href="#cv">Download CV</a>
-          </Button>
 
           <div className="flex">
             <ThemeToggle />
@@ -145,16 +130,8 @@ export const Navbar = () => {
                   <NavLinks orientation="vertical" />
                   <div className="flex flex-col gap-3">
                     <Button asChild variant="outline" size="lg">
-                      <a
-                        href="#publications"
-                        onClick={() => setIsSheetOpen(false)}
-                      >
+                      <a href="#publications" onClick={() => setIsSheetOpen(false)}>
                         View Publications
-                      </a>
-                    </Button>
-                    <Button asChild size="lg">
-                      <a href="#cv" onClick={() => setIsSheetOpen(false)}>
-                        Download CV
                       </a>
                     </Button>
                     <div className="mt-2">
