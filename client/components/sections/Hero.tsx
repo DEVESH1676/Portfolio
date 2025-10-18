@@ -90,10 +90,7 @@ export const HeroSection = () => {
             className="mt-8 flex flex-wrap items-center gap-4 justify-center md:justify-start"
           >
             <Button asChild size="lg">
-              <a
-                href="#publications"
-                className="btn-cta"
-              >
+              <a href="#publications" className="btn-cta">
                 View Publications
               </a>
             </Button>

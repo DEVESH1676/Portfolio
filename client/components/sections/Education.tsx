@@ -1,7 +1,13 @@
 import { EDUCATION_TIMELINE } from "@/data/portfolio";
 import * as React from "react";
 import Container from "@/components/ui/container";
-import { animateLineDraw, animateEntrance, animatePulse, getAnimeLib, runAnime } from "@/lib/anime";
+import {
+  animateLineDraw,
+  animateEntrance,
+  animatePulse,
+  getAnimeLib,
+  runAnime,
+} from "@/lib/anime";
 
 export const EducationSection = () => {
   const lineRef = React.useRef<HTMLDivElement | null>(null);
@@ -55,7 +61,11 @@ export const EducationSection = () => {
           const i = dots.indexOf(el);
           if (entry.isIntersecting) {
             // Entrance animation for the dot
-            animateEntrance(el, { translateY: 8, duration: 420, easing: "easeOutExpo" });
+            animateEntrance(el, {
+              translateY: 8,
+              duration: 420,
+              easing: "easeOutExpo",
+            });
 
             // If it's current, add subtle pulsing (loop)
             if ((EDUCATION_TIMELINE[i] as any).current ?? i === 0) {
@@ -78,7 +88,13 @@ export const EducationSection = () => {
     const dot = dotRefs.current[index] as HTMLElement | null;
     if (!dot) return;
     // Use centralized runAnime helper which loads anime safely and respects reduced-motion
-    runAnime({ targets: dot, scale: enter ? 1.12 : 1, duration: 200, easing: "easeOutQuad", translateZ: 0 }).catch(() => {
+    runAnime({
+      targets: dot,
+      scale: enter ? 1.12 : 1,
+      duration: 200,
+      easing: "easeOutQuad",
+      translateZ: 0,
+    }).catch(() => {
       // ignore animation errors to avoid blocking UI
     });
   };
@@ -127,9 +143,12 @@ export const EducationSection = () => {
                   <div className="flex md:justify-center md:items-start">
                     <div className="flex flex-col items-center h-full">
                       <div
-                        ref={(el) => (dotRefs.current[index] = el as HTMLDivElement)}
+                        ref={(el) =>
+                          (dotRefs.current[index] = el as HTMLDivElement)
+                        }
                         className={
-                          "timeline-dot z-20 " + (isCurrent ? "current" : "inactive")
+                          "timeline-dot z-20 " +
+                          (isCurrent ? "current" : "inactive")
                         }
                         role="presentation"
                         tabIndex={-1}
@@ -143,7 +162,9 @@ export const EducationSection = () => {
                   {/* Right column: content */}
                   <div className="mt-4 md:mt-0 md:ml-6">
                     <div
-                      ref={(el) => (cardRefs.current[index] = el as HTMLDivElement)}
+                      ref={(el) =>
+                        (cardRefs.current[index] = el as HTMLDivElement)
+                      }
                       onMouseEnter={() => handleCardHover(index, true)}
                       onMouseLeave={() => handleCardHover(index, false)}
                       className="rounded-2xl bg-background p-6 shadow-md ring-1 ring-primary/10 transition-transform duration-200 card-elevate"

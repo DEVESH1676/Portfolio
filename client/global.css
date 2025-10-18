@@ -107,7 +107,11 @@
 
   /* Utility for smooth theme transitions */
   .smooth-theme-transition {
-    transition: background-color 320ms ease, color 320ms ease, border-color 320ms ease, box-shadow 320ms ease;
+    transition:
+      background-color 320ms ease,
+      color 320ms ease,
+      border-color 320ms ease,
+      box-shadow 320ms ease;
   }
 
   /* Force hardware acceleration for timeline line */
@@ -122,13 +126,18 @@
     align-items: center;
     justify-content: center;
     border-radius: 9999px;
-    transition: transform 200ms ease, box-shadow 240ms ease, background-color 240ms ease;
+    transition:
+      transform 200ms ease,
+      box-shadow 240ms ease,
+      background-color 240ms ease;
     will-change: transform, box-shadow;
-    box-shadow: 0 4px 10px rgba(2,6,23,0.04);
+    box-shadow: 0 4px 10px rgba(2, 6, 23, 0.04);
   }
   .timeline-dot .inner {
     border-radius: 9999px;
-    transition: background-color 200ms ease, transform 200ms ease;
+    transition:
+      background-color 200ms ease,
+      transform 200ms ease;
   }
 
   /* Current milestone */
@@ -167,7 +176,10 @@
 
   /* Card elevate/glow */
   .card-elevate {
-    transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+    transition:
+      transform 220ms ease,
+      box-shadow 220ms ease,
+      border-color 220ms ease;
     will-change: transform, box-shadow;
   }
   .card-elevate:hover,
@@ -179,7 +191,11 @@
 
   /* Button CTA adjustments */
   .btn-cta {
-    transition: transform 180ms ease, box-shadow 180ms ease, background-color 200ms ease, color 200ms ease;
+    transition:
+      transform 180ms ease,
+      box-shadow 180ms ease,
+      background-color 200ms ease,
+      color 200ms ease;
   }
   .btn-cta:hover {
     transform: translateY(-3px) scale(1.02);

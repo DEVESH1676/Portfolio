@@ -21,7 +21,10 @@ const Card = React.forwardRef<
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             import("@/lib/anime").then((mod) => {
-              mod.animateEntrance(el as HTMLElement, { translateY: 14, duration: 600 });
+              mod.animateEntrance(el as HTMLElement, {
+                translateY: 14,
+                duration: 600,
+              });
             });
             observer?.disconnect();
           }
