@@ -16,7 +16,7 @@ export const CurriculumVitaeSection = () => {
           </p>
           <div className="mt-8 flex flex-wrap gap-4">
             <Button asChild size="lg">
-              <a href={CV_DOWNLOAD_URL} target="_blank" rel="noreferrer">
+              <a href={DOWNLOAD_CV_URL} target="_blank" rel="noreferrer">
                 Download CV
               </a>
             </Button>
