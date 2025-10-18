@@ -264,6 +264,7 @@
   h5,
   h6 {
     font-family: "Inter", sans-serif;
+    color: hsl(var(--heading));
   }
 
   .font-heading {
