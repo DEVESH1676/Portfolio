@@ -33,31 +33,11 @@ const Card = React.forwardRef<
     return () => observer?.disconnect();
   }, []);
 
-  const handleMouseEnter = () => {
-    const el = localRef.current;
-    if (!el) return;
-    import("animejs").then((mod) => {
-      const a = (mod as any).default ?? mod;
-      a({ targets: el, scale: 1.02, boxShadow: ["0 4px 6px rgba(0,0,0,0.06)", "0 12px 30px rgba(0,0,0,0.12)"], duration: 220, easing: "easeOutQuad" });
-    });
-  };
-
-  const handleMouseLeave = () => {
-    const el = localRef.current;
-    if (!el) return;
-    import("animejs").then((mod) => {
-      const a = (mod as any).default ?? mod;
-      a({ targets: el, scale: 1, boxShadow: ["0 12px 30px rgba(0,0,0,0.12)", "0 4px 6px rgba(0,0,0,0.06)"], duration: 220, easing: "easeOutQuad" });
-    });
-  };
-
   return (
     <div
       ref={localRef}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
       className={cn(
-        "rounded-lg border bg-card text-card-foreground shadow-sm transition-transform duration-200 hover:-translate-y-1 hover:shadow-lg",
+        "rounded-lg border bg-card text-card-foreground shadow-sm transition-transform duration-200 hover:-translate-y-1 hover:shadow-lg will-change-transform",
         className,
       )}
       {...props}
