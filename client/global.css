@@ -62,7 +62,7 @@
     --radius: 0.75rem;
 
     /* Shadows */
-    --shadow-elevate: 0 12px 36px rgba(0,0,0,0.05);
+    --shadow-elevate: 0 12px 36px rgba(0, 0, 0, 0.05);
 
     /* Sidebar (kept consistent) */
     --sidebar-background: 217 91% 60%;
@@ -120,7 +120,7 @@
     --tag: 160 64% 56%; /* #34D399 */
     --tag-hover: 162 94% 31%; /* #059669 */
 
-    --shadow-elevate: 0 12px 36px rgba(0,0,0,0.3);
+    --shadow-elevate: 0 12px 36px rgba(0, 0, 0, 0.3);
 
     --sidebar-background: 222 26% 22%;
     --sidebar-foreground: 210 20% 96%;
@@ -181,7 +181,7 @@
     height: 1.75rem; /* 28px */
     width: 1.75rem;
     background-color: hsl(var(--timeline-dot-current) / 0.58);
-    box-shadow: 0 8px 30px hsl(var(--timeline-halo) / 0.20);
+    box-shadow: 0 8px 30px hsl(var(--timeline-halo) / 0.2);
   }
   .timeline-dot.current .inner {
     height: 0.75rem;
@@ -241,14 +241,17 @@
 
   /* Tag style */
   .tag {
-    border: 1px solid hsl(var(--tag) / 0.30);
-    background-color: hsl(var(--tag) / 0.10);
+    border: 1px solid hsl(var(--tag) / 0.3);
+    background-color: hsl(var(--tag) / 0.1);
     color: hsl(var(--tag));
     border-radius: 9999px;
     padding: 0.5rem 1rem;
     font-weight: 600;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
-    transition: transform 200ms ease, background-color 200ms ease, color 200ms ease;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    transition:
+      transform 200ms ease,
+      background-color 200ms ease,
+      color 200ms ease;
   }
   .tag:hover,
   .tag:focus-visible {
