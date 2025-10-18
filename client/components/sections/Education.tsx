@@ -146,7 +146,7 @@ export const EducationSection = () => {
                       ref={(el) => (cardRefs.current[index] = el as HTMLDivElement)}
                       onMouseEnter={() => handleCardHover(index, true)}
                       onMouseLeave={() => handleCardHover(index, false)}
-                      className="rounded-2xl bg-background p-6 shadow-md ring-1 ring-primary/10 transition-transform duration-200 hover:-translate-y-1"
+                      className="rounded-2xl bg-background p-6 shadow-md ring-1 ring-primary/10 transition-transform duration-200 card-elevate"
                     >
                       <div className="flex flex-wrap items-baseline justify-between gap-4">
                         <h3 className="font-heading text-2xl font-semibold text-primary">
