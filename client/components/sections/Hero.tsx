@@ -1,4 +1,4 @@
-import { DOWNLOAD_CV_URL, HERO_IMAGE_URL } from "@/data/portfolio";
+import { HERO_IMAGE_URL } from "@/data/portfolio";
 import * as React from "react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
@@ -92,11 +92,6 @@ export const HeroSection = () => {
             <Button asChild size="lg">
               <a href="#publications" className="btn-cta">
                 View Publications
-              </a>
-            </Button>
-            <Button asChild variant="outline" size="lg">
-              <a href={DOWNLOAD_CV_URL} target="_blank" rel="noreferrer" className="btn-cta">
-                Download CV
               </a>
             </Button>
           </div>

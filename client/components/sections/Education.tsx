@@ -17,7 +17,6 @@ export const EducationSection = () => {
   const animeAPI = React.useRef<any>(null);
 
   React.useEffect(() => {
-    // load anime helper once
     let mounted = true;
     getAnimeLib().then((lib) => {
       if (mounted) animeAPI.current = lib;
@@ -27,6 +26,7 @@ export const EducationSection = () => {
     };
   }, []);
 
+  // 🧩 Animate line when in view
   React.useEffect(() => {
     const lineEl = lineRef.current;
     const container = lineContainerRef.current;
@@ -36,7 +36,6 @@ export const EducationSection = () => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            // Use centralized helper to draw the line
             animateLineDraw(lineEl, { duration: 900 });
             obs.disconnect();
           }
@@ -46,57 +45,66 @@ export const EducationSection = () => {
     );
 
     obs.observe(container);
-
     return () => obs.disconnect();
   }, []);
 
+  // 🎞️ Timeline animation for cards + dots
   React.useEffect(() => {
     const dots = dotRefs.current.filter(Boolean) as HTMLElement[];
-    if (!dots.length) return;
+    const cards = cardRefs.current.filter(Boolean) as HTMLElement[];
+    if (!dots.length || !cards.length || !animeAPI.current) return;
 
-    const dotObserver = new IntersectionObserver(
+    const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          const el = entry.target as HTMLElement;
-          const i = dots.indexOf(el);
           if (entry.isIntersecting) {
-            // Entrance animation for the dot
-            animateEntrance(el, {
-              translateY: 8,
-              duration: 420,
+            const anime = animeAPI.current;
+
+            // 👇 Create Anime.js Timeline
+            const tl = anime.timeline({
               easing: "easeOutExpo",
+              duration: 700,
             });
 
-            // If it's current, add subtle pulsing (loop)
-            if ((EDUCATION_TIMELINE[i] as any).current ?? i === 0) {
-              animatePulse(el, { scale: [1, 1.06], duration: 1200 });
-            }
+            // Animate each dot + card in sequence
+            dots.forEach((dot, i) => {
+              const card = cards[i];
+              tl.add({
+                targets: dot,
+                opacity: [0, 1],
+                scale: [0.8, 1],
+                translateY: [20, 0],
+                duration: 500,
+              })
+              .add({
+                targets: card,
+                opacity: [0, 1],
+                translateY: [40, 0],
+                duration: 600,
+              }, "-=400"); // overlap slightly
+            });
 
-            dotObserver.unobserve(el);
+            observer.disconnect();
           }
         });
       },
-      { threshold: 0.35, rootMargin: "0px 0px -10% 0px" },
+      { threshold: 0.2, rootMargin: "0px 0px -10% 0px" },
     );
 
-    dots.forEach((d) => dotObserver.observe(d));
-
-    return () => dotObserver.disconnect();
+    if (cards[0]) observer.observe(cards[0]); // trigger when section visible
+    return () => observer.disconnect();
   }, []);
 
   const handleCardHover = (index: number, enter = true) => {
     const dot = dotRefs.current[index] as HTMLElement | null;
     if (!dot) return;
-    // Use centralized runAnime helper which loads anime safely and respects reduced-motion
     runAnime({
       targets: dot,
       scale: enter ? 1.12 : 1,
       duration: 200,
       easing: "easeOutQuad",
       translateZ: 0,
-    }).catch(() => {
-      // ignore animation errors to avoid blocking UI
-    });
+    }).catch(() => {});
   };
 
   return (
@@ -116,7 +124,6 @@ export const EducationSection = () => {
 
         {/* Timeline Container */}
         <div className="relative">
-          {/* Continuous vertical line for timeline (visible on md+) */}
           <div
             className="hidden md:block absolute left-14 top-6 bottom-6 z-0"
             ref={(el) => (lineContainerRef.current = el)}
@@ -129,29 +136,24 @@ export const EducationSection = () => {
             />
           </div>
 
-          {/* Timeline Entries - each row has a left column for dot/line and right column for content */}
           <div className="flex flex-col relative z-10">
             {EDUCATION_TIMELINE.map((entry, index) => {
-              const isLast = index === EDUCATION_TIMELINE.length - 1;
               const isCurrent = (entry as any).current ?? index === 0;
               return (
                 <div
                   key={entry.degree}
                   className="mb-12 last:mb-0 md:grid md:grid-cols-[64px_1fr] md:items-center md:gap-6 py-4"
                 >
-                  {/* Left column: dot and spacer (dot centered over the continuous line) */}
+                  {/* Dot */}
                   <div className="flex md:justify-center md:items-start">
                     <div className="flex flex-col items-center h-full">
                       <div
                         ref={(el) =>
                           (dotRefs.current[index] = el as HTMLDivElement)
                         }
-                        className={
-                          "timeline-dot z-20 " +
-                          (isCurrent ? "current" : "inactive")
-                        }
-                        role="presentation"
-                        tabIndex={-1}
+                        className={`timeline-dot z-20 ${
+                          isCurrent ? "current" : "inactive"
+                        }`}
                         aria-hidden
                       >
                         <div className="inner" />
@@ -159,7 +161,7 @@ export const EducationSection = () => {
                     </div>
                   </div>
 
-                  {/* Right column: content */}
+                  {/* Card */}
                   <div className="mt-4 md:mt-0 md:ml-6">
                     <div
                       ref={(el) =>
@@ -167,7 +169,7 @@ export const EducationSection = () => {
                       }
                       onMouseEnter={() => handleCardHover(index, true)}
                       onMouseLeave={() => handleCardHover(index, false)}
-                      className="rounded-2xl bg-background p-6 shadow-md ring-1 ring-primary/10 transition-transform duration-200 card-elevate"
+                      className="rounded-2xl bg-background p-6 shadow-md ring-1 ring-primary/10 transition-transform duration-200 opacity-0 translate-y-8"
                     >
                       <div className="flex flex-wrap items-baseline justify-between gap-4">
                         <h3 className="font-heading text-2xl font-semibold text-primary">
