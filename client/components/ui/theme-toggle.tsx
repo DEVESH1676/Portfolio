@@ -42,15 +42,8 @@ export const ThemeToggle: React.FC = () => {
     >
       <motion.button
         onClick={() => setIsDark((v) => !v)}
-        className="relative inline-flex h-8 w-14 items-center rounded-full bg-muted/40 p-1"
+        className="relative inline-flex h-8 w-14 items-center rounded-full p-1 smooth-theme-transition bg-muted/40 dark:bg-primary/18"
         aria-pressed={isDark}
-        initial={false}
-        animate={{
-          backgroundColor: isDark
-            ? "rgba(59,130,246,0.18)"
-            : "rgba(0,0,0,0.04)",
-        }}
-        transition={{ duration: 0.35 }}
       >
         <motion.span
           className="absolute left-1 top-1 h-6 w-6 rounded-full bg-background shadow-sm flex items-center justify-center"
