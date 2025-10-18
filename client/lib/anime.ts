@@ -1,4 +1,3 @@
-// Dynamically import anime.js and run the animation factory
 let _animeLib: any = null;
 let _animeLibPromise: Promise<any> | null = null;
 
@@ -13,13 +12,14 @@ export async function getAnimeLib() {
   return _animeLibPromise;
 }
 
-function prefersReducedMotion() {
+export const prefersReducedMotion = () => {
   if (typeof window === "undefined") return false;
-  return (
-    window.matchMedia &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches
-  );
-}
+  try {
+    return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  } catch {
+    return false;
+  }
+};
 
 // Global animation configuration
 export const ANIME = {
@@ -56,13 +56,7 @@ export const animateLineDraw = async (
   // ensure transform origin
   el.style.transformOrigin = "top";
   el.style.transform = "scaleY(0)";
-  await runAnime({
-    targets: el,
-    scaleY: [0, 1],
-    duration,
-    easing,
-    translateZ: 0,
-  });
+  await runAnime({ targets: el, scaleY: [0, 1], duration, easing, translateZ: 0 });
 };
 
 export const animateEntrance = async (
@@ -80,7 +74,6 @@ export const animateEntrance = async (
   const easing = opts?.easing ?? ANIME.fastEasing;
   const delay = opts?.delay ?? 0;
 
-  // Avoid forcing initial opacity to 0 to prevent text invisibility and layout jank.
   // Animate transform only for entrance animations to keep content readable immediately.
   await runAnime({
     targets: el,
@@ -120,28 +113,15 @@ export const animateHoverPop = async (
   const scale = opts?.scale ?? 1.04;
   const duration = opts?.duration ?? 180;
   return {
-    onEnter: () =>
-      runAnime({
-        targets: el,
-        scale,
-        duration,
-        easing: ANIME.fastEasing,
-        translateZ: 0,
-      }),
-    onLeave: () =>
-      runAnime({
-        targets: el,
-        scale: 1,
-        duration,
-        easing: ANIME.fastEasing,
-        translateZ: 0,
-      }),
+    onEnter: () => runAnime({ targets: el, scale, duration, easing: ANIME.fastEasing, translateZ: 0 }),
+    onLeave: () => runAnime({ targets: el, scale: 1, duration, easing: ANIME.fastEasing, translateZ: 0 }),
   };
 };
 
 export default {
   getAnimeLib,
   runAnime,
+  prefersReducedMotion,
   animateLineDraw,
   animateEntrance,
   animatePulse,
