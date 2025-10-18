@@ -37,7 +37,7 @@ export const ContactSection = () => {
   return (
     <motion.section
       id="contact"
-      className="bg-background/40 py-24 scroll-mt-24"
+      className="bg-background/40> py-24 scroll-mt-24"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.3 }}
