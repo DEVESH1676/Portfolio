@@ -102,7 +102,7 @@ export const HeroSection = () => {
                 href={CV_DOWNLOAD_URL}
                 target="_blank"
                 rel="noreferrer"
-                className="transform transition-all duration-200 hover:scale-105"
+                className="btn-cta"
               >
                 Download CV
               </a>
