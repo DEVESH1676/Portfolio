@@ -15,7 +15,10 @@ export async function getAnimeLib() {
 
 function prefersReducedMotion() {
   if (typeof window === "undefined") return false;
-  return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  return (
+    window.matchMedia &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  );
 }
 
 // Global animation configuration
@@ -53,7 +56,13 @@ export const animateLineDraw = async (
   // ensure transform origin
   el.style.transformOrigin = "top";
   el.style.transform = "scaleY(0)";
-  await runAnime({ targets: el, scaleY: [0, 1], duration, easing, translateZ: 0 });
+  await runAnime({
+    targets: el,
+    scaleY: [0, 1],
+    duration,
+    easing,
+    translateZ: 0,
+  });
 };
 
 export const animateEntrance = async (
@@ -111,8 +120,22 @@ export const animateHoverPop = async (
   const scale = opts?.scale ?? 1.04;
   const duration = opts?.duration ?? 180;
   return {
-    onEnter: () => runAnime({ targets: el, scale, duration, easing: ANIME.fastEasing, translateZ: 0 }),
-    onLeave: () => runAnime({ targets: el, scale: 1, duration, easing: ANIME.fastEasing, translateZ: 0 }),
+    onEnter: () =>
+      runAnime({
+        targets: el,
+        scale,
+        duration,
+        easing: ANIME.fastEasing,
+        translateZ: 0,
+      }),
+    onLeave: () =>
+      runAnime({
+        targets: el,
+        scale: 1,
+        duration,
+        easing: ANIME.fastEasing,
+        translateZ: 0,
+      }),
   };
 };
 
