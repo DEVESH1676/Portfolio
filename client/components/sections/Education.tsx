@@ -1,7 +1,7 @@
 import { EDUCATION_TIMELINE } from "@/data/portfolio";
 import * as React from "react";
 import Container from "@/components/ui/container";
-import { animateLineDraw, animateEntrance, animatePulse, getAnimeLib } from "@/lib/anime";
+import { animateLineDraw, animateEntrance, animatePulse, getAnimeLib, runAnime } from "@/lib/anime";
 
 export const EducationSection = () => {
   const lineRef = React.useRef<HTMLDivElement | null>(null);
