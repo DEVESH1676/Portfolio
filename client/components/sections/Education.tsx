@@ -1,13 +1,25 @@
 import { EDUCATION_TIMELINE } from "@/data/portfolio";
 import * as React from "react";
-import { motion } from "framer-motion";
 import Container from "@/components/ui/container";
+import { animateLineDraw, animateEntrance, animatePulse, getAnimeLib } from "@/lib/anime";
 
 export const EducationSection = () => {
   const lineRef = React.useRef<HTMLDivElement | null>(null);
   const lineContainerRef = React.useRef<HTMLDivElement | null>(null);
   const dotRefs = React.useRef<Array<HTMLDivElement | null>>([]);
   const cardRefs = React.useRef<Array<HTMLDivElement | null>>([]);
+  const animeAPI = React.useRef<any>(null);
+
+  React.useEffect(() => {
+    // load anime helper once
+    let mounted = true;
+    getAnimeLib().then((lib) => {
+      if (mounted) animeAPI.current = lib;
+    });
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   React.useEffect(() => {
     const lineEl = lineRef.current;
@@ -18,23 +30,13 @@ export const EducationSection = () => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            // Animate line drawing with anime.js dynamically imported to avoid SSR issues
-            import("animejs").then((mod) => {
-              const animeLib = (mod as any).default ?? mod;
-              animeLib({
-                targets: lineEl,
-                scaleY: [0, 1],
-                duration: 900,
-                easing: "easeInOutQuad",
-                elasticity: 300,
-              });
-            });
-
+            // Use centralized helper to draw the line
+            animateLineDraw(lineEl, { duration: 900 });
             obs.disconnect();
           }
         });
       },
-      { threshold: 0.05 },
+      { threshold: 0.06, rootMargin: "0px 0px -10% 0px" },
     );
 
     obs.observe(container);
@@ -52,41 +54,35 @@ export const EducationSection = () => {
           const el = entry.target as HTMLElement;
           const i = dots.indexOf(el);
           if (entry.isIntersecting) {
-            // Entrance animation for the dot using dynamic import
-            import("animejs").then((mod) => {
-              const animeLib = (mod as any).default ?? mod;
-              animeLib({
-                targets: el,
-                scale: [0.9, 1.03],
-                opacity: [0, 1],
-                duration: 520,
-                easing: "easeOutExpo",
-              });
+            // Entrance animation for the dot
+            animateEntrance(el, { translateY: 8, duration: 420, easing: "easeOutExpo" });
 
-              // If it's current, add subtle pulsing (loop)
-              if ((EDUCATION_TIMELINE[i] as any).current ?? i === 0) {
-                animeLib({
-                  targets: el,
-                  scale: [1, 1.06],
-                  duration: 1200,
-                  easing: "easeInOutSine",
-                  direction: "alternate",
-                  loop: true,
-                });
-              }
-            });
+            // If it's current, add subtle pulsing (loop)
+            if ((EDUCATION_TIMELINE[i] as any).current ?? i === 0) {
+              animatePulse(el, { scale: [1, 1.06], duration: 1200 });
+            }
 
             dotObserver.unobserve(el);
           }
         });
       },
-      { threshold: 0.35 },
+      { threshold: 0.35, rootMargin: "0px 0px -10% 0px" },
     );
 
     dots.forEach((d) => dotObserver.observe(d));
 
     return () => dotObserver.disconnect();
   }, []);
+
+  const handleCardHover = (index: number, enter = true) => {
+    const dot = dotRefs.current[index] as HTMLElement | null;
+    if (!dot) return;
+    // use cached anime lib if available for quick pop; otherwise fallback to CSS scale
+    const a = animeAPI.current;
+    if (a) {
+      a({ targets: dot, scale: enter ? 1.12 : 1, duration: 200, easing: "easeOutQuad" });
+    }
+  };
 
   return (
     <section id="education" className="bg-secondary/40 py-24 scroll-mt-24">
@@ -120,8 +116,6 @@ export const EducationSection = () => {
 
           {/* Timeline Entries - each row has a left column for dot/line and right column for content */}
           <div className="flex flex-col relative z-10">
-            {/* Refs for anime.js animations */}
-            {/* We'll animate the continuous line and each dot on scroll using anime.js */}
             {EDUCATION_TIMELINE.map((entry, index) => {
               const isLast = index === EDUCATION_TIMELINE.length - 1;
               const isCurrent = (entry as any).current ?? index === 0;
@@ -133,16 +127,8 @@ export const EducationSection = () => {
                   {/* Left column: dot and spacer (dot centered over the continuous line) */}
                   <div className="flex md:justify-center md:items-start">
                     <div className="flex flex-col items-center h-full">
-                      <motion.div
-                        ref={(el) =>
-                          (dotRefs.current[index] = el as HTMLDivElement)
-                        }
-                        whileHover={{ scale: 1.08 }}
-                        transition={
-                          isCurrent
-                            ? { duration: 1.6, repeat: Infinity }
-                            : { duration: 0.2 }
-                        }
+                      <div
+                        ref={(el) => (dotRefs.current[index] = el as HTMLDivElement)}
                         className={
                           "flex items-center justify-center rounded-full transition-transform duration-200 transform-gpu z-20 " +
                           (isCurrent
@@ -159,7 +145,7 @@ export const EducationSection = () => {
                               : "h-3 w-3 bg-primary/60")
                           }
                         />
-                      </motion.div>
+                      </div>
                     </div>
                   </div>
 
@@ -167,24 +153,8 @@ export const EducationSection = () => {
                   <div className="mt-4 md:mt-0 md:ml-6">
                     <div
                       ref={(el) => (cardRefs.current[index] = el as HTMLDivElement)}
-                      onMouseEnter={() => {
-                        const dot = dotRefs.current[index] as HTMLElement | null;
-                        if (dot) {
-                          import("animejs").then((mod) => {
-                            const a = (mod as any).default ?? mod;
-                            a({ targets: dot, scale: 1.12, duration: 220, easing: "easeOutQuad" });
-                          });
-                        }
-                      }}
-                      onMouseLeave={() => {
-                        const dot = dotRefs.current[index] as HTMLElement | null;
-                        if (dot) {
-                          import("animejs").then((mod) => {
-                            const a = (mod as any).default ?? mod;
-                            a({ targets: dot, scale: 1, duration: 220, easing: "easeOutQuad" });
-                          });
-                        }
-                      }}
+                      onMouseEnter={() => handleCardHover(index, true)}
+                      onMouseLeave={() => handleCardHover(index, false)}
                       className="rounded-2xl bg-background p-6 shadow-md ring-1 ring-primary/10 transition-transform duration-200 hover:-translate-y-1"
                     >
                       <div className="flex flex-wrap items-baseline justify-between gap-4">
