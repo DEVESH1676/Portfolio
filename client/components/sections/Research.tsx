@@ -40,7 +40,7 @@ export const ResearchSection = () => {
               <span
                 key={tag}
                 ref={(el) => (tagRefs.current[i] = el)}
-                className="rounded-full border border-primary/30 bg-primary/10 px-4 py-2 text-sm font-semibold text-primary shadow-sm"
+                className="rounded-full border border-primary/30 bg-primary/10 px-4 py-2 text-sm font-semibold text-primary shadow-sm transition-transform duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary/40"
               >
                 {tag}
               </span>
