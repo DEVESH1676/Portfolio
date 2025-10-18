@@ -1,8 +1,21 @@
 // Dynamically import anime.js and run the animation factory
-async function runAnime(params: any) {
-  const mod = await import("animejs");
-  const anime = (mod as any).default ?? mod;
-  return anime(params as any);
+let _animeLib: any = null;
+let _animeLibPromise: Promise<any> | null = null;
+
+async function getAnimeLib() {
+  if (_animeLib) return _animeLib;
+  if (_animeLibPromise) return _animeLibPromise;
+  _animeLibPromise = import("animejs").then((mod) => {
+    const a = (mod as any).default ?? mod;
+    _animeLib = a;
+    return a;
+  });
+  return _animeLibPromise;
+}
+
+function prefersReducedMotion() {
+  if (typeof window === "undefined") return false;
+  return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
 // Global animation configuration
@@ -18,6 +31,18 @@ export const ANIME = {
   },
 };
 
+async function runAnime(params: any) {
+  const anime = await getAnimeLib();
+  // Respect reduced motion: if user prefers reduced motion, make animations instant
+  if (prefersReducedMotion()) {
+    if (params && typeof params === "object") {
+      params.duration = 0;
+      if (params.loop) params.loop = false;
+    }
+  }
+  return anime(params as any);
+}
+
 export const animateLineDraw = async (
   el: HTMLElement,
   opts?: { duration?: number; easing?: string },
@@ -28,14 +53,13 @@ export const animateLineDraw = async (
   // ensure transform origin
   el.style.transformOrigin = "top";
   el.style.transform = "scaleY(0)";
-  await runAnime({ targets: el, scaleY: [0, 1], duration, easing });
+  await runAnime({ targets: el, scaleY: [0, 1], duration, easing, translateZ: 0 });
 };
 
 export const animateEntrance = async (
   el: HTMLElement,
   opts?: {
     translateY?: number;
-    opacity?: [number, number];
     duration?: number;
     easing?: string;
     delay?: number;
@@ -43,36 +67,40 @@ export const animateEntrance = async (
 ) => {
   if (!el) return;
   const translateY = opts?.translateY ?? 16;
-  const opacity = opts?.opacity ?? [0, 1];
   const duration = opts?.duration ?? ANIME.durations.entrance;
   const easing = opts?.easing ?? ANIME.fastEasing;
   const delay = opts?.delay ?? 0;
 
-  el.style.opacity = String(opacity[0]);
+  // Avoid forcing initial opacity to 0 to prevent text invisibility and layout jank.
+  // Animate transform only for entrance animations to keep content readable immediately.
   await runAnime({
     targets: el,
     translateY: [translateY, 0],
-    opacity,
     duration,
     easing,
     delay,
+    translateZ: 0,
   });
 };
 
 export const animatePulse = async (
   el: HTMLElement,
-  opts?: { scale?: [number, number]; duration?: number },
+  opts?: { scale?: [number, number]; duration?: number; loop?: boolean },
 ) => {
   if (!el) return;
   const scale = opts?.scale ?? [1, 1.06];
   const duration = opts?.duration ?? ANIME.durations.pulse;
+  const loop = opts?.loop ?? true;
+  // Respect reduced motion
+  if (prefersReducedMotion()) return;
   return runAnime({
     targets: el,
     scale,
     duration,
     easing: ANIME.pulseEasing,
     direction: "alternate",
-    loop: true,
+    loop,
+    translateZ: 0,
   });
 };
 
@@ -80,17 +108,16 @@ export const animateHoverPop = async (
   el: HTMLElement,
   opts?: { scale?: number; duration?: number },
 ) => {
-  // anime.js not ideal for hover binding; prefer CSS or framer-motion for hover interactions
-  // This helper returns a bound function that triggers a quick pop.
   const scale = opts?.scale ?? 1.04;
   const duration = opts?.duration ?? 180;
   return {
-    onEnter: () => runAnime({ targets: el, scale, duration, easing: ANIME.fastEasing }),
-    onLeave: () => runAnime({ targets: el, scale: 1, duration, easing: ANIME.fastEasing }),
+    onEnter: () => runAnime({ targets: el, scale, duration, easing: ANIME.fastEasing, translateZ: 0 }),
+    onLeave: () => runAnime({ targets: el, scale: 1, duration, easing: ANIME.fastEasing, translateZ: 0 }),
   };
 };
 
 export default {
+  getAnimeLib,
   runAnime,
   animateLineDraw,
   animateEntrance,
