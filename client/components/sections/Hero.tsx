@@ -92,7 +92,7 @@ export const HeroSection = () => {
             <Button asChild size="lg">
               <a
                 href="#publications"
-                className="transform transition-all duration-200 hover:scale-105"
+                className="btn-cta"
               >
                 View Publications
               </a>
