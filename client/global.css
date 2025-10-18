@@ -115,6 +115,76 @@
     will-change: transform;
     transform: translateZ(0);
   }
+
+  /* Timeline dot base */
+  .timeline-dot {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    transition: transform 200ms ease, box-shadow 240ms ease, background-color 240ms ease;
+    will-change: transform, box-shadow;
+    box-shadow: 0 4px 10px rgba(2,6,23,0.04);
+  }
+  .timeline-dot .inner {
+    border-radius: 9999px;
+    transition: background-color 200ms ease, transform 200ms ease;
+  }
+
+  /* Current milestone */
+  .timeline-dot.current {
+    height: 1.75rem; /* 28px */
+    width: 1.75rem;
+    background-color: hsl(var(--primary) / 0.58);
+    box-shadow: 0 8px 30px hsl(var(--primary) / 0.14);
+  }
+  .timeline-dot.current .inner {
+    height: 0.75rem;
+    width: 0.75rem;
+    background-color: hsl(var(--primary));
+  }
+
+  /* Inactive dot */
+  .timeline-dot.inactive {
+    height: 1.5rem;
+    width: 1.5rem;
+    background-color: hsl(var(--primary) / 0.12);
+    box-shadow: none;
+  }
+  .timeline-dot.inactive .inner {
+    height: 0.75rem;
+    width: 0.75rem;
+    background-color: hsl(var(--primary) / 0.45);
+  }
+
+  /* Hover/focus state */
+  .timeline-dot:focus,
+  .timeline-dot:hover {
+    transform: scale(1.06);
+    box-shadow: 0 10px 30px hsl(var(--primary) / 0.18);
+    outline: none;
+  }
+
+  /* Card elevate/glow */
+  .card-elevate {
+    transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+    will-change: transform, box-shadow;
+  }
+  .card-elevate:hover,
+  .card-elevate:focus-within {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 36px hsl(var(--primary) / 0.12);
+    border-color: hsl(var(--primary) / 0.22);
+  }
+
+  /* Button CTA adjustments */
+  .btn-cta {
+    transition: transform 180ms ease, box-shadow 180ms ease, background-color 200ms ease, color 200ms ease;
+  }
+  .btn-cta:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 10px 30px hsl(var(--primary) / 0.12);
+  }
 }
 
 @layer base {
