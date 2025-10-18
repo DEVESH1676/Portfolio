@@ -8,8 +8,8 @@ import { Button } from "@/components/ui/button";
 import { ExternalLink } from "lucide-react";
 
 export const PublicationsSection = () => {
-  const headingRef = React.useRef<HTMLElement | null>(null);
-  const introRef = React.useRef<HTMLElement | null>(null);
+  const headingRef = React.useRef<HTMLHeadingElement | null>(null);
+  const introRef = React.useRef<HTMLParagraphElement | null>(null);
   const featuredRef = React.useRef<HTMLDivElement | null>(null);
   const additionalRef = React.useRef<HTMLDivElement | null>(null);
 
