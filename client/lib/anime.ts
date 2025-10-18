@@ -31,7 +31,7 @@ export const ANIME = {
   },
 };
 
-async function runAnime(params: any) {
+export async function runAnime(params: any) {
   const anime = await getAnimeLib();
   // Respect reduced motion: if user prefers reduced motion, make animations instant
   if (prefersReducedMotion()) {
