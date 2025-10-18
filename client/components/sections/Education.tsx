@@ -129,21 +129,13 @@ export const EducationSection = () => {
                       <div
                         ref={(el) => (dotRefs.current[index] = el as HTMLDivElement)}
                         className={
-                          "flex items-center justify-center rounded-full transition-transform duration-200 transform-gpu z-20 " +
-                          (isCurrent
-                            ? "h-7 w-7 bg-primary/60 ring-2 ring-primary/70 shadow-[0_8px_24px_rgba(59,130,246,0.12)]"
-                            : "h-6 w-6 bg-primary/10 ring-2 ring-primary/30")
+                          "timeline-dot z-20 " + (isCurrent ? "current" : "inactive")
                         }
+                        role="presentation"
+                        tabIndex={-1}
                         aria-hidden
                       >
-                        <div
-                          className={
-                            "rounded-full " +
-                            (isCurrent
-                              ? "h-3 w-3 bg-primary/90"
-                              : "h-3 w-3 bg-primary/60")
-                          }
-                        />
+                        <div className="inner" />
                       </div>
                     </div>
                   </div>
