@@ -2,7 +2,7 @@
 let _animeLib: any = null;
 let _animeLibPromise: Promise<any> | null = null;
 
-async function getAnimeLib() {
+export async function getAnimeLib() {
   if (_animeLib) return _animeLib;
   if (_animeLibPromise) return _animeLibPromise;
   _animeLibPromise = import("animejs").then((mod) => {
