@@ -77,11 +77,10 @@ export const EducationSection = () => {
   const handleCardHover = (index: number, enter = true) => {
     const dot = dotRefs.current[index] as HTMLElement | null;
     if (!dot) return;
-    // use cached anime lib if available for quick pop; otherwise fallback to CSS scale
-    const a = animeAPI.current;
-    if (a) {
-      a({ targets: dot, scale: enter ? 1.12 : 1, duration: 200, easing: "easeOutQuad" });
-    }
+    // Use centralized runAnime helper which loads anime safely and respects reduced-motion
+    runAnime({ targets: dot, scale: enter ? 1.12 : 1, duration: 200, easing: "easeOutQuad", translateZ: 0 }).catch(() => {
+      // ignore animation errors to avoid blocking UI
+    });
   };
 
   return (
