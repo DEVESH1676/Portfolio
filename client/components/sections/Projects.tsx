@@ -3,8 +3,8 @@ import { Card } from "@/components/ui/card";
 import { PROJECTS } from "@/data/portfolio";
 
 export const ProjectsSection = () => {
-  const headingRef = React.useRef<HTMLElement | null>(null);
-  const introRef = React.useRef<HTMLElement | null>(null);
+  const headingRef = React.useRef<HTMLHeadingElement | null>(null);
+  const introRef = React.useRef<HTMLParagraphElement | null>(null);
 
   React.useEffect(() => {
     import("@/lib/anime").then((mod) => {
