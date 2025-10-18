@@ -3,8 +3,8 @@ import { RESEARCH_TAGS } from "@/data/portfolio";
 
 export const ResearchSection = () => {
   const tagRefs = React.useRef<Array<HTMLSpanElement | null>>([]);
-  const headingRef = React.useRef<HTMLElement | null>(null);
-  const introRef = React.useRef<HTMLElement | null>(null);
+  const headingRef = React.useRef<HTMLHeadingElement | null>(null);
+  const introRef = React.useRef<HTMLParagraphElement | null>(null);
 
   React.useEffect(() => {
     const tags = tagRefs.current.filter(Boolean) as HTMLElement[];
