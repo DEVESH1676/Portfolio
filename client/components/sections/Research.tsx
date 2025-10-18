@@ -1,17 +1,22 @@
-import * as React from "react";
+import React from "react";
 import { RESEARCH_TAGS } from "@/data/portfolio";
 
 export const ResearchSection = () => {
   const tagRefs = React.useRef<Array<HTMLSpanElement | null>>([]);
+  const headingRef = React.useRef<HTMLElement | null>(null);
+  const introRef = React.useRef<HTMLElement | null>(null);
 
   React.useEffect(() => {
     const tags = tagRefs.current.filter(Boolean) as HTMLElement[];
-    if (!tags.length) return;
     import("@/lib/anime").then((mod) => {
       const { animateEntrance } = mod;
-      tags.forEach((el, i) => {
-        animateEntrance(el, { translateY: 12, duration: 480, delay: i * 60 });
-      });
+      if (headingRef.current) animateEntrance(headingRef.current, { translateY: 18, duration: 600 });
+      if (introRef.current) animateEntrance(introRef.current, { translateY: 16, duration: 600, delay: 70 });
+      if (tags.length) {
+        tags.forEach((el, i) => {
+          animateEntrance(el, { translateY: 12, duration: 480, delay: i * 60 + 140 });
+        });
+      }
     });
   }, []);
 
@@ -20,10 +25,10 @@ export const ResearchSection = () => {
       <div className="mx-auto max-w-6xl px-6">
         <div className="grid gap-10 lg:grid-cols-[1.1fr_1fr] lg:items-center">
           <div>
-            <h2 className="font-heading text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
+            <h2 ref={headingRef} className="font-heading text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
               Research Interests
             </h2>
-            <p className="mt-4 text-base leading-relaxed text-foreground/80 md:text-lg">
+            <p ref={introRef} className="mt-4 text-base leading-relaxed text-foreground/80 md:text-lg">
               My research focuses on computer vision and video analytics —
               object detection and tracking across frames, query-based video
               retrieval, hybrid machine learning models, and practical
