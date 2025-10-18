@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { CV_DOWNLOAD_URL, RESEARCH_SUMMARY_URL } from "@/data/portfolio";
+import { DOWNLOAD_CV_URL, RESEARCH_SUMMARY_URL } from "@/data/portfolio";
 
 export const CurriculumVitaeSection = () => {
   return (
