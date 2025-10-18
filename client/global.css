@@ -180,33 +180,33 @@
   .timeline-dot.current {
     height: 1.75rem; /* 28px */
     width: 1.75rem;
-    background-color: hsl(var(--primary) / 0.58);
-    box-shadow: 0 8px 30px hsl(var(--primary) / 0.14);
+    background-color: hsl(var(--timeline-dot-current) / 0.58);
+    box-shadow: 0 8px 30px hsl(var(--timeline-halo) / 0.20);
   }
   .timeline-dot.current .inner {
     height: 0.75rem;
     width: 0.75rem;
-    background-color: hsl(var(--primary));
+    background-color: hsl(var(--timeline-dot-current));
   }
 
   /* Inactive dot */
   .timeline-dot.inactive {
     height: 1.5rem;
     width: 1.5rem;
-    background-color: hsl(var(--primary) / 0.12);
+    background-color: hsl(var(--timeline-dot) / 0.12);
     box-shadow: none;
   }
   .timeline-dot.inactive .inner {
     height: 0.75rem;
     width: 0.75rem;
-    background-color: hsl(var(--primary) / 0.45);
+    background-color: hsl(var(--timeline-dot));
   }
 
   /* Hover/focus state */
   .timeline-dot:focus,
   .timeline-dot:hover {
     transform: scale(1.06);
-    box-shadow: 0 10px 30px hsl(var(--primary) / 0.18);
+    box-shadow: 0 10px 30px hsl(var(--timeline-halo) / 0.22);
     outline: none;
   }
 
@@ -221,8 +221,8 @@
   .card-elevate:hover,
   .card-elevate:focus-within {
     transform: translateY(-6px);
-    box-shadow: 0 12px 36px hsl(var(--primary) / 0.12);
-    border-color: hsl(var(--primary) / 0.22);
+    box-shadow: var(--shadow-elevate);
+    border-color: hsl(var(--border));
   }
 
   /* Button CTA adjustments */
@@ -233,9 +233,10 @@
       background-color 200ms ease,
       color 200ms ease;
   }
-  .btn-cta:hover {
+  .btn-cta:hover,
+  .btn-cta:focus-visible {
     transform: translateY(-3px) scale(1.02);
-    box-shadow: 0 10px 30px hsl(var(--primary) / 0.12);
+    box-shadow: var(--shadow-elevate);
   }
 }
 
