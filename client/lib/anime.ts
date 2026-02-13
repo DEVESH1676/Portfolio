@@ -1,3 +1,4 @@
+// Native Web Animations API Wrapper - No external dependency required
 let _animeLib: any = null;
 let _animeLibPromise: Promise<any> | null = null;
 
