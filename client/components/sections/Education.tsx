@@ -43,38 +43,62 @@ export const EducationSection = () => {
 
   React.useEffect(() => {
     const dots = dotRefs.current.filter(Boolean) as HTMLElement[];
+    const cards = cardRefs.current.filter(Boolean) as HTMLElement[];
     if (!dots.length) return;
 
+    // Observer for dots
     const dotObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          const el = entry.target as HTMLElement;
-          const i = dots.indexOf(el);
           if (entry.isIntersecting) {
-            // Entrance animation for the dot
+            const el = entry.target as HTMLElement;
             animateEntrance(el, {
               translateY: 8,
               duration: 420,
-              easing: "cubic-bezier(0.19, 1, 0.22, 1)", // easeOutExpo
+              easing: "cubic-bezier(0.19, 1, 0.22, 1)",
             });
-
-            // If it's current, add subtle pulsing (loop)
-            // Use strictly typed access
-            const isCurrent = (EDUCATION_TIMELINE[i] as EducationEntry).current ?? i === 0;
-            if (isCurrent) {
-              animatePulse(el, { scale: [1, 1.06], duration: 1200 });
-            }
-
             dotObserver.unobserve(el);
           }
         });
       },
-      { threshold: 0.35, rootMargin: "0px 0px -10% 0px" },
+      { threshold: 0.5 }
     );
-
     dots.forEach((d) => dotObserver.observe(d));
 
-    return () => dotObserver.disconnect();
+    // Observer for cards with stagger
+    const cardObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const el = entry.target as HTMLElement;
+            const index = cards.indexOf(el);
+            // Stagger delay based on index (e.g., 100ms per item)
+            const delay = index * 100;
+
+            animateEntrance(el, {
+              translateY: 20,
+              duration: 600,
+              delay,
+              easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+            });
+            cardObserver.unobserve(el);
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+    cards.forEach((c) => {
+      if (c) {
+        // Set initial opacity to 0 to ensure fade-in works
+        c.style.opacity = "0";
+        cardObserver.observe(c);
+      }
+    });
+
+    return () => {
+      dotObserver.disconnect();
+      cardObserver.disconnect();
+    };
   }, []);
 
   const handleCardHover = (index: number, enter = true) => {
@@ -113,13 +137,13 @@ export const EducationSection = () => {
         <div className="relative">
           {/* Continuous vertical line for timeline (visible on md+) */}
           <div
-            className="hidden md:block absolute left-14 top-6 bottom-6 z-0"
+            className="hidden md:block absolute left-8 top-6 bottom-6 z-0"
             ref={(el) => (lineContainerRef.current = el)}
           >
             <div
               ref={(el) => (lineRef.current = el)}
               style={{ transformOrigin: "top", transform: "scaleY(0)" }}
-              className="absolute left-1/2 top-0 bottom-0 w-px timeline-line"
+              className="absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-primary/50 to-transparent"
               aria-hidden
             />
           </div>
@@ -142,14 +166,18 @@ export const EducationSection = () => {
                           (dotRefs.current[index] = el as HTMLDivElement)
                         }
                         className={
-                          "timeline-dot z-20 " +
-                          (isCurrent ? "current" : "inactive")
+                          "z-20 flex h-4 w-4 items-center justify-center rounded-full border-2 transition-colors duration-300 " +
+                          (isCurrent
+                            ? "border-primary bg-background shadow-[0_0_12px_rgba(59,130,246,0.6)]"
+                            : "border-muted-foreground/30 bg-background")
                         }
                         role="presentation"
                         tabIndex={-1}
                         aria-hidden
                       >
-                        <div className="inner" />
+                        {isCurrent && (
+                          <div className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
+                        )}
                       </div>
                     </div>
                   </div>
