@@ -7,9 +7,11 @@ import { fadeInUp } from "@/lib/animations";
 
 export const HeroSection = () => {
   const titleRef = React.useRef<HTMLHeadingElement | null>(null);
-  const subtitleRef = React.useRef<HTMLParagraphElement | null>(null);
+  const subtitle1Ref = React.useRef<HTMLParagraphElement | null>(null); // Unique reference for the first subtitle
+  const subtitle2Ref = React.useRef<HTMLParagraphElement | null>(null); // Unique reference for the second subtitle
   const descRef = React.useRef<HTMLParagraphElement | null>(null);
   const ctasRef = React.useRef<HTMLDivElement | null>(null);
+  const badgeRef = React.useRef<HTMLDivElement | null>(null); // New ref for the badge
 
   React.useEffect(() => {
     // animate hero entrance with anime.js staggered sequence
@@ -21,23 +23,36 @@ export const HeroSection = () => {
           duration: 700,
           delay: 80,
         });
-      if (subtitleRef.current)
-        animateEntrance(subtitleRef.current, {
+      if (subtitle1Ref.current)
+        animateEntrance(subtitle1Ref.current, {
           translateY: 18,
           duration: 600,
           delay: 180,
         });
-      if (descRef.current)
-        animateEntrance(descRef.current, {
+      if (subtitle2Ref.current)
+        animateEntrance(subtitle2Ref.current, {
           translateY: 12,
           duration: 600,
           delay: 280,
         });
-      if (ctasRef.current)
-        animateEntrance(ctasRef.current, {
+      if (descRef.current)
+        animateEntrance(descRef.current, {
           translateY: 8,
           duration: 600,
           delay: 360,
+        });
+      if (ctasRef.current)
+        animateEntrance(ctasRef.current, {
+          translateY: 4,
+          duration: 600,
+          delay: 440,
+        });
+      if (badgeRef.current) // Ensure the badge gets its own animation
+        animateEntrance(badgeRef.current, {
+          scale: 1.2,
+          opacity: 1,
+          duration: 500,
+          delay: 520,
         });
     });
   }, []);
@@ -53,7 +68,7 @@ export const HeroSection = () => {
         {/* Text Section */}
         <div className="w-full md:w-3/5 flex flex-col items-center md:items-start">
           <span
-            ref={subtitleRef}
+            ref={badgeRef}
             className="inline-flex items-center rounded-full bg-primary/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-primary"
           >
             Professional Academic Portfolio
@@ -67,7 +82,7 @@ export const HeroSection = () => {
           </h1>
 
           <p
-            ref={subtitleRef}
+            ref={subtitle1Ref}
             className="mt-4 text-lg font-medium text-primary md:text-xl text-center md:text-left"
           >
             Associate Professor · Computer Vision Researcher · Ph.D., K L
@@ -75,7 +90,7 @@ export const HeroSection = () => {
           </p>
 
           <p
-            ref={descRef}
+            ref={subtitle2Ref} // New reference for the second subtitle
             className="mt-6 max-w-2xl text-base leading-relaxed text-foreground/80 md:text-lg text-center md:text-left"
           >
             Dr. C. A. Ghuge is an Associate Professor and researcher in computer

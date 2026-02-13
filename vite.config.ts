@@ -1,9 +1,24 @@
-import { defineConfig, Plugin, searchForWorkspaceRoot } from "vite";
+import { defineConfig, Plugin } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
+import fs from 'fs';
+
+// Function to search for the workspace root
+function searchForWorkspaceRoot(cwd: string): string {
+  let currentDir = cwd;
+  while (currentDir !== path.parse(currentDir).root) {
+    const packageJsonPath = path.join(currentDir, 'package.json');
+    if (fs.existsSync(packageJsonPath)) {
+      return currentDir;
+    }
+    currentDir = path.dirname(currentDir);
+  }
+  throw new Error('Workspace root not found');
+}
+
+// Import the createServer function from your server module
 import { createServer } from "./server";
 
-// https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
@@ -12,8 +27,8 @@ export default defineConfig(({ mode }) => ({
       allow: [
         "./client",
         "./shared",
-        searchForWorkspaceRoot(process.cwd()),
-        "/workspaces/Portfolio", // allow root access for your workspace
+        searchForWorkspaceRoot(process.cwd()), // Dynamically find the workspace root
+        "/workspaces/Portfolio", // Optionally still include the fixed path if needed
       ],
       deny: [".env", ".env.*", "*.{crt,pem}", "**/.git/**", "server/**"],
     },
