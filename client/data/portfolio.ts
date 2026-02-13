@@ -42,7 +42,15 @@ export const QUICK_FACTS = [
   },
 ];
 
-export const EDUCATION_TIMELINE = [
+export interface EducationEntry {
+  degree: string;
+  institution: string;
+  year: string;
+  highlight: string;
+  current?: boolean;
+}
+
+export const EDUCATION_TIMELINE: EducationEntry[] = [
   {
     degree: "Ph.D.",
     institution: "K L University",
@@ -146,3 +154,23 @@ export const CONTACT_LINKS = [
 
 export const HERO_IMAGE_URL =
   "https://imagehs.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=900&q=80";
+
+export const BIO_DATA = {
+  name: "Dr. Chandrashekhar Arvind Ghuge",
+  role: "Associate Professor · Computer Vision Researcher · Ph.D., K L University (2023)",
+  shortBio:
+    "Dr. C. A. Ghuge is an Associate Professor and researcher in computer vision and machine learning, focusing on video object retrieval and object tracking. He has published in peer-reviewed journals and leads research and student projects at P.E.S.’s Modern College of Engineering, Pune.",
+  fullBio: [
+    "Dr. Chandrashekhar Arvind Ghuge completed his Ph.D. from K L University in 2023. He holds an M.E. from D. Y. Patil, Akurdi, and a B.E. from a college in Dhule. He currently serves as Associate Professor and Head of AI & Machine Learning (Information Technology) at P.E.S.’s Modern College of Engineering, Pune.",
+    "His research interests include Computer Vision, Video Retrieval, Object Tracking, and Machine Learning. He collaborates with multidisciplinary teams to deliver impactful research outcomes and to mentor the next generation of engineers and scientists.",
+  ],
+};
+
+export const CONTENT_INTROS = {
+  projects:
+    "Guiding research projects and final-year students in the domains of machine learning, deep learning, and computer vision. Past works include hybrid tracking systems, object recognition models, and intelligent video analysis tools.",
+  publications:
+    "Below are selected peer-reviewed publications. For the complete and updated list, visit Dr. Ghuge’s Google Scholar profile.",
+  research:
+    "My research focuses on computer vision and video analytics — object detection and tracking across frames, query-based video retrieval, hybrid machine learning models, and practical deployment of intelligent vision systems.",
+};

@@ -1,12 +1,12 @@
-import { EDUCATION_TIMELINE } from "@/data/portfolio";
+import { EDUCATION_TIMELINE, EducationEntry } from "@/data/portfolio"; // Import interface
 import * as React from "react";
 import Container from "@/components/ui/container";
 import {
   animateLineDraw,
   animateEntrance,
   animatePulse,
-  getAnimeLib,
   runAnime,
+  // getAnimeLib removed
 } from "@/lib/anime";
 
 export const EducationSection = () => {
@@ -14,18 +14,9 @@ export const EducationSection = () => {
   const lineContainerRef = React.useRef<HTMLDivElement | null>(null);
   const dotRefs = React.useRef<Array<HTMLDivElement | null>>([]);
   const cardRefs = React.useRef<Array<HTMLDivElement | null>>([]);
-  const animeAPI = React.useRef<any>(null);
+  // animeAPI ref removed as it's no longer needed
 
-  React.useEffect(() => {
-    // load anime helper once
-    let mounted = true;
-    getAnimeLib().then((lib) => {
-      if (mounted) animeAPI.current = lib;
-    });
-    return () => {
-      mounted = false;
-    };
-  }, []);
+  // Removed getAnimeLib useEffect
 
   React.useEffect(() => {
     const lineEl = lineRef.current;
@@ -64,11 +55,13 @@ export const EducationSection = () => {
             animateEntrance(el, {
               translateY: 8,
               duration: 420,
-              easing: "easeOutExpo",
+              easing: "cubic-bezier(0.19, 1, 0.22, 1)", // easeOutExpo
             });
 
             // If it's current, add subtle pulsing (loop)
-            if ((EDUCATION_TIMELINE[i] as any).current ?? i === 0) {
+            // Use strictly typed access
+            const isCurrent = (EDUCATION_TIMELINE[i] as EducationEntry).current ?? i === 0;
+            if (isCurrent) {
               animatePulse(el, { scale: [1, 1.06], duration: 1200 });
             }
 
@@ -87,27 +80,29 @@ export const EducationSection = () => {
   const handleCardHover = (index: number, enter = true) => {
     const dot = dotRefs.current[index] as HTMLElement | null;
     if (!dot) return;
-    // Use centralized runAnime helper which loads anime safely and respects reduced-motion
-    runAnime({
-      targets: dot,
-      scale: enter ? 1.12 : 1,
-      duration: 200,
-      easing: "easeOutQuad",
-      translateZ: 0,
-    }).catch(() => {
-      // ignore animation errors to avoid blocking UI
-    });
+
+    // Updated runAnime call to WAAPI signature
+    // runAnime(el, keyframes, options)
+    runAnime(
+      dot,
+      [{ transform: enter ? "scale(1.12) translateZ(0)" : "scale(1) translateZ(0)" }],
+      {
+        duration: 200,
+        easing: "cubic-bezier(0.455, 0.03, 0.515, 0.955)", // easeOutQuad
+        fill: "forwards"
+      }
+    );
   };
 
   return (
-    <section id="education" className="bg-secondary/40 py-24 scroll-mt-24">
+    <section id="education" className="bg-secondary/40 section-padding scroll-mt-24">
       <Container>
         {/* Section Heading */}
         <div className="mb-12">
-          <h2 className="font-heading text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
+          <h2 className="font-heading font-semibold tracking-tight text-foreground">
             Education
           </h2>
-          <p className="mt-4 max-w-2xl text-base text-foreground/75 md:text-lg">
+          <p className="mt-4 max-w-2xl text-foreground/75">
             A progressive academic journey grounded in Computer Engineering,
             culminating in a doctoral degree focused on advancing intelligent
             video analytics.
@@ -132,8 +127,8 @@ export const EducationSection = () => {
           {/* Timeline Entries - each row has a left column for dot/line and right column for content */}
           <div className="flex flex-col relative z-10">
             {EDUCATION_TIMELINE.map((entry, index) => {
-              const isLast = index === EDUCATION_TIMELINE.length - 1;
-              const isCurrent = (entry as any).current ?? index === 0;
+              // const isLast = index === EDUCATION_TIMELINE.length - 1;
+              const isCurrent = (entry as EducationEntry).current ?? index === 0;
               return (
                 <div
                   key={entry.degree}
@@ -167,7 +162,7 @@ export const EducationSection = () => {
                       }
                       onMouseEnter={() => handleCardHover(index, true)}
                       onMouseLeave={() => handleCardHover(index, false)}
-                      className="rounded-2xl bg-background p-6 shadow-md ring-1 ring-primary/10 transition-transform duration-200 card-elevate"
+                      className="glass-card rounded-2xl bg-background p-6 md:p-8 shadow-md ring-1 ring-primary/10 transition-transform duration-200 card-elevate"
                     >
                       <div className="flex flex-wrap items-baseline justify-between gap-4">
                         <h3 className="font-heading text-2xl font-semibold text-primary">

@@ -1,12 +1,11 @@
-import { FormEvent } from "react";
+import { FormEvent, useEffect, useRef } from "react";
 import { GraduationCap, Linkedin, Mail, Network } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { CONTACT_LINKS } from "@/data/portfolio";
-import { motion } from "framer-motion";
-import { fadeInUp } from "@/lib/animations";
+import { animateEntrance } from "@/lib/anime";
 
 const iconMap = {
   linkedin: Linkedin,
@@ -17,6 +16,38 @@ const iconMap = {
 const emailRecipient = "chandrashekar.ghuge@moderncoe.edu.in";
 
 export const ContactSection = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const textRef = useRef<HTMLParagraphElement>(null);
+  const iconsRef = useRef<HTMLDivElement>(null);
+  const formRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          if (headingRef.current)
+            animateEntrance(headingRef.current, { translateY: 20, delay: 0 });
+          if (textRef.current)
+            animateEntrance(textRef.current, { translateY: 20, delay: 100 });
+          if (iconsRef.current)
+            animateEntrance(iconsRef.current, { translateY: 20, delay: 200 });
+          if (formRef.current)
+            animateEntrance(formRef.current, { translateY: 30, delay: 300 });
+
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -35,22 +66,24 @@ export const ContactSection = () => {
   };
 
   return (
-    <motion.section
+    <section
+      ref={sectionRef}
       id="contact"
       className="bg-background py-24 scroll-mt-24"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.3 }}
-      variants={fadeInUp}
-      custom={0}
     >
       <div className="mx-auto max-w-6xl px-6">
         <div className="grid gap-10 lg:grid-cols-[1.1fr_1fr]">
           <div>
-            <h2 className="font-heading text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
+            <h2
+              ref={headingRef}
+              className="font-heading text-3xl font-semibold tracking-tight text-foreground md:text-4xl opacity-0"
+            >
               Contact
             </h2>
-            <p className="mt-4 text-base leading-relaxed text-foreground/80 md:text-lg">
+            <p
+              ref={textRef}
+              className="mt-4 text-base leading-relaxed text-foreground/80 md:text-lg opacity-0"
+            >
               For collaboration, student supervision, or speaking engagements,
               please contact:{" "}
               <a
@@ -61,7 +94,10 @@ export const ContactSection = () => {
               </a>
               .
             </p>
-            <div className="mt-8 flex gap-3">
+            <div
+              ref={iconsRef}
+              className="mt-8 flex gap-3 opacity-0"
+            >
               {CONTACT_LINKS.map((link) => {
                 const IconComponent =
                   iconMap[link.icon as keyof typeof iconMap] ?? Mail;
@@ -80,7 +116,10 @@ export const ContactSection = () => {
               })}
             </div>
           </div>
-          <div className="rounded-3xl border border-primary/20 bg-primary/5 p-8 shadow-xl">
+          <div
+            ref={formRef}
+            className="rounded-3xl border border-primary/20 bg-primary/5 p-8 shadow-xl opacity-0"
+          >
             <form className="space-y-5" onSubmit={handleSubmit}>
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="space-y-2">
@@ -148,6 +187,6 @@ export const ContactSection = () => {
           </div>
         </div>
       </div>
-    </motion.section>
+    </section>
   );
 };
