@@ -1,6 +1,7 @@
 import { DOWNLOAD_CV_URL, HERO_IMAGE_URL } from "@/data/portfolio";
 import * as React from "react";
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 import Container from "@/components/ui/container";
 import { fadeInUp } from "@/lib/animations";
 
@@ -10,6 +11,7 @@ export const HeroSection = () => {
   const subtitle2Ref = React.useRef<HTMLParagraphElement | null>(null); // Unique reference for the second subtitle
   const descRef = React.useRef<HTMLParagraphElement | null>(null);
   const ctasRef = React.useRef<HTMLDivElement | null>(null);
+  const badgeRef = React.useRef<HTMLDivElement | null>(null); // New ref for the badge
 
   React.useEffect(() => {
     // animate hero entrance with anime.js staggered sequence
@@ -45,6 +47,13 @@ export const HeroSection = () => {
           duration: 600,
           delay: 440,
         });
+      if (badgeRef.current) // Ensure the badge gets its own animation
+        animateEntrance(badgeRef.current, {
+          scale: 1.2,
+          opacity: 1,
+          duration: 500,
+          delay: 520,
+        });
     });
   }, []);
 
@@ -59,6 +68,7 @@ export const HeroSection = () => {
         {/* Text Section */}
         <div className="w-full md:w-3/5 flex flex-col items-center md:items-start">
           <span
+            ref={badgeRef}
             className="inline-flex items-center rounded-full bg-primary/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-primary"
           >
             Professional Academic Portfolio
@@ -108,6 +118,27 @@ export const HeroSection = () => {
         </div>
 
         {/* Image Section */}
+        <motion.div
+          custom={5}
+          variants={fadeInUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.7 }}
+          className="w-full md:w-2/5 flex justify-center md:justify-end"
+        >
+          <div className="relative mx-auto aspect-[3/4] max-w-sm overflow-hidden rounded-3xl border border-primary/20 bg-background shadow-2xl">
+            <div className="absolute inset-0 bg-gradient-to-b from-primary/30 via-primary/10 to-transparent" />
+            <img
+              src={HERO_IMAGE_URL}
+              alt="Professional portrait of Dr. C. A. Ghuge"
+              className="h-full w-full object-cover"
+              loading="lazy"
+            />
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-foreground/80 to-transparent px-6 py-4 text-sm font-medium text-background">
+              Dedicated to advancing intelligent vision systems
+            </div>
+          </div>
+        </motion.div>
       </Container>
     </section>
   );
