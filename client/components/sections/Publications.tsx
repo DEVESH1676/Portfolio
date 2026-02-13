@@ -2,6 +2,7 @@ import React from "react";
 import {
   ADDITIONAL_PUBLICATIONS,
   FEATURED_PUBLICATION,
+  CONTENT_INTROS,
 } from "@/data/portfolio";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -16,6 +17,7 @@ export const PublicationsSection = () => {
   React.useEffect(() => {
     import("@/lib/anime").then((mod) => {
       const { animateEntrance } = mod;
+      // ... same animations
       if (headingRef.current)
         animateEntrance(headingRef.current, { translateY: 18, duration: 600 });
       if (introRef.current)
@@ -40,33 +42,32 @@ export const PublicationsSection = () => {
   }, []);
 
   return (
-    <section id="publications" className="bg-secondary/40 py-24 scroll-mt-24">
+    <section id="publications" className="bg-secondary/40 section-padding scroll-mt-24">
       <div className="mx-auto max-w-6xl px-6">
         <div className="mb-12 max-w-3xl">
           <h2
             ref={headingRef}
-            className="font-heading text-3xl font-semibold tracking-tight text-foreground md:text-4xl"
+            className="font-heading font-semibold tracking-tight text-foreground"
           >
             Selected Publications
           </h2>
           <p
             ref={introRef}
-            className="mt-4 text-base text-foreground/75 md:text-lg"
+            className="mt-4 text-foreground/75"
           >
-            Below are selected peer-reviewed publications. For the complete and
-            updated list, visit Dr. Ghuge’s Google Scholar profile.
+            {CONTENT_INTROS.publications}
           </p>
         </div>
         <div className="grid gap-10 lg:grid-cols-[1.2fr_0.8fr]">
           <Card
             ref={featuredRef}
-            className="border border-primary/20 bg-background/95 shadow-xl"
+            className="glass-card border border-primary/20 bg-background/95 shadow-xl p-6 md:p-10"
           >
-            <CardHeader>
+            <CardHeader className="p-0 mb-6">
               <span className="text-xs font-semibold uppercase tracking-[0.3em] text-primary/80">
                 Featured
               </span>
-              <CardTitle className="font-heading text-2xl text-foreground">
+              <CardTitle className="font-heading text-2xl text-foreground mt-2">
                 {FEATURED_PUBLICATION.title}
               </CardTitle>
               <p className="text-sm font-medium text-foreground/70">
@@ -76,25 +77,25 @@ export const PublicationsSection = () => {
                 {FEATURED_PUBLICATION.venue}
               </p>
             </CardHeader>
-            <CardContent className="space-y-6">
+            <CardContent className="p-0 space-y-6">
               <p className="text-sm leading-relaxed text-foreground/80">
                 {FEATURED_PUBLICATION.abstract}
               </p>
-              <Button asChild variant="outline" className="w-fit">
+              <Button asChild variant="outline" className="w-fit min-h-[48px] px-6">
                 <a
                   href={FEATURED_PUBLICATION.doiUrl}
                   target="_blank"
                   rel="noreferrer"
                 >
                   {FEATURED_PUBLICATION.doiLabel}
-                  <ExternalLink className="h-4 w-4" aria-hidden />
+                  <ExternalLink className="ml-2 h-4 w-4" aria-hidden />
                 </a>
               </Button>
             </CardContent>
           </Card>
           <Card
             ref={additionalRef}
-            className="border border-primary/10 bg-primary/5 p-6 shadow-lg"
+            className="glass-card border border-primary/10 bg-primary/5 p-6 md:p-8 shadow-lg"
           >
             <h3 className="font-heading text-xl font-semibold text-primary">
               Additional Publications
@@ -103,12 +104,12 @@ export const PublicationsSection = () => {
               {ADDITIONAL_PUBLICATIONS.map((publication) => (
                 <li
                   key={publication.title}
-                  className="flex items-start justify-between gap-4"
+                  className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 sm:gap-4"
                 >
                   <span className="block leading-snug">
                     {publication.title}
                   </span>
-                  <span className="text-xs font-semibold uppercase tracking-[0.2em] text-foreground/50">
+                  <span className="text-xs font-semibold uppercase tracking-[0.2em] text-foreground/50 whitespace-nowrap">
                     {publication.year}
                   </span>
                 </li>

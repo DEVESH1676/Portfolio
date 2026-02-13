@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Sun, Moon } from "lucide-react";
-import { motion } from "framer-motion";
+
 import { Button } from "./button";
 
 const THEME_KEY = "site-theme";
@@ -29,35 +29,26 @@ export const ThemeToggle: React.FC = () => {
         root.classList.remove("dark");
         localStorage.setItem(THEME_KEY, "light");
       }
-    } catch {}
+    } catch { }
   }, [isDark]);
 
   return (
     <Button
-      asChild
-      size="sm"
       variant="ghost"
-      aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
-      title={isDark ? "Switch to light mode" : "Switch to dark mode"}
+      size="icon"
+      onClick={() => setIsDark(!isDark)}
+      className="relative h-10 w-10 rounded-full transition-colors hover:bg-muted/60"
+      aria-label="Toggle theme"
     >
-      <motion.button
-        onClick={() => setIsDark((v) => !v)}
-        className="relative inline-flex h-8 w-14 items-center rounded-full p-1 smooth-theme-transition bg-muted/40 dark:bg-primary/18"
-        aria-pressed={isDark}
-      >
-        <motion.span
-          className="absolute left-1 top-1 h-6 w-6 rounded-full bg-background shadow-sm flex items-center justify-center"
-          layout
-          animate={{ x: isDark ? 22 : 0 }}
-          transition={{ type: "spring", stiffness: 600, damping: 40 }}
-        >
-          {isDark ? (
-            <Sun className="h-3 w-3 text-yellow-300" />
-          ) : (
-            <Moon className="h-3 w-3 text-gray-600" />
-          )}
-        </motion.span>
-      </motion.button>
+      <Sun
+        className={`h-5 w-5 transition-all duration-500 text-amber-500 fill-amber-500 ${isDark ? "rotate-90 scale-0 opacity-0" : "rotate-0 scale-100 opacity-100"
+          }`}
+      />
+      <Moon
+        className={`absolute h-5 w-5 transition-all duration-500 text-slate-700 fill-slate-700 ${isDark ? "rotate-0 scale-100 opacity-100" : "-rotate-90 scale-0 opacity-0"
+          }`}
+      />
+      <span className="sr-only">Toggle theme</span>
     </Button>
   );
 };

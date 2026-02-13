@@ -6,6 +6,7 @@
 @tailwind utilities;
 
 @layer base {
+
   /**
    * Tailwind CSS theme
    * tailwind.config.ts expects the following color variables to be expressed as HSL values.
@@ -13,51 +14,70 @@
   */
   :root {
     /* Light mode palette */
-    --background: 210 40% 98%; /* #F9FAFB */
-    --foreground: 222 25% 13%; /* #111827 */
+    --background: 210 40% 98%;
+    /* #F9FAFB */
+    --foreground: 222 25% 13%;
+    /* #111827 */
 
-    --card: 0 0% 100%; /* #FFFFFF */
+    --card: 0 0% 100%;
+    /* #FFFFFF */
     --card-foreground: 222 25% 13%;
 
     --popover: 0 0% 100%;
     --popover-foreground: 222 25% 13%;
 
-    --primary: 217 91% 60%; /* #3B82F6 */
-    --primary-hover: 221 83% 53%; /* #2563EB */
+    --primary: 217 91% 60%;
+    /* #3B82F6 */
+    --primary-hover: 221 83% 53%;
+    /* #2563EB */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 160 84% 39%; /* #10B981 */
-    --secondary-hover: 162 94% 31%; /* #059669 */
+    --secondary: 160 84% 39%;
+    /* #10B981 */
+    --secondary-hover: 162 94% 31%;
+    /* #059669 */
     --secondary-foreground: 222 25% 13%;
 
     --muted: 210 30% 96%;
-    --muted-foreground: 215 20% 35%; /* #374151 */
+    --muted-foreground: 215 20% 35%;
+    /* #374151 */
 
-    --accent: 160 84% 39%; /* tag default uses secondary */
+    --accent: 160 84% 39%;
+    /* tag default uses secondary */
     --accent-foreground: 222 25% 13%;
 
     --destructive: 355 70% 45%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 214 32% 91%; /* #D1D5DB */
+    --border: 214 32% 91%;
+    /* #D1D5DB */
     --input: 214 32% 91%;
     --ring: 217 91% 60%;
 
-    --heading: 215 28% 25%; /* #1F2937 */
+    --heading: 215 28% 25%;
+    /* #1F2937 */
 
     /* Links */
-    --link: 217 91% 60%; /* #3B82F6 */
-    --link-hover: 221 83% 53%; /* #1D4ED8/2563EB */
+    --link: 217 91% 60%;
+    /* #3B82F6 */
+    --link-hover: 221 83% 53%;
+    /* #1D4ED8/2563EB */
 
     /* Timeline */
-    --timeline-line: 220 14% 94%; /* #E5E7EB */
-    --timeline-dot: 217 91% 60%; /* #3B82F6 */
-    --timeline-dot-current: 221 83% 53%; /* #2563EB */
-    --timeline-halo: 217 91% 60%; /* hue for halo, alpha applied in CSS */
+    --timeline-line: 220 14% 94%;
+    /* #E5E7EB */
+    --timeline-dot: 217 91% 60%;
+    /* #3B82F6 */
+    --timeline-dot-current: 221 83% 53%;
+    /* #2563EB */
+    --timeline-halo: 217 91% 60%;
+    /* hue for halo, alpha applied in CSS */
 
     /* Tag */
-    --tag: 160 84% 39%; /* #10B981 */
-    --tag-hover: 162 94% 31%; /* #059669 */
+    --tag: 160 84% 39%;
+    /* #10B981 */
+    --tag-hover: 162 94% 31%;
+    /* #059669 */
 
     --radius: 0.75rem;
 
@@ -76,60 +96,67 @@
   }
 
   .dark {
-    /* Dark mode palette */
-    --background: 215 28% 17%; /* #1E293B */
-    --foreground: 210 20% 96%; /* #F3F4F6 */
+    /* Dark mode palette - Premium Deep Blue/Black */
+    --background: 224 71% 4%;
+    /* #030712 - Very dark blue */
+    --foreground: 210 40% 98%;
+    /* #F9FAFB */
 
-    --card: 222 26% 22%; /* #283046 */
-    --card-foreground: 210 20% 96%;
+    --card: 222 47% 11%;
+    /* #0F172A - Slate 900 */
+    --card-foreground: 210 40% 98%;
 
-    --popover: 222 26% 22%;
-    --popover-foreground: 210 20% 96%;
+    --popover: 222 47% 11%;
+    --popover-foreground: 210 40% 98%;
 
-    --primary: 221 83% 53%; /* #2563EB */
-    --primary-hover: 226 71% 40%; /* #1E40AF */
+    --primary: 217 91% 60%;
+    /* #3B82F6 */
+    --primary-hover: 221 83% 53%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 160 64% 56%; /* #34D399 */
-    --secondary-hover: 162 94% 31%; /* #059669 */
-    --secondary-foreground: 210 20% 96%;
+    --secondary: 160 55% 45%;
+    /* Slightly muted green for dark mode */
+    --secondary-hover: 162 60% 35%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 215 19% 35%;
-    --muted-foreground: 214 32% 91%; /* #D1D5DB */
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
 
-    --accent: 160 64% 56%;
-    --accent-foreground: 210 20% 96%;
+    --accent: 217 33% 17%;
+    --accent-foreground: 210 40% 98%;
 
-    --destructive: 359 66% 46%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 210 40% 98%;
 
-    --border: 215 19% 43%; /* #475569 */
-    --input: 215 19% 43%;
-    --ring: 221 83% 53%;
+    --border: 217 33% 17%;
+    /* Smoother border blending */
+    --input: 217 33% 17%;
+    --ring: 224 76% 48%;
 
-    --heading: 220 14% 94%; /* #E5E7EB */
+    --heading: 210 40% 98%;
 
-    --link: 217 91% 66%; /* #60A5FA */
-    --link-hover: 217 91% 60%; /* #3B82F6 */
+    --link: 217 91% 60%;
+    --link-hover: 224 76% 48%;
 
-    --timeline-line: 215 19% 35%; /* #334155 */
-    --timeline-dot: 217 91% 66%; /* #60A5FA */
-    --timeline-dot-current: 217 91% 60%; /* #3B82F6 */
-    --timeline-halo: 217 91% 66%;
+    --timeline-line: 217 33% 20%;
+    --timeline-dot: 217 91% 60%;
+    --timeline-dot-current: 224 76% 48%;
+    --timeline-halo: 224 76% 48%;
 
-    --tag: 160 64% 56%; /* #34D399 */
-    --tag-hover: 162 94% 31%; /* #059669 */
+    --tag: 160 55% 45%;
+    --tag-hover: 162 60% 35%;
 
-    --shadow-elevate: 0 12px 36px rgba(0, 0, 0, 0.3);
+    --shadow-elevate: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
 
-    --sidebar-background: 222 26% 22%;
-    --sidebar-foreground: 210 20% 96%;
-    --sidebar-primary: 221 83% 53%;
+    /* Sidebar updates */
+    --sidebar-background: 224 71% 4%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 224 76% 48%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 215 19% 35%;
-    --sidebar-accent-foreground: 210 20% 96%;
-    --sidebar-border: 215 19% 43%;
-    --sidebar-ring: 221 83% 53%;
+    --sidebar-accent: 217 33% 17%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 217 33% 17%;
+    --sidebar-ring: 224 76% 48%;
   }
 
   /* Respect user prefers-reduced-motion */
@@ -169,6 +196,7 @@
     will-change: transform, box-shadow;
     box-shadow: 0 4px 10px rgba(2, 6, 23, 0.04);
   }
+
   .timeline-dot .inner {
     border-radius: 9999px;
     transition:
@@ -178,11 +206,13 @@
 
   /* Current milestone */
   .timeline-dot.current {
-    height: 1.75rem; /* 28px */
+    height: 1.75rem;
+    /* 28px */
     width: 1.75rem;
     background-color: hsl(var(--timeline-dot-current) / 0.58);
     box-shadow: 0 8px 30px hsl(var(--timeline-halo) / 0.2);
   }
+
   .timeline-dot.current .inner {
     height: 0.75rem;
     width: 0.75rem;
@@ -196,6 +226,7 @@
     background-color: hsl(var(--timeline-dot) / 0.12);
     box-shadow: none;
   }
+
   .timeline-dot.inactive .inner {
     height: 0.75rem;
     width: 0.75rem;
@@ -218,6 +249,7 @@
       border-color 220ms ease;
     will-change: transform, box-shadow;
   }
+
   .card-elevate:hover,
   .card-elevate:focus-within {
     transform: translateY(-6px);
@@ -233,6 +265,7 @@
       background-color 200ms ease,
       color 200ms ease;
   }
+
   .btn-cta:hover,
   .btn-cta:focus-visible {
     transform: translateY(-3px) scale(1.02);
@@ -253,6 +286,7 @@
       background-color 200ms ease,
       color 200ms ease;
   }
+
   .tag:hover,
   .tag:focus-visible {
     transform: scale(1.05);
@@ -288,6 +322,31 @@
   h6 {
     font-family: "Inter", sans-serif;
     color: hsl(var(--heading));
+    line-height: 1.1;
+  }
+
+  h1 {
+    font-size: clamp(2.25rem, 6vw, 4rem);
+    letter-spacing: -0.025em;
+    /* tracking-tight */
+  }
+
+  h2 {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+  }
+
+  p {
+    font-size: 1rem;
+    /* text-base */
+    line-height: 1.625;
+    /* leading-relaxed */
+  }
+
+  @media (min-width: 768px) {
+    p {
+      font-size: 1.125rem;
+      /* text-lg */
+    }
   }
 
   .font-heading {
@@ -296,5 +355,27 @@
 
   .font-body {
     font-family: "Roboto", sans-serif;
+  }
+}
+
+@layer utilities {
+  .glass-card {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+  }
+
+  .dark .glass-card {
+    background: rgba(15, 23, 42, 0.6);
+    /* Slate 900 with transparency */
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  }
+
+  .section-padding {
+    padding-top: clamp(3rem, 10vh, 8rem);
+    padding-bottom: clamp(3rem, 10vh, 8rem);
   }
 }

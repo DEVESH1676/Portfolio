@@ -144,7 +144,7 @@ export const Navbar = () => {
                 <div className="mt-12 flex flex-col gap-8">
                   <NavLinks orientation="vertical" />
                   <div className="flex flex-col gap-3">
-                    <Button asChild variant="outline" size="lg">
+                    <Button asChild variant="outline" size="lg" className="min-h-[48px]">
                       <a
                         href="#publications"
                         onClick={() => setIsSheetOpen(false)}
@@ -152,7 +152,7 @@ export const Navbar = () => {
                         View Publications
                       </a>
                     </Button>
-                    <Button asChild size="lg">
+                    <Button asChild size="lg" className="min-h-[48px]">
                       <a href="#cv" onClick={() => setIsSheetOpen(false)}>
                         Download CV
                       </a>

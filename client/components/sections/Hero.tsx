@@ -1,136 +1,158 @@
-import { DOWNLOAD_CV_URL, HERO_IMAGE_URL } from "@/data/portfolio";
+import {
+  DOWNLOAD_CV_URL,
+  HERO_IMAGE_URL,
+  BIO_DATA,
+  RESEARCH_SUMMARY_URL,
+} from "@/data/portfolio";
 import * as React from "react";
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
 import Container from "@/components/ui/container";
-import { fadeInUp } from "@/lib/animations";
+import { animateEntrance } from "@/lib/anime"; // removing fadeInUp import
 
 export const HeroSection = () => {
   const titleRef = React.useRef<HTMLHeadingElement | null>(null);
-  const subtitle1Ref = React.useRef<HTMLParagraphElement | null>(null); // Unique reference for the first subtitle
-  const subtitle2Ref = React.useRef<HTMLParagraphElement | null>(null); // Unique reference for the second subtitle
+  const subtitle1Ref = React.useRef<HTMLParagraphElement | null>(null);
+  const subtitle2Ref = React.useRef<HTMLParagraphElement | null>(null);
   const descRef = React.useRef<HTMLParagraphElement | null>(null);
   const ctasRef = React.useRef<HTMLDivElement | null>(null);
-  const badgeRef = React.useRef<HTMLDivElement | null>(null); // New ref for the badge
+  const badgeRef = React.useRef<HTMLDivElement | null>(null);
+  const imgRef = React.useRef<HTMLDivElement | null>(null); // New ref for image
 
   React.useEffect(() => {
     // animate hero entrance with anime.js staggered sequence
-    import("@/lib/anime").then((mod) => {
-      const { animateEntrance } = mod;
-      if (titleRef.current)
-        animateEntrance(titleRef.current, {
-          translateY: 24,
-          duration: 700,
-          delay: 80,
-        });
-      if (subtitle1Ref.current)
-        animateEntrance(subtitle1Ref.current, {
-          translateY: 18,
-          duration: 600,
-          delay: 180,
-        });
-      if (subtitle2Ref.current)
-        animateEntrance(subtitle2Ref.current, {
-          translateY: 12,
-          duration: 600,
-          delay: 280,
-        });
-      if (descRef.current)
-        animateEntrance(descRef.current, {
-          translateY: 8,
-          duration: 600,
-          delay: 360,
-        });
-      if (ctasRef.current)
-        animateEntrance(ctasRef.current, {
-          translateY: 4,
-          duration: 600,
-          delay: 440,
-        });
-      if (badgeRef.current) // Ensure the badge gets its own animation
-        animateEntrance(badgeRef.current, {
-          scale: 1.2,
-          opacity: 1,
-          duration: 500,
-          delay: 520,
-        });
-    });
+    // Note: dynamic import removed since we are using native WAAPI directly
+    // based on previous refactor of anime.ts which exports directly
+
+    if (titleRef.current)
+      animateEntrance(titleRef.current, {
+        translateY: 24,
+        duration: 700,
+        delay: 80,
+      });
+    if (subtitle1Ref.current)
+      animateEntrance(subtitle1Ref.current, {
+        translateY: 18,
+        duration: 600,
+        delay: 180,
+      });
+    if (subtitle2Ref.current)
+      animateEntrance(subtitle2Ref.current, {
+        translateY: 12,
+        duration: 600,
+        delay: 280,
+      });
+    if (descRef.current)
+      animateEntrance(descRef.current, {
+        translateY: 8,
+        duration: 600,
+        delay: 360,
+      });
+    if (ctasRef.current)
+      animateEntrance(ctasRef.current, {
+        translateY: 4,
+        duration: 600,
+        delay: 440,
+      });
+    if (badgeRef.current)
+      animateEntrance(badgeRef.current, {
+        scale: 1.2,
+        opacity: 1,
+        duration: 500,
+        delay: 520,
+      });
+
+    // Image animation (formerly framer-motion)
+    if (imgRef.current) {
+      animateEntrance(imgRef.current, {
+        translateY: 24,
+        opacity: 1, // Explicitly animate to opacity 1
+        duration: 800, // slightly longer for image
+        delay: 600, // delay to match previous custom={5} roughly (5 * 0.1s + base?)
+        // Previous was custom={5}. fadeInUp delay is i * 0.12. So 0.6s.
+      });
+    }
   }, []);
 
   return (
     <section
       id="home"
-      className="relative overflow-hidden bg-secondary/40 pb-24 pt-36 scroll-mt-24"
+      className="relative overflow-hidden bg-secondary/40 pb-12 pt-24 md:pb-24 md:pt-36 scroll-mt-24"
     >
       <div className="absolute inset-0 -z-10 bg-gradient-to-br from-primary/15 via-background to-background" />
 
-      <Container className="flex flex-col items-center gap-16 md:flex-row md:items-start">
+      <Container className="flex flex-col-reverse items-center gap-12 md:gap-16 lg:flex-row lg:items-start">
         {/* Text Section */}
-        <div className="w-full md:w-3/5 flex flex-col items-center md:items-start">
+        <div className="w-full lg:w-3/5 flex flex-col items-center lg:items-start text-center lg:text-left">
           <span
             ref={badgeRef}
-            className="inline-flex items-center rounded-full bg-primary/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-primary"
+            className="inline-flex items-center rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-primary mb-4"
           >
             Professional Academic Portfolio
           </span>
 
           <h1
             ref={titleRef}
-            className="mt-6 font-heading text-4xl font-semibold tracking-tight text-foreground md:text-5xl lg:text-6xl text-center md:text-left"
+            className="font-heading font-semibold text-foreground"
           >
-            Dr. Chandrashekhar Arvind Ghuge
+            {BIO_DATA.name}
           </h1>
 
           <p
             ref={subtitle1Ref}
-            className="mt-4 text-lg font-medium text-primary md:text-xl text-center md:text-left"
+            className="mt-4 text-lg font-medium text-primary md:text-xl"
           >
-            Associate Professor · Computer Vision Researcher · Ph.D., K L
-            University (2023)
+            {BIO_DATA.role}
           </p>
 
           <p
             ref={subtitle2Ref} // New reference for the second subtitle
-            className="mt-6 max-w-2xl text-base leading-relaxed text-foreground/80 md:text-lg text-center md:text-left"
+            className="mt-6 max-w-2xl text-foreground/80 md:text-lg"
           >
-            Dr. C. A. Ghuge is an Associate Professor and researcher in computer
-            vision and machine learning, focusing on video object retrieval and
-            object tracking. He has published in peer-reviewed journals and
-            leads research and student projects at P.E.S.’s Modern College of
-            Engineering, Pune.
+            {BIO_DATA.shortBio}
           </p>
 
           <div
             ref={ctasRef}
-            className="mt-8 flex flex-wrap items-center gap-4 justify-center md:justify-start"
+            className="mt-8 flex flex-wrap items-center gap-4 justify-center lg:justify-start"
           >
-            <Button asChild size="lg">
+            <Button asChild size="lg" className="min-h-[48px] px-6">
               <a href="#publications" className="btn-cta">
                 View Publications
               </a>
             </Button>
-            <Button asChild variant="outline" size="lg">
-              <a href={DOWNLOAD_CV_URL} target="_blank" rel="noreferrer" className="btn-cta">
+            <Button asChild variant="outline" size="lg" className="min-h-[48px] px-6">
+              <a
+                href={DOWNLOAD_CV_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="btn-cta"
+              >
                 Download CV
+              </a>
+            </Button>
+            <Button asChild variant="outline" size="lg" className="min-h-[48px] px-6">
+              <a
+                href={RESEARCH_SUMMARY_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="btn-cta"
+              >
+                Research Summary
               </a>
             </Button>
           </div>
         </div>
 
         {/* Image Section */}
-        <motion.div
-          custom={5}
-          variants={fadeInUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.7 }}
-          className="w-full md:w-2/5 flex justify-center md:justify-end"
+        <div
+          ref={imgRef}
+          className="w-full max-w-sm lg:w-2/5 flex justify-center lg:justify-end opacity-0" // Start hidden for animation
         >
-          <div className="relative mx-auto aspect-[3/4] max-w-sm overflow-hidden rounded-3xl border border-primary/20 bg-background shadow-2xl">
+          <div className="relative mx-auto aspect-[3/4] w-full overflow-hidden rounded-3xl border border-primary/20 bg-background shadow-2xl">
             <div className="absolute inset-0 bg-gradient-to-b from-primary/30 via-primary/10 to-transparent" />
             <img
               src={HERO_IMAGE_URL}
-              alt="Professional portrait of Dr. C. A. Ghuge"
+              alt={`Professional portrait of ${BIO_DATA.name}`}
               className="h-full w-full object-cover"
               loading="lazy"
             />
@@ -138,7 +160,7 @@ export const HeroSection = () => {
               Dedicated to advancing intelligent vision systems
             </div>
           </div>
-        </motion.div>
+        </div>
       </Container>
     </section>
   );
