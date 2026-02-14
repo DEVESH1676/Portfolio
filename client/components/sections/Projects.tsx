@@ -1,23 +1,30 @@
 import React from "react";
 import { Card } from "@/components/ui/card";
 import { PROJECTS, CONTENT_INTROS } from "@/data/portfolio";
+import { animateEntrance, animateStaggeredChildren } from "@/lib/anime";
 
 export const ProjectsSection = () => {
   const headingRef = React.useRef<HTMLHeadingElement | null>(null);
   const introRef = React.useRef<HTMLParagraphElement | null>(null);
+  const gridRef = React.useRef<HTMLDivElement | null>(null);
 
   React.useEffect(() => {
-    import("@/lib/anime").then((mod) => {
-      const { animateEntrance } = mod;
-      if (headingRef.current)
-        animateEntrance(headingRef.current, { translateY: 18, duration: 600 });
-      if (introRef.current)
-        animateEntrance(introRef.current, {
-          translateY: 16,
-          duration: 600,
-          delay: 70,
-        });
-    });
+    if (headingRef.current)
+      animateEntrance(headingRef.current, { translateY: 24, blur: true });
+
+    if (introRef.current)
+      animateEntrance(introRef.current, {
+        translateY: 20,
+        staggerIndex: 1,
+        blur: true,
+      });
+
+    if (gridRef.current) {
+      animateStaggeredChildren(gridRef.current, ".project-card", {
+        translateY: 40,
+        baseDelay: 200, // Wait for intro
+      });
+    }
   }, []);
 
   return (
@@ -26,22 +33,22 @@ export const ProjectsSection = () => {
         <div className="max-w-3xl">
           <h2
             ref={headingRef}
-            className="font-heading font-semibold tracking-tight text-foreground"
+            className="font-heading font-semibold tracking-tight text-foreground opacity-0"
           >
             Projects &amp; Supervision
           </h2>
           <p
             ref={introRef}
-            className="mt-4 text-foreground/75"
+            className="mt-4 text-foreground/75 opacity-0"
           >
             {CONTENT_INTROS.projects}
           </p>
         </div>
-        <div className="mt-12 grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <div ref={gridRef} className="mt-12 grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {PROJECTS.map((project) => (
             <Card
               key={project.title}
-              className="glass-card flex h-full flex-col justify-between border border-primary/15 bg-primary/5 p-6 md:p-8 shadow-lg"
+              className="project-card glass-card flex h-full flex-col justify-between border border-primary/15 bg-primary/5 p-6 md:p-8 shadow-lg opacity-0"
             >
               <div>
                 <h3 className="font-heading text-xl font-semibold text-primary">

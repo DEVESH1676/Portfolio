@@ -386,4 +386,23 @@
   .dark .section-alt {
     background-color: hsl(var(--card));
   }
+
+  /* Animated Gradient Keyframes */
+  @keyframes gradient-xy {
+
+    0%,
+    100% {
+      background-size: 400% 400%;
+      background-position: 0% 0%;
+    }
+
+    50% {
+      background-size: 400% 400%;
+      background-position: 100% 100%;
+    }
+  }
+
+  .animate-gradient-xy {
+    animation: gradient-xy 3s ease infinite;
+  }
 }

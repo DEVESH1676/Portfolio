@@ -5,6 +5,7 @@ export interface AnimeOptions extends KeyframeAnimationOptions {
   duration?: number;
   delay?: number;
   easing?: string;
+  staggerIndex?: number; // New: For staggered animations
 }
 
 export const prefersReducedMotion = (): boolean => {
@@ -19,16 +20,20 @@ export const prefersReducedMotion = (): boolean => {
   }
 };
 
-// Global animation configuration
+// Premium Academic Animation Configuration
 export const ANIME = {
-  easing: "cubic-bezier(0.455, 0.03, 0.515, 0.955)", // easeInOutQuad equivalent
-  fastEasing: "cubic-bezier(0.19, 1, 0.22, 1)", // easeOutExpo equivalent
-  pulseEasing: "cubic-bezier(0.445, 0.05, 0.55, 0.95)", // easeInOutSine equivalent
+  // "Apple-like" smooth easing (Premium)
+  premiumEasing: "cubic-bezier(0.2, 0.8, 0.2, 1)",
+  // Standard functional easing
+  standardEasing: "cubic-bezier(0.4, 0.0, 0.2, 1)",
+  // Bouncy/Playful (Use sparingly)
+  springEasing: "cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+
   durations: {
-    line: 900,
-    dot: 520,
-    pulse: 1200,
-    entrance: 600,
+    hero: 1000,
+    section: 800,
+    card: 600,
+    staggerBase: 100, // ms per item
   },
 };
 
@@ -38,39 +43,29 @@ export function runAnime(
   options?: AnimeOptions,
 ): Animation {
   let finalDuration = options?.duration ?? 0;
+  let finalDelay = options?.delay ?? 0;
 
-  // Respect reduced motion: if user prefers reduced motion, make animations instant
+  // Stagger calculation
+  if (options?.staggerIndex !== undefined && options.staggerIndex > 0) {
+    finalDelay += options.staggerIndex * ANIME.durations.staggerBase;
+  }
+
+  // Respect reduced motion
   if (prefersReducedMotion()) {
     finalDuration = 0;
+    finalDelay = 0;
   }
 
   const anim = el.animate(keyframes, {
     ...options,
     duration: finalDuration,
+    delay: finalDelay,
     easing: options?.easing ?? "linear",
-    fill: options?.fill ?? "forwards", // Default to 'forwards' to persist state
+    fill: options?.fill ?? "forwards",
   });
 
   return anim;
 }
-
-export const animateLineDraw = (
-  el: HTMLElement,
-  opts?: { duration?: number; easing?: string },
-): Animation | undefined => {
-  if (!el) return;
-  const duration = opts?.duration ?? ANIME.durations.line;
-  const easing = opts?.easing ?? ANIME.easing;
-
-  // ensure transform origin
-  el.style.transformOrigin = "top";
-
-  return runAnime(
-    el,
-    [{ transform: "scaleY(0)" }, { transform: "scaleY(1)" }],
-    { duration, easing }
-  );
-};
 
 export const animateEntrance = (
   el: HTMLElement,
@@ -81,65 +76,96 @@ export const animateEntrance = (
     duration?: number;
     easing?: string;
     delay?: number;
+    staggerIndex?: number;
+    blur?: boolean; // New: Blur effect
   },
 ): Animation | undefined => {
   if (!el) return;
 
-  const duration = opts?.duration ?? ANIME.durations.entrance;
-  const easing = opts?.easing ?? ANIME.fastEasing;
-  const delay = opts?.delay ?? 0;
+  const duration = opts?.duration ?? ANIME.durations.section;
+  const easing = opts?.easing ?? ANIME.premiumEasing;
 
-  const keyframes: Keyframe[] = [];
-  const startFrame: Keyframe = { transform: "translateZ(0)", opacity: 0 };
-  const endFrame: Keyframe = { transform: "translateZ(0)", opacity: 1 };
+  const startFrame: Keyframe = {
+    transform: "translate3d(0, 0, 0)",
+    opacity: 0,
+    filter: opts?.blur ? "blur(4px)" : "none"
+  };
+
+  const endFrame: Keyframe = {
+    transform: "translate3d(0, 0, 0)",
+    opacity: 1,
+    filter: "blur(0px)"
+  };
 
   if (opts?.translateY !== undefined) {
     startFrame.transform += ` translateY(${opts.translateY}px)`;
-    endFrame.transform += ` translateY(0px)`;
   }
 
-  if (opts.scale) {
-    startFrame.transform += ` scale(0.8)`;
-    endFrame.transform += ` scale(${opts.scale})`;
-  }
-
-
-  // Override opacity if start is implied 0 -> 1
-  if (opts?.opacity !== undefined) {
-    endFrame.opacity = opts.opacity;
+  if (opts?.scale !== undefined) {
+    startFrame.transform += ` scale(${opts.scale})`;
   }
 
   return runAnime(el, [startFrame, endFrame], {
     duration,
     easing,
-    delay,
+    delay: opts?.delay,
+    staggerIndex: opts?.staggerIndex,
     fill: "forwards"
   });
 };
 
-
-
-export const animateHoverPop = (
+export const animateLineDraw = (
   el: HTMLElement,
-  opts?: { scale?: number; duration?: number },
-) => {
-  const scale = opts?.scale ?? 1.04;
-  const duration = opts?.duration ?? 180;
+  opts?: { duration?: number; easing?: string; delay?: number },
+): Animation | undefined => {
+  if (!el) return;
+  const duration = opts?.duration ?? 800;
+  const easing = opts?.easing ?? ANIME.premiumEasing;
 
-  return {
-    onEnter: () =>
-      runAnime(
-        el,
-        [{ transform: `scale(${scale})` }],
-        { duration, easing: ANIME.fastEasing, fill: "forwards" }
-      ),
-    onLeave: () =>
-      runAnime(
-        el,
-        [{ transform: "scale(1)" }],
-        { duration, easing: ANIME.fastEasing, fill: "forwards" }
-      ),
-  };
+  el.style.transformOrigin = "top";
+
+  return runAnime(
+    el,
+    [{ transform: "scaleY(0)" }, { transform: "scaleY(1)" }],
+    { duration, easing, delay: opts?.delay }
+  );
+};
+
+// New: Animate a list of children with automatic staggering
+export const animateStaggeredChildren = (
+  parent: HTMLElement,
+  selector: string,
+  opts?: {
+    translateY?: number;
+    duration?: number;
+    baseDelay?: number;
+  }
+) => {
+  if (!parent) return;
+  const children = parent.querySelectorAll(selector);
+
+  children.forEach((child, index) => {
+    animateEntrance(child as HTMLElement, {
+      translateY: opts?.translateY ?? 20,
+      duration: opts?.duration,
+      delay: opts?.baseDelay ?? 0,
+      staggerIndex: index,
+      easing: ANIME.premiumEasing,
+    });
+  });
+};
+
+// New: Premium Hover Effect for Cards
+export const animatePremiumHover = (
+  el: HTMLElement,
+) => {
+  // We use event listeners for hover to ensure it uses WAAPI
+  // But often CSS :hover is better for performance. 
+  // However, for spring physics or complex transforms, JS is useful.
+  // For now, we'll keep this simple and rely on CSS classes for hover in this project
+  // unless strictly requested.
+  // Returning a simple object to match pattern if needed later.
+  return;
 };
 
 export default {
@@ -147,5 +173,6 @@ export default {
   prefersReducedMotion,
   animateLineDraw,
   animateEntrance,
-  animateHoverPop,
+  animateStaggeredChildren,
+  ANIME
 };

@@ -7,6 +7,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ExternalLink } from "lucide-react";
+import { animateEntrance } from "@/lib/anime";
 
 export const PublicationsSection = () => {
   const headingRef = React.useRef<HTMLHeadingElement | null>(null);
@@ -15,30 +16,33 @@ export const PublicationsSection = () => {
   const additionalRef = React.useRef<HTMLDivElement | null>(null);
 
   React.useEffect(() => {
-    import("@/lib/anime").then((mod) => {
-      const { animateEntrance } = mod;
-      // ... same animations
-      if (headingRef.current)
-        animateEntrance(headingRef.current, { translateY: 18, duration: 600 });
-      if (introRef.current)
-        animateEntrance(introRef.current, {
-          translateY: 16,
-          duration: 600,
-          delay: 70,
-        });
-      if (featuredRef.current)
-        animateEntrance(featuredRef.current, {
-          translateY: 20,
-          duration: 700,
-          delay: 140,
-        });
-      if (additionalRef.current)
-        animateEntrance(additionalRef.current, {
-          translateY: 20,
-          duration: 700,
-          delay: 220,
-        });
-    });
+    if (headingRef.current)
+      animateEntrance(headingRef.current, {
+        translateY: 24,
+        blur: true
+      });
+
+    if (introRef.current)
+      animateEntrance(introRef.current, {
+        translateY: 20,
+        staggerIndex: 1,
+        blur: true,
+      });
+
+    if (featuredRef.current)
+      animateEntrance(featuredRef.current, {
+        translateY: 40,
+        staggerIndex: 2,
+        // Card is large, so slower fade in
+        duration: 900,
+      });
+
+    if (additionalRef.current)
+      animateEntrance(additionalRef.current, {
+        translateY: 40,
+        staggerIndex: 3,
+        duration: 900,
+      });
   }, []);
 
   return (
@@ -47,13 +51,13 @@ export const PublicationsSection = () => {
         <div className="mb-12 max-w-3xl">
           <h2
             ref={headingRef}
-            className="font-heading font-semibold tracking-tight text-foreground"
+            className="font-heading font-semibold tracking-tight text-foreground opacity-0"
           >
             Selected Publications
           </h2>
           <p
             ref={introRef}
-            className="mt-4 text-foreground/75"
+            className="mt-4 text-foreground/75 opacity-0"
           >
             {CONTENT_INTROS.publications}
           </p>
@@ -61,7 +65,7 @@ export const PublicationsSection = () => {
         <div className="grid gap-10 lg:grid-cols-[1.2fr_0.8fr]">
           <Card
             ref={featuredRef}
-            className="glass-card border border-primary/20 bg-background/95 shadow-xl p-6 md:p-10"
+            className="glass-card border border-primary/20 bg-background/95 shadow-xl p-6 md:p-10 opacity-0"
           >
             <CardHeader className="p-0 mb-6">
               <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-primary/10 text-primary border border-primary/20 mb-4">
@@ -95,7 +99,7 @@ export const PublicationsSection = () => {
           </Card>
           <Card
             ref={additionalRef}
-            className="glass-card border border-primary/10 bg-primary/5 p-6 md:p-8 shadow-lg"
+            className="glass-card border border-primary/10 bg-primary/5 p-6 md:p-8 shadow-lg opacity-0"
           >
             <h3 className="font-heading text-xl font-semibold text-primary">
               Additional Publications

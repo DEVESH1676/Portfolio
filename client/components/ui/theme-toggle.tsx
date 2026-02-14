@@ -1,19 +1,21 @@
 import * as React from "react";
 import { Sun, Moon } from "lucide-react";
-
-import { Button } from "./button";
+import { cn } from "@/lib/utils";
 
 const THEME_KEY = "site-theme";
 
 export const ThemeToggle: React.FC = () => {
   const [isDark, setIsDark] = React.useState<boolean>(() => {
     try {
-      const stored = localStorage.getItem(THEME_KEY);
-      if (stored) return stored === "dark";
-      return (
-        window.matchMedia &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches
-      );
+      if (typeof window !== 'undefined') {
+        const stored = localStorage.getItem(THEME_KEY);
+        if (stored) return stored === "dark";
+        return (
+          window.matchMedia &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches
+        );
+      }
+      return false;
     } catch {
       return false;
     }
@@ -33,23 +35,30 @@ export const ThemeToggle: React.FC = () => {
   }, [isDark]);
 
   return (
-    <Button
-      variant="ghost"
-      size="icon"
+    <div
       onClick={() => setIsDark(!isDark)}
-      className="relative h-10 w-10 rounded-full transition-colors hover:bg-muted/60"
+      className="relative flex items-center gap-0.5 bg-muted/20 border border-primary/10 rounded-full p-1 h-9 w-[70px] cursor-pointer transition-colors hover:border-primary/30 hover:bg-muted/30"
+      role="button"
       aria-label="Toggle theme"
     >
-      <Sun
-        className={`h-5 w-5 transition-all duration-500 text-amber-500 fill-amber-500 ${isDark ? "rotate-90 scale-0 opacity-0" : "rotate-0 scale-100 opacity-100"
-          }`}
+      {/* Sliding Pill Background */}
+      <div
+        className="absolute top-1 left-1 w-7 h-7 bg-background shadow-sm border border-border/50 rounded-full transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)]"
+        style={{ transform: isDark ? "translateX(34px)" : "translateX(0px)" }}
       />
-      <Moon
-        className={`absolute h-5 w-5 transition-all duration-500 text-slate-700 fill-slate-700 ${isDark ? "rotate-0 scale-100 opacity-100" : "-rotate-90 scale-0 opacity-0"
-          }`}
-      />
+
+      {/* Sun Icon (Light Mode Position) */}
+      <div className={cn("relative z-10 h-7 w-7 flex items-center justify-center rounded-full transition-colors duration-300", !isDark ? "text-amber-500" : "text-muted-foreground/40")}>
+        <Sun className="h-4 w-4" />
+      </div>
+
+      {/* Moon Icon (Dark Mode Position) */}
+      <div className={cn("relative z-10 h-7 w-7 flex items-center justify-center rounded-full transition-colors duration-300", isDark ? "text-blue-500" : "text-muted-foreground/40")}>
+        <Moon className="h-4 w-4" />
+      </div>
+
       <span className="sr-only">Toggle theme</span>
-    </Button>
+    </div>
   );
 };
 
