@@ -80,7 +80,7 @@ export const HeroSection = () => {
   }, []);
 
   return (
-    <section id="hero" className="section-base relative flex min-h-[90vh] flex-col justify-center overflow-hidden section-padding pt-32 lg:pt-40">
+    <section id="home" className="section-base relative flex min-h-[90vh] flex-col justify-center overflow-hidden section-padding pt-32 lg:pt-40">
       <div className="hero-glow" />
 
       <Container className="flex flex-col-reverse items-center gap-12 md:gap-16 lg:flex-row lg:items-start">

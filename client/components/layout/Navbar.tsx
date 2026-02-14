@@ -5,15 +5,16 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { NAV_ITEMS, DOWNLOAD_CV_URL } from "@/data/portfolio";
 import ThemeToggle from "@/components/ui/theme-toggle";
+import { motion, AnimatePresence } from "framer-motion";
 
 export const Navbar = () => {
   const [activeSection, setActiveSection] = React.useState<string>("#home");
   const [isSheetOpen, setIsSheetOpen] = React.useState(false);
   const [isScrolled, setIsScrolled] = React.useState(false);
 
-  // Active Indicator State
-  const [indicatorStyle, setIndicatorStyle] = React.useState({ left: 0, width: 0, opacity: 0 });
-  const navRefs = React.useRef<{ [key: string]: HTMLAnchorElement | null }>({});
+  // Active Indicator State - REMOVED
+  // const [indicatorStyle, setIndicatorStyle] = React.useState({ left: 0, width: 0, opacity: 0 });
+  // const navRefs = React.useRef<{ [key: string]: HTMLAnchorElement | null }>({});
 
   const observerEntries = React.useMemo(
     () =>
@@ -53,24 +54,24 @@ export const Navbar = () => {
           if (matched) setActiveSection(matched.href);
         }
       },
-      { rootMargin: "-50% 0px -45% 0px", threshold: [0, 0.2, 0.4, 0.6, 0.8, 1] }
+      { rootMargin: "-10% 0px -40% 0px", threshold: 0.4 }
     );
 
     sections.forEach((section) => observer.observe(section));
     return () => observer.disconnect();
   }, [observerEntries]);
 
-  // Update Sliding Pill Position
-  React.useEffect(() => {
-    const activeEl = navRefs.current[activeSection];
-    if (activeEl) {
-      setIndicatorStyle({
-        left: activeEl.offsetLeft,
-        width: activeEl.offsetWidth,
-        opacity: 1,
-      });
-    }
-  }, [activeSection]);
+  // Update Sliding Pill Position - REMOVED
+  // React.useEffect(() => {
+  //   const activeEl = navRefs.current[activeSection];
+  //   if (activeEl) {
+  //     setIndicatorStyle({
+  //       left: activeEl.offsetLeft,
+  //       width: activeEl.offsetWidth,
+  //       opacity: 1,
+  //     });
+  //   }
+  // }, [activeSection]);
 
   const handleNavClick = (href: string) => {
     setActiveSection(href);
@@ -83,91 +84,106 @@ export const Navbar = () => {
         "fixed z-50 transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)]",
         // Mobile: Full width top bar
         "inset-x-0 top-0 border-b border-border/40 bg-background/80 backdrop-blur-md md:border-none md:bg-transparent md:backdrop-filter-none",
-        // Desktop: Floating Glass Pill Position
-        "md:inset-x-auto md:left-1/2 md:-translate-x-1/2 md:w-auto md:max-w-5xl",
-        isScrolled ? "md:top-3" : "md:top-6" // Slight lift on scroll
+        // Desktop: Floating Glass Pill Position (Refined)
+        "md:inset-x-auto md:left-1/2 md:-translate-x-1/2 md:w-auto md:max-w-[95%] xl:max-w-7xl",
+        isScrolled ? "md:top-3" : "md:top-6"
       )}
     >
       <div
         className={cn(
-          "flex items-center justify-between px-6 transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)]",
+          "flex items-center justify-between px-4 lg:px-6 transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)]",
           // Desktop Container Style (The Morphing Object)
           "md:rounded-full md:border",
           isScrolled
-            ? "py-2 md:bg-background/70 md:backdrop-blur-2xl md:shadow-2xl md:border-white/10" // Scrolled: Ultra Glass
-            : "py-4 md:bg-transparent md:backdrop-blur-none md:shadow-none md:border-transparent" // Top: Floating Air
+            ? "py-2 md:bg-background/70 md:backdrop-blur-xl md:shadow-lg md:border-border/20" // Scrolled
+            : "py-3 md:bg-transparent md:backdrop-blur-none md:shadow-none md:border-transparent" // Top
         )}
       >
-        {/* LOGO (Left) */}
-        <a
+        {/* LOGO (Left - Animated) */}
+        <motion.a
           href="#home"
-          className="font-heading text-lg font-bold tracking-tight text-foreground transition-all hover:text-primary md:ml-6 md:mr-8 whitespace-nowrap"
+          initial={{ letterSpacing: "-0.02em" }}
+          whileHover={{
+            letterSpacing: "0.02em",
+            textShadow: "0 0 20px rgba(var(--primary), 0.5)"
+          }}
+          transition={{ duration: 0.3 }}
+          className="font-heading text-lg font-bold tracking-tight text-foreground md:ml-4 md:mr-6 whitespace-nowrap cursor-pointer"
         >
           Dr. C. A. Ghuge
-        </a>
+        </motion.a>
 
-        {/* DESKTOP NAV (Center - Sliding Pill) */}
-        <nav className="hidden md:flex items-center relative gap-1 p-1">
-          {/* Animated Active Pill (The Glide) */}
-          <div
+        {/* DESKTOP NAV (Center - Framer Motion Pill) */}
+        <nav className="hidden md:flex items-center gap-1 p-1">
+          {/* Animated Active Pill (The Glide) - REMOVED */}
+          {/* <div
             className="absolute h-[calc(100%-8px)] top-1 bg-primary/10 rounded-full transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] -z-10"
             style={{
               left: indicatorStyle.left,
               width: indicatorStyle.width,
               opacity: indicatorStyle.opacity,
             }}
-          />
+          /> */}
 
           {NAV_ITEMS.map((item) => (
             <a
               key={item.href}
               href={item.href}
-              ref={(el) => (navRefs.current[item.href] = el)}
+              // ref={(el) => (navRefs.current[item.href] = el)} // REMOVED
               onClick={() => handleNavClick(item.href)}
               className={cn(
-                "relative px-5 py-2 text-sm font-medium transition-colors duration-300 rounded-full",
+                "relative px-3 lg:px-5 py-2 text-sm font-medium transition-colors duration-300 rounded-full cursor-pointer",
                 activeSection === item.href
                   ? "text-primary font-semibold"
                   : "text-foreground/70 hover:text-foreground"
               )}
             >
+              {activeSection === item.href && (
+                <motion.div
+                  layoutId="navbar-pill"
+                  className="absolute inset-0 bg-primary/10 rounded-full -z-10 shadow-[0_0_10px_rgba(var(--primary),0.2)]"
+                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                />
+              )}
               {item.label}
             </a>
           ))}
         </nav>
 
         {/* ACTIONS (Right) */}
-        <div className="flex items-center gap-2 md:ml-4 lg:ml-8 md:mr-1">
+        <div className="flex items-center gap-2 md:ml-4 lg:ml-6 md:mr-1">
           <div className="hidden md:flex items-center gap-2">
-            <Button asChild variant="ghost" size="sm" className="rounded-full text-foreground/70 hover:text-primary px-2 lg:px-4 h-9 hover:bg-primary/5 transition-all">
+            <Button asChild variant="ghost" size="sm" className="rounded-full text-foreground/70 hover:text-primary px-2 text-xs lg:text-sm h-9 hover:bg-primary/5 transition-all">
               <a href="#publications" className="flex items-center gap-2">
                 <FileText className="h-4 w-4 opacity-70" />
-                <span className="hidden lg:inline">Papers</span>
+                <span className="hidden xl:inline">Papers</span>
               </a>
             </Button>
 
             {/* Holographic CV Button (Compact on MD) */}
-            <a
+            <motion.a
               href={DOWNLOAD_CV_URL}
               target="_blank"
               rel="noreferrer"
-              className="relative group p-[1px] rounded-full transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] hover:scale-105 hover:shadow-[0_0_24px_-8px_rgba(var(--primary),0.6)]"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="relative group p-[1px] rounded-full transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] hover:shadow-[0_0_24px_-8px_rgba(var(--primary),0.6)] cursor-pointer"
             >
               <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary via-violet-500 to-primary bg-[length:400%_400%] animate-gradient-xy opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative flex items-center justify-center bg-background/95 group-hover:bg-background/90 rounded-full px-4 lg:px-5 py-2 h-9 transition-colors">
+              <div className="relative flex items-center justify-center bg-background/95 group-hover:bg-background/90 rounded-full px-3 lg:px-5 py-2 h-9 transition-colors">
                 <span className="font-medium flex items-center gap-2 text-sm text-foreground/90 group-hover:text-primary transition-colors">
                   <Download className="h-3.5 w-3.5 text-primary group-hover:rotate-12 transition-transform duration-300" />
                   CV
                 </span>
               </div>
-            </a>
+            </motion.a>
           </div>
 
           <div className="pl-2 border-l border-border/20 ml-2 hidden md:block">
             <ThemeToggle />
           </div>
 
-          {/* Mobile Toggle */}
+          {/* Mobile Toggle & Menu */}
           <div className="flex items-center gap-4 lg:hidden">
             <ThemeToggle />
             <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
@@ -181,6 +197,7 @@ export const Navbar = () => {
                 </button>
               </SheetTrigger>
               <SheetContent side="right" className="w-full max-w-xs border-l border-border bg-background/95 backdrop-blur-xl">
+                {/* ... Mobile Menu Content ... */}
                 <div className="mt-12 flex flex-col gap-6">
                   <div className="flex flex-col space-y-2">
                     {NAV_ITEMS.map((item) => (
