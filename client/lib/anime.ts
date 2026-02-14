@@ -135,32 +135,7 @@ export const animateEntrance = (
   });
 };
 
-export const animatePulse = (
-  el: HTMLElement,
-  opts?: { scale?: [number, number]; duration?: number; loop?: boolean },
-): Animation | undefined => {
-  if (!el) return;
-  // Reduced motion check is already in runAnime, but we might want early exit?
-  if (prefersReducedMotion()) return;
 
-  const scale = opts?.scale ?? [1, 1.06];
-  const duration = opts?.duration ?? ANIME.durations.pulse;
-  const loop = opts?.loop ?? true;
-
-  return runAnime(
-    el,
-    [
-      { transform: `scale(${scale[0]})` },
-      { transform: `scale(${scale[1]})` }
-    ],
-    {
-      duration,
-      easing: ANIME.pulseEasing,
-      direction: "alternate",
-      iterations: loop ? Infinity : 1,
-    }
-  );
-};
 
 export const animateHoverPop = (
   el: HTMLElement,
@@ -190,6 +165,5 @@ export default {
   prefersReducedMotion,
   animateLineDraw,
   animateEntrance,
-  animatePulse,
   animateHoverPop,
 };
