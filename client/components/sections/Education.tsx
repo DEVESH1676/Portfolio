@@ -8,6 +8,7 @@ export const EducationSection = () => {
   const containerRef = React.useRef<HTMLDivElement | null>(null);
   const lineRef = React.useRef<HTMLDivElement | null>(null);
   const dotRefs = React.useRef<Array<HTMLDivElement | null>>([]);
+  const connectorRefs = React.useRef<Array<HTMLDivElement | null>>([]); // New Ref
   const cardRefs = React.useRef<Array<HTMLDivElement | null>>([]);
   const headingRef = React.useRef<HTMLHeadingElement | null>(null);
 
@@ -55,6 +56,37 @@ export const EducationSection = () => {
                 easing: "cubic-bezier(0.175, 0.885, 0.32, 1.275)", // Pop
                 blur: true,
               });
+
+              // Dot Pulse causing "Fill" effect
+              dot.animate(
+                [
+                  { transform: "scale(1)", backgroundColor: "hsl(var(--background))" },
+                  { transform: "scale(1.5)", backgroundColor: "hsl(var(--primary))", offset: 0.5 },
+                  { transform: "scale(1)", backgroundColor: "hsl(var(--background))" }
+                ],
+                {
+                  duration: 600,
+                  delay: delay + 200, // Sync with line arrival
+                  easing: "ease-out"
+                }
+              );
+            }
+
+            // Connector Line Animation
+            const connector = connectorRefs.current[index];
+            if (connector) {
+              connector.animate(
+                [
+                  { transform: "scaleX(0)" },
+                  { transform: "scaleX(1)" }
+                ],
+                {
+                  duration: 400,
+                  delay: delay + 100, // Start shortly after dot appears
+                  easing: ANIME.premiumEasing,
+                  fill: "forwards"
+                }
+              );
             }
 
             // Card Directional Slide (Sync slightly after dot)
@@ -182,6 +214,19 @@ export const EducationSection = () => {
                             : "h-1.5 w-1.5 bg-primary/20 group-hover:bg-primary" // Clean Matte Inner
                         )} />
                       </div>
+
+                      {/* Connector Line */}
+                      <div
+                        ref={(el) => (connectorRefs.current[index] = el)}
+                        className={cn(
+                          "absolute top-1/2 -translate-y-1/2 h-[2px] bg-primary/30 w-12 md:w-20 -z-10",
+                          // Mobile: Always Right
+                          "left-1/2 origin-left",
+                          // Desktop: Alternate
+                          isEven ? "md:right-1/2 md:left-auto md:origin-right" : "md:left-1/2 md:origin-left",
+                          "scale-x-0" // Initial state
+                        )}
+                      />
                     </div>
 
                     {/* Content Card (Level 2 Elevation) */}
@@ -220,6 +265,6 @@ export const EducationSection = () => {
           </div>
         </div>
       </Container>
-    </section>
+    </section >
   );
 };

@@ -59,9 +59,9 @@ export default {
         },
       },
       fontFamily: {
-        heading: ["Inter", "sans-serif"],
-        body: ["Roboto", "sans-serif"],
-        sans: ["Roboto", "sans-serif"],
+        heading: ["Satoshi", "sans-serif"],
+        body: ["Inter", "sans-serif"],
+        sans: ["Inter", "sans-serif"],
       },
       borderRadius: {
         lg: "var(--radius)",

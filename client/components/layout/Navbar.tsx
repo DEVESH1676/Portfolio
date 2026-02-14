@@ -34,31 +34,29 @@ export const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Intersection Observer
+  // Scroll-based active section detection (handles tall sections)
   React.useEffect(() => {
-    const sections = observerEntries
-      .map((entry) => document.getElementById(entry.id))
-      .filter((section): section is HTMLElement => Boolean(section));
+    const handleActiveSection = () => {
+      const scrollY = window.scrollY;
+      const offset = window.innerHeight * 0.35; // Detection point at 35% from top
 
-    if (sections.length === 0) return;
+      let current = observerEntries[0]?.href ?? "#home";
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-
-        if (visible.length > 0) {
-          const topMost = visible[0].target.getAttribute("id");
-          const matched = observerEntries.find((entry) => entry.id === topMost);
-          if (matched) setActiveSection(matched.href);
+      for (const entry of observerEntries) {
+        const el = document.getElementById(entry.id);
+        if (!el) continue;
+        // If the section's top has scrolled past the detection point, it's "active"
+        if (el.offsetTop - offset <= scrollY) {
+          current = entry.href;
         }
-      },
-      { rootMargin: "-10% 0px -40% 0px", threshold: 0.4 }
-    );
+      }
 
-    sections.forEach((section) => observer.observe(section));
-    return () => observer.disconnect();
+      setActiveSection(current);
+    };
+
+    handleActiveSection(); // Run once on mount
+    window.addEventListener("scroll", handleActiveSection, { passive: true });
+    return () => window.removeEventListener("scroll", handleActiveSection);
   }, [observerEntries]);
 
   // Update Sliding Pill Position - REMOVED
