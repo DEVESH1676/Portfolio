@@ -4,7 +4,6 @@ import Container from "@/components/ui/container";
 import {
   animateLineDraw,
   animateEntrance,
-  animatePulse,
   runAnime,
   // getAnimeLib removed
 } from "@/lib/anime";
