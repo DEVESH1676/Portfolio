@@ -24,6 +24,7 @@ export const ResearchSection = () => {
             translateY: 12,
             duration: 480,
             delay: i * 60 + 140,
+            blur: true,
           });
         });
       }
@@ -53,7 +54,7 @@ export const ResearchSection = () => {
               <span
                 key={tag}
                 ref={(el) => (tagRefs.current[i] = el)}
-                className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium font-sans bg-primary/10 text-primary border border-primary/20 mb-2 mr-2 whitespace-nowrap transition-colors hover:bg-primary/20"
+                className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium font-sans bg-primary/10 text-primary border border-primary/20 mb-2 mr-2 whitespace-nowrap transition-colors duration-300 hover:bg-primary/25 hover:border-primary/40 hover:text-primary-hover"
               >
                 {tag}
               </span>

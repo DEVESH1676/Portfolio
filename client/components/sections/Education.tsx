@@ -52,7 +52,8 @@ export const EducationSection = () => {
                 opacity: 1,
                 delay: delay,
                 duration: 500,
-                easing: "cubic-bezier(0.175, 0.885, 0.32, 1.275)" // Pop
+                easing: "cubic-bezier(0.175, 0.885, 0.32, 1.275)", // Pop
+                blur: true,
               });
             }
 
@@ -69,8 +70,8 @@ export const EducationSection = () => {
 
                 card.animate(
                   [
-                    { opacity: 0, transform: `translate3d(${startX}px, 0, 0)` },
-                    { opacity: 1, transform: `translate3d(0, 0, 0)` }
+                    { opacity: 0, transform: `translate3d(${startX}px, 0, 0)`, filter: "blur(6px)" },
+                    { opacity: 1, transform: `translate3d(0, 0, 0)`, filter: "blur(0px)" }
                   ],
                   {
                     duration: 800,
@@ -86,6 +87,7 @@ export const EducationSection = () => {
                   opacity: 1,
                   delay: delay + 150,
                   duration: 800,
+                  blur: true,
                 });
               }
             }

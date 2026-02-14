@@ -234,9 +234,17 @@
 
   .card-elevate:hover,
   .card-elevate:focus-within {
-    transform: translateY(-6px);
+    transform: translateY(-3px) scale(1.01);
     box-shadow: var(--shadow-elevate);
-    border-color: hsl(var(--border));
+    border-color: hsl(var(--primary) / 0.3);
+  }
+
+  .dark .card-elevate:hover,
+  .dark .card-elevate:focus-within {
+    border-color: hsl(var(--primary) / 0.5);
+    box-shadow:
+      0 10px 40px -10px rgba(0, 0, 0, 0.5),
+      0 0 20px -5px hsl(var(--primary) / 0.3);
   }
 
   /* Button CTA adjustments */
@@ -404,5 +412,14 @@
 
   .animate-gradient-xy {
     animation: gradient-xy 3s ease infinite;
+  }
+
+  /* Premium Card Depth */
+  .shadow-premium {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 0, 0, 0.06);
+  }
+
+  .dark .shadow-premium {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 10px 40px rgba(0, 0, 0, 0.5);
   }
 }

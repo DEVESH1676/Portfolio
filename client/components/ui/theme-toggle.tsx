@@ -43,7 +43,7 @@ export const ThemeToggle: React.FC = () => {
     >
       {/* Sliding Pill Background */}
       <div
-        className="absolute top-1 left-1 w-7 h-7 bg-background shadow-sm border border-border/50 rounded-full transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)]"
+        className="absolute top-1 left-1 w-7 h-7 bg-background shadow-sm border border-border/50 rounded-full transition-all duration-500 ease-spring"
         style={{ transform: isDark ? "translateX(34px)" : "translateX(0px)" }}
       />
 

@@ -35,6 +35,7 @@ export const PublicationsSection = () => {
         staggerIndex: 2,
         // Card is large, so slower fade in
         duration: 900,
+        blur: true,
       });
 
     if (additionalRef.current)
@@ -42,6 +43,7 @@ export const PublicationsSection = () => {
         translateY: 40,
         staggerIndex: 3,
         duration: 900,
+        blur: true,
       });
   }, []);
 
@@ -65,13 +67,13 @@ export const PublicationsSection = () => {
         <div className="grid gap-10 lg:grid-cols-[1.2fr_0.8fr]">
           <Card
             ref={featuredRef}
-            className="glass-card border border-primary/20 bg-background/95 shadow-xl p-6 md:p-10 opacity-0"
+            className="glass-card border border-primary/20 bg-background/95 shadow-premium p-6 md:p-10 opacity-0 group"
           >
             <CardHeader className="p-0 mb-6">
-              <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-primary/10 text-primary border border-primary/20 mb-4">
+              <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-primary/10 text-primary border border-primary/20 mb-4 group-hover:bg-primary/20 group-hover:border-primary/40 transition-colors duration-300">
                 Featured
               </span>
-              <CardTitle className="font-heading text-2xl text-foreground mt-2">
+              <CardTitle className="font-heading text-2xl text-foreground mt-2 group-hover:text-primary transition-colors duration-300">
                 {FEATURED_PUBLICATION.title}
               </CardTitle>
               <p className="text-sm font-medium text-foreground/70">
@@ -99,9 +101,9 @@ export const PublicationsSection = () => {
           </Card>
           <Card
             ref={additionalRef}
-            className="glass-card border border-primary/10 bg-primary/5 p-6 md:p-8 shadow-lg opacity-0"
+            className="glass-card border border-primary/10 bg-primary/5 p-6 md:p-8 shadow-premium opacity-0 group"
           >
-            <h3 className="font-heading text-xl font-semibold text-primary">
+            <h3 className="font-heading text-xl font-semibold text-primary group-hover:text-primary-hover transition-colors duration-300">
               Additional Publications
             </h3>
             <ul className="mt-4 space-y-4 text-sm text-foreground/85">

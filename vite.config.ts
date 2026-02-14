@@ -1,7 +1,7 @@
 import { defineConfig, Plugin } from "vite";
 import react from "@vitejs/plugin-react-swc";
-import path from "path";
-import fs from 'fs';
+import path from "node:path";
+import fs from "node:fs";
 
 // Function to search for the workspace root
 function searchForWorkspaceRoot(cwd: string): string {
@@ -17,7 +17,7 @@ function searchForWorkspaceRoot(cwd: string): string {
 }
 
 // Import the createServer function from your server module
-import { createServer } from "./server";
+import { createServer } from "./server/index";
 
 export default defineConfig(({ mode }) => ({
   server: {

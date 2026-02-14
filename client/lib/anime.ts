@@ -88,7 +88,7 @@ export const animateEntrance = (
   const startFrame: Keyframe = {
     transform: "translate3d(0, 0, 0)",
     opacity: 0,
-    filter: opts?.blur ? "blur(4px)" : "none"
+    filter: opts?.blur ? "blur(6px)" : "none"
   };
 
   const endFrame: Keyframe = {
@@ -151,6 +151,7 @@ export const animateStaggeredChildren = (
       delay: opts?.baseDelay ?? 0,
       staggerIndex: index,
       easing: ANIME.premiumEasing,
+      blur: true,
     });
   });
 };

@@ -48,13 +48,13 @@ export const ProjectsSection = () => {
           {PROJECTS.map((project) => (
             <Card
               key={project.title}
-              className="project-card glass-card flex h-full flex-col justify-between border border-primary/15 bg-primary/5 p-6 md:p-8 shadow-lg opacity-0"
+              className="project-card glass-card flex h-full flex-col justify-between border border-primary/15 bg-primary/5 p-6 md:p-8 shadow-premium opacity-0 group"
             >
               <div>
-                <h3 className="font-heading text-xl font-semibold text-primary">
+                <h3 className="font-heading text-xl font-semibold text-foreground group-hover:text-primary transition-colors duration-300">
                   {project.title}
                 </h3>
-                <p className="mt-2 text-sm font-medium text-foreground/70">
+                <p className="mt-2 text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors duration-300">
                   {project.role}
                 </p>
               </div>

@@ -81,7 +81,7 @@ export const Navbar = () => {
   return (
     <header
       className={cn(
-        "fixed z-50 transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)]",
+        "fixed z-50 transition-all duration-500 ease-spring",
         // Mobile: Full width top bar
         "inset-x-0 top-0 border-b border-border/40 bg-background/80 backdrop-blur-md md:border-none md:bg-transparent md:backdrop-filter-none",
         // Desktop: Floating Glass Pill Position (Refined)
@@ -91,7 +91,7 @@ export const Navbar = () => {
     >
       <div
         className={cn(
-          "flex items-center justify-between px-4 lg:px-6 transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)]",
+          "flex items-center justify-between px-4 lg:px-6 transition-all duration-500 ease-spring",
           // Desktop Container Style (The Morphing Object)
           "md:rounded-full md:border",
           isScrolled
