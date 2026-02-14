@@ -81,7 +81,7 @@ export const Navbar = () => {
       className={cn(
         "fixed z-50 transition-all duration-500 ease-spring",
         // Mobile: Full width top bar
-        "inset-x-0 top-0 border-b border-border/40 bg-background/80 backdrop-blur-md md:border-none md:bg-transparent md:backdrop-filter-none",
+        "inset-x-0 top-0 border-b border-white/10 dark:border-white/5 bg-background/50 backdrop-blur-2xl backdrop-saturate-150 md:border-none md:bg-transparent md:backdrop-filter-none",
         // Desktop: Floating Glass Pill Position (Refined)
         "md:inset-x-auto md:left-1/2 md:-translate-x-1/2 md:w-auto md:max-w-[95%] xl:max-w-7xl",
         isScrolled ? "md:top-3" : "md:top-6"
@@ -93,7 +93,7 @@ export const Navbar = () => {
           // Desktop Container Style (The Morphing Object)
           "md:rounded-full md:border",
           isScrolled
-            ? "py-2 md:bg-background/70 md:backdrop-blur-xl md:shadow-lg md:border-border/20" // Scrolled
+            ? "py-2 md:bg-background/50 md:backdrop-blur-2xl md:backdrop-saturate-150 md:shadow-lg md:border-white/10 dark:md:border-white/5" // Scrolled (Elite Glass)
             : "py-3 md:bg-transparent md:backdrop-blur-none md:shadow-none md:border-transparent" // Top
         )}
       >
