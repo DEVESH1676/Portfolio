@@ -13,7 +13,7 @@ export const Footer = () => {
   );
 
   return (
-    <footer className="bg-background text-foreground">
+    <footer className="section-base text-foreground">
       <div className="mx-auto flex max-w-6xl flex-col gap-8 px-6 py-12 md:flex-row md:items-center md:justify-between">
         <div className="space-y-2">
           <p className="font-heading text-lg font-semibold">

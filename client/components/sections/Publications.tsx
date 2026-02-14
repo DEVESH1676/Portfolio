@@ -42,7 +42,7 @@ export const PublicationsSection = () => {
   }, []);
 
   return (
-    <section id="publications" className="bg-secondary/40 section-padding scroll-mt-24">
+    <section id="publications" className="section-base section-padding scroll-mt-24">
       <div className="mx-auto max-w-6xl px-6">
         <div className="mb-12 max-w-3xl">
           <h2
@@ -64,7 +64,7 @@ export const PublicationsSection = () => {
             className="glass-card border border-primary/20 bg-background/95 shadow-xl p-6 md:p-10"
           >
             <CardHeader className="p-0 mb-6">
-              <span className="text-xs font-semibold uppercase tracking-[0.3em] text-primary/80">
+              <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-primary/10 text-primary border border-primary/20 mb-4">
                 Featured
               </span>
               <CardTitle className="font-heading text-2xl text-foreground mt-2">
@@ -109,7 +109,7 @@ export const PublicationsSection = () => {
                   <span className="block leading-snug">
                     {publication.title}
                   </span>
-                  <span className="text-xs font-semibold uppercase tracking-[0.2em] text-foreground/50 whitespace-nowrap">
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-primary/5 text-primary/80 border border-primary/10 whitespace-nowrap">
                     {publication.year}
                   </span>
                 </li>

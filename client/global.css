@@ -13,150 +13,133 @@
    * A different format will require also updating the theme in tailwind.config.ts.
   */
   :root {
-    /* Light mode palette */
+    /* "Academic Authority" Light Mode (Hybrid System) */
     --background: 210 40% 98%;
-    /* #F9FAFB */
-    --foreground: 222 25% 13%;
-    /* #111827 */
+    /* #F8FAFC - Calm Slate */
+    --foreground: 222 47% 11%;
+    /* #0F172A */
 
     --card: 0 0% 100%;
     /* #FFFFFF */
-    --card-foreground: 222 25% 13%;
+    --card-foreground: 222 47% 11%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222 25% 13%;
+    --popover-foreground: 222 47% 11%;
 
-    --primary: 217 91% 60%;
-    /* #3B82F6 */
-    --primary-hover: 221 83% 53%;
-    /* #2563EB */
+    --primary: 221 83% 53%;
+    /* #2563EB - Authority Blue */
+    --primary-hover: 224 76% 48%;
+    /* #1D4ED8 */
     --primary-foreground: 0 0% 100%;
 
     --secondary: 160 84% 39%;
-    /* #10B981 */
+    /* #10B981 - Mint (Tags Only) */
     --secondary-hover: 162 94% 31%;
-    /* #059669 */
-    --secondary-foreground: 222 25% 13%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 210 30% 96%;
-    --muted-foreground: 215 20% 35%;
-    /* #374151 */
+    --muted: 210 40% 94%;
+    /* #F1F5F9 - Crisp Alternate Section */
+    --muted-foreground: 215 25% 35%;
 
     --accent: 160 84% 39%;
-    /* tag default uses secondary */
-    --accent-foreground: 222 25% 13%;
+    --accent-foreground: 222 47% 11%;
 
     --destructive: 355 70% 45%;
     --destructive-foreground: 0 0% 100%;
 
     --border: 214 32% 91%;
-    /* #D1D5DB */
+    /* #E2E8F0 */
     --input: 214 32% 91%;
-    --ring: 217 91% 60%;
+    --ring: 221 83% 53%;
 
-    --heading: 215 28% 25%;
-    /* #1F2937 */
+    --heading: 222 47% 11%;
 
-    /* Links */
-    --link: 217 91% 60%;
-    /* #3B82F6 */
-    --link-hover: 221 83% 53%;
-    /* #1D4ED8/2563EB */
+    --link: 221 83% 53%;
+    --link-hover: 224 76% 48%;
 
-    /* Timeline */
-    --timeline-line: 220 14% 94%;
-    /* #E5E7EB */
-    --timeline-dot: 217 91% 60%;
-    /* #3B82F6 */
-    --timeline-dot-current: 221 83% 53%;
-    /* #2563EB */
-    --timeline-halo: 217 91% 60%;
-    /* hue for halo, alpha applied in CSS */
+    --timeline-line: 210 32% 90%;
+    --timeline-dot: 221 83% 53%;
+    --timeline-dot-current: 224 76% 48%;
+    --timeline-halo: 221 83% 53%;
 
-    /* Tag */
     --tag: 160 84% 39%;
-    /* #10B981 */
     --tag-hover: 162 94% 31%;
-    /* #059669 */
 
     --radius: 0.75rem;
+    --shadow-elevate: 0 10px 40px -10px rgba(0, 0, 0, 0.08);
 
-    /* Shadows */
-    --shadow-elevate: 0 12px 36px rgba(0, 0, 0, 0.05);
-
-    /* Sidebar (kept consistent) */
-    --sidebar-background: 217 91% 60%;
+    /* Sidebar */
+    --sidebar-background: 221 83% 53%;
     --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 40 95% 52%;
-    --sidebar-primary-foreground: 208 20% 14%;
-    --sidebar-accent: 210 60% 96%;
-    --sidebar-accent-foreground: 210 10% 20%;
-    --sidebar-border: 214 32% 91%;
-    --sidebar-ring: 217 91% 60%;
+    --sidebar-primary: 210 40% 98%;
+    --sidebar-primary-foreground: 222 47% 11%;
+    --sidebar-accent: 224 76% 48%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 224 76% 48%;
+    --sidebar-ring: 210 40% 98%;
   }
 
   .dark {
-    /* Dark mode palette - Premium Deep Blue/Black */
-    --background: 224 71% 4%;
-    /* #030712 - Very dark blue */
-    --foreground: 210 40% 98%;
-    /* #F9FAFB */
+    /* "Midnight Scholar" Dark Mode (Hybrid System) */
+    --background: 240 15% 8%;
+    /* Deep Midnight Navy */
+    --foreground: 240 10% 94%;
+    /* Soft Off-White */
 
-    --card: 222 47% 11%;
-    /* #0F172A - Slate 900 */
-    --card-foreground: 210 40% 98%;
+    --card: 240 12% 14%;
+    /* Layered Navy Surface */
+    --card-foreground: 240 10% 94%;
 
-    --popover: 222 47% 11%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 240 12% 14%;
+    --popover-foreground: 240 10% 94%;
 
-    --primary: 217 91% 60%;
-    /* #3B82F6 */
-    --primary-hover: 221 83% 53%;
+    --primary: 230 60% 60%;
+    /* Intelligent Blue (Luminous) */
+    --primary-hover: 230 60% 65%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 160 55% 45%;
-    /* Slightly muted green for dark mode */
-    --secondary-hover: 162 60% 35%;
+    --secondary: 150 50% 45%;
+    /* Emerald Accent (Tags Only) */
+    --secondary-hover: 150 50% 50%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 217 33% 17%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 240 10% 20%;
+    --muted-foreground: 240 5% 65%;
 
-    --accent: 217 33% 17%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 240 10% 20%;
+    --accent-foreground: 240 10% 94%;
 
     --destructive: 0 62% 30%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 240 10% 94%;
 
-    --border: 217 33% 17%;
-    /* Smoother border blending */
-    --input: 217 33% 17%;
-    --ring: 224 76% 48%;
+    --border: 240 10% 20%;
+    --input: 240 10% 20%;
+    --ring: 230 60% 60%;
 
-    --heading: 210 40% 98%;
+    --heading: 240 10% 98%;
 
-    --link: 217 91% 60%;
-    --link-hover: 224 76% 48%;
+    --link: 230 60% 60%;
+    --link-hover: 230 60% 70%;
 
-    --timeline-line: 217 33% 20%;
-    --timeline-dot: 217 91% 60%;
-    --timeline-dot-current: 224 76% 48%;
-    --timeline-halo: 224 76% 48%;
+    --timeline-line: 240 10% 20%;
+    --timeline-dot: 230 60% 60%;
+    --timeline-dot-current: 230 70% 70%;
+    --timeline-halo: 230 60% 60%;
 
-    --tag: 160 55% 45%;
-    --tag-hover: 162 60% 35%;
+    --tag: 150 50% 45%;
+    --tag-hover: 150 50% 50%;
 
     --shadow-elevate: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
 
-    /* Sidebar updates */
-    --sidebar-background: 224 71% 4%;
-    --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 224 76% 48%;
+    /* Sidebar */
+    --sidebar-background: 240 15% 8%;
+    --sidebar-foreground: 240 10% 94%;
+    --sidebar-primary: 230 60% 60%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 217 33% 17%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 217 33% 17%;
-    --sidebar-ring: 224 76% 48%;
+    --sidebar-accent: 240 10% 20%;
+    --sidebar-accent-foreground: 240 10% 94%;
+    --sidebar-border: 240 10% 20%;
+    --sidebar-ring: 230 60% 60%;
   }
 
   /* Respect user prefers-reduced-motion */
@@ -207,7 +190,6 @@
   /* Current milestone */
   .timeline-dot.current {
     height: 1.75rem;
-    /* 28px */
     width: 1.75rem;
     background-color: hsl(var(--timeline-dot-current) / 0.58);
     box-shadow: 0 8px 30px hsl(var(--timeline-halo) / 0.2);
@@ -307,6 +289,7 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-family: "Roboto", sans-serif;
+    font-weight: 400;
     transition:
       background-color 300ms ease,
       color 300ms ease;
@@ -323,30 +306,41 @@
     font-family: "Inter", sans-serif;
     color: hsl(var(--heading));
     line-height: 1.1;
+    letter-spacing: -0.01em;
+    font-weight: 700;
   }
 
   h1 {
-    font-size: clamp(2.25rem, 6vw, 4rem);
-    letter-spacing: -0.025em;
-    /* tracking-tight */
+    font-weight: 800;
+    font-size: clamp(2.25rem, 5vw, 4rem);
   }
 
   h2 {
-    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
   }
 
   p {
-    font-size: 1rem;
-    /* text-base */
+    font-size: clamp(1rem, 1.2vw, 1.125rem);
     line-height: 1.625;
-    /* leading-relaxed */
+    font-weight: 400;
   }
 
-  @media (min-width: 768px) {
-    p {
-      font-size: 1.125rem;
-      /* text-lg */
-    }
+  /* PRO VISUALS - Dark Mode Glow Only */
+  .hero-glow {
+    position: absolute;
+    top: -20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120%;
+    height: 100vh;
+    background: radial-gradient(circle at center, hsla(var(--primary) / 0.12), transparent 60%);
+    pointer-events: none;
+    z-index: -1;
+    display: none;
+  }
+
+  .dark .hero-glow {
+    display: block;
   }
 
   .font-heading {
@@ -362,20 +356,34 @@
   .glass-card {
     background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
   }
 
   .dark .glass-card {
-    background: rgba(15, 23, 42, 0.6);
-    /* Slate 900 with transparency */
+    background: hsl(var(--card) / 0.6);
     backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid hsl(var(--border));
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
   }
 
   .section-padding {
     padding-top: clamp(3rem, 10vh, 8rem);
     padding-bottom: clamp(3rem, 10vh, 8rem);
+  }
+
+  /* Semantic Section Classes */
+  .section-base {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+  }
+
+  .section-alt {
+    background-color: hsl(var(--muted));
+    color: hsl(var(--foreground));
+  }
+
+  .dark .section-alt {
+    background-color: hsl(var(--card));
   }
 }

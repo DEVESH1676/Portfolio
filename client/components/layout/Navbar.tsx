@@ -4,7 +4,7 @@ import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
-import { NAV_ITEMS } from "@/data/portfolio";
+import { NAV_ITEMS, DOWNLOAD_CV_URL } from "@/data/portfolio";
 import ThemeToggle from "@/components/ui/theme-toggle";
 
 export const Navbar = () => {
@@ -92,7 +92,7 @@ export const Navbar = () => {
   );
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-border/60 bg-background/85 backdrop-blur-xl">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <a
           href="#home"
@@ -113,7 +113,7 @@ export const Navbar = () => {
             <a href="#publications">View Publications</a>
           </Button>
           <Button asChild size="sm">
-            <a href="#cv">Download CV</a>
+            <a href={DOWNLOAD_CV_URL} target="_blank" rel="noreferrer">Download CV</a>
           </Button>
 
           <div className="flex">
@@ -153,7 +153,7 @@ export const Navbar = () => {
                       </a>
                     </Button>
                     <Button asChild size="lg" className="min-h-[48px]">
-                      <a href="#cv" onClick={() => setIsSheetOpen(false)}>
+                      <a href={DOWNLOAD_CV_URL} target="_blank" rel="noreferrer" onClick={() => setIsSheetOpen(false)}>
                         Download CV
                       </a>
                     </Button>

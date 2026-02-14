@@ -1,21 +1,14 @@
-import { EDUCATION_TIMELINE, EducationEntry } from "@/data/portfolio"; // Import interface
+import { EDUCATION_TIMELINE, EducationEntry } from "@/data/portfolio";
 import * as React from "react";
 import Container from "@/components/ui/container";
-import {
-  animateLineDraw,
-  animateEntrance,
-  runAnime,
-  // getAnimeLib removed
-} from "@/lib/anime";
+import { animateLineDraw, animateEntrance, runAnime } from "@/lib/anime";
+import { cn } from "@/lib/utils";
 
 export const EducationSection = () => {
   const lineRef = React.useRef<HTMLDivElement | null>(null);
   const lineContainerRef = React.useRef<HTMLDivElement | null>(null);
   const dotRefs = React.useRef<Array<HTMLDivElement | null>>([]);
   const cardRefs = React.useRef<Array<HTMLDivElement | null>>([]);
-  // animeAPI ref removed as it's no longer needed
-
-  // Removed getAnimeLib useEffect
 
   React.useEffect(() => {
     const lineEl = lineRef.current;
@@ -26,17 +19,15 @@ export const EducationSection = () => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            // Use centralized helper to draw the line
-            animateLineDraw(lineEl, { duration: 900 });
+            animateLineDraw(lineEl, { duration: 1200 });
             obs.disconnect();
           }
         });
       },
-      { threshold: 0.06, rootMargin: "0px 0px -10% 0px" },
+      { threshold: 0.05, rootMargin: "0px 0px -15% 0px" },
     );
 
     obs.observe(container);
-
     return () => obs.disconnect();
   }, []);
 
@@ -45,51 +36,51 @@ export const EducationSection = () => {
     const cards = cardRefs.current.filter(Boolean) as HTMLElement[];
     if (!dots.length) return;
 
-    // Observer for dots
     const dotObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            const el = entry.target as HTMLElement;
-            animateEntrance(el, {
-              translateY: 8,
-              duration: 420,
+            animateEntrance(entry.target as HTMLElement, {
+              scale: 1,
+              opacity: 1,
+              duration: 400,
               easing: "cubic-bezier(0.19, 1, 0.22, 1)",
             });
-            dotObserver.unobserve(el);
+            dotObserver.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.5 }
+      { threshold: 0.8 }
     );
-    dots.forEach((d) => dotObserver.observe(d));
 
-    // Observer for cards with stagger
     const cardObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            const el = entry.target as HTMLElement;
-            const index = cards.indexOf(el);
-            // Stagger delay based on index (e.g., 100ms per item)
-            const delay = index * 100;
-
-            animateEntrance(el, {
-              translateY: 20,
-              duration: 600,
-              delay,
-              easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+            animateEntrance(entry.target as HTMLElement, {
+              translateY: 24,
+              opacity: 1,
+              duration: 700,
+              easing: "cubic-bezier(0.2, 0.8, 0.2, 1)",
             });
-            cardObserver.unobserve(el);
+            cardObserver.unobserve(entry.target);
           }
         });
       },
       { threshold: 0.2 }
     );
+
+    dots.forEach((d) => {
+      if (d) {
+        d.style.opacity = "0";
+        d.style.transform = "scale(0)";
+        dotObserver.observe(d);
+      }
+    });
+
     cards.forEach((c) => {
       if (c) {
-        // Set initial opacity to 0 to ensure fade-in works
-        c.style.opacity = "0";
+        c.style.opacity = "0"; // Initial state for entrance
         cardObserver.observe(c);
       }
     });
@@ -100,109 +91,87 @@ export const EducationSection = () => {
     };
   }, []);
 
-  const handleCardHover = (index: number, enter = true) => {
-    const dot = dotRefs.current[index] as HTMLElement | null;
-    if (!dot) return;
-
-    // Updated runAnime call to WAAPI signature
-    // runAnime(el, keyframes, options)
-    runAnime(
-      dot,
-      [{ transform: enter ? "scale(1.12) translateZ(0)" : "scale(1) translateZ(0)" }],
-      {
-        duration: 200,
-        easing: "cubic-bezier(0.455, 0.03, 0.515, 0.955)", // easeOutQuad
-        fill: "forwards"
-      }
-    );
-  };
-
   return (
-    <section id="education" className="bg-secondary/40 section-padding scroll-mt-24">
+    <section id="education" className="section-base relative section-padding scroll-mt-24">
+      {/* Background accent removed for strict semantic compliance */}
+
       <Container>
-        {/* Section Heading */}
-        <div className="mb-12">
-          <h2 className="font-heading font-semibold tracking-tight text-foreground">
-            Education
+        <div className="mb-16 text-center md:mb-24">
+          <h2 className="font-heading font-bold tracking-tight text-foreground">
+            Academic Milestones
           </h2>
-          <p className="mt-4 max-w-2xl text-foreground/75">
-            A progressive academic journey grounded in Computer Engineering,
-            culminating in a doctoral degree focused on advancing intelligent
-            video analytics.
+          <p className="mx-auto mt-4 max-w-2xl text-foreground/75 text-lg">
+            A continuous journey of specialization in Computer Vision and Intelligent Systems.
           </p>
         </div>
 
-        {/* Timeline Container */}
-        <div className="relative">
-          {/* Continuous vertical line for timeline (visible on md+) */}
-          <div
-            className="hidden md:block absolute left-8 top-6 bottom-6 z-0"
-            ref={(el) => (lineContainerRef.current = el)}
-          >
+        <div className="relative mx-auto max-w-5xl" ref={lineContainerRef}>
+          {/* Vertical Line: Left on mobile, Center on desktop */}
+          <div className="absolute left-8 md:left-1/2 top-4 bottom-4 w-px -translate-x-1/2 bg-border/40 md:transform-none">
             <div
-              ref={(el) => (lineRef.current = el)}
-              style={{ transformOrigin: "top", transform: "scaleY(0)" }}
-              className="absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-primary/50 to-transparent"
-              aria-hidden
+              ref={lineRef}
+              className="absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2 bg-gradient-to-b from-primary via-primary/50 to-transparent"
             />
           </div>
 
-          {/* Timeline Entries - each row has a left column for dot/line and right column for content */}
-          <div className="flex flex-col relative z-10">
+          <div className="flex flex-col gap-12 md:gap-0">
             {EDUCATION_TIMELINE.map((entry, index) => {
-              // const isLast = index === EDUCATION_TIMELINE.length - 1;
-              const isCurrent = (entry as EducationEntry).current ?? index === 0;
+              const isEven = index % 2 === 0;
+              const isCurrent = (entry as any).current ?? index === 0; // Fallback if type not fully updated yet
+
               return (
                 <div
                   key={entry.degree}
-                  className="mb-12 last:mb-0 md:grid md:grid-cols-[64px_1fr] md:items-center md:gap-6 py-4"
+                  className={cn(
+                    "relative flex items-center md:justify-between",
+                    isEven ? "md:flex-row-reverse" : "md:flex-row"
+                  )}
                 >
-                  {/* Left column: dot and spacer (dot centered over the continuous line) */}
-                  <div className="flex md:justify-center md:items-start">
-                    <div className="flex flex-col items-center h-full">
-                      <div
-                        ref={(el) =>
-                          (dotRefs.current[index] = el as HTMLDivElement)
-                        }
-                        className={
-                          "z-20 flex h-4 w-4 items-center justify-center rounded-full border-2 transition-colors duration-300 " +
-                          (isCurrent
-                            ? "border-primary bg-background shadow-[0_0_12px_rgba(59,130,246,0.6)]"
-                            : "border-muted-foreground/30 bg-background")
-                        }
-                        role="presentation"
-                        tabIndex={-1}
-                        aria-hidden
-                      >
-                        {isCurrent && (
-                          <div className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
-                        )}
-                      </div>
+                  {/* Empty half for desktop spacing */}
+                  <div className="hidden md:block md:w-5/12" />
+
+                  {/* Dot */}
+                  <div className="absolute left-8 md:left-1/2 -translate-x-1/2 flex items-center justify-center z-10 w-8 h-8">
+                    <div
+                      ref={(el) => (dotRefs.current[index] = el)}
+                      className={cn(
+                        "relative flex items-center justify-center rounded-full transition-all duration-500",
+                        isCurrent ? "h-6 w-6" : "h-4 w-4",
+                        isCurrent ? "bg-primary" : "bg-muted-foreground/30"
+                      )}
+                    >
+                      {isCurrent && (
+                        <span className="absolute inset-0 -z-10 rounded-full bg-primary/40 animate-[pulse_2s_ease-in-out_infinite] scale-150" />
+                      )}
+                      {isCurrent && (
+                        <span className="absolute inset-0 -z-10 rounded-full bg-primary/20 animate-[pulse_3s_ease-in-out_infinite] scale-[2]" />
+                      )}
+
+                      <div className={cn("rounded-full bg-background", isCurrent ? "h-2 w-2" : "h-0 w-0")} />
                     </div>
                   </div>
 
-                  {/* Right column: content */}
-                  <div className="mt-4 md:mt-0 md:ml-6">
+                  {/* Content Card */}
+                  <div
+                    className={cn(
+                      "pl-20 md:pl-0 w-full md:w-5/12",
+                      isEven ? "md:text-right" : "md:text-left"
+                    )}
+                  >
                     <div
-                      ref={(el) =>
-                        (cardRefs.current[index] = el as HTMLDivElement)
-                      }
-                      onMouseEnter={() => handleCardHover(index, true)}
-                      onMouseLeave={() => handleCardHover(index, false)}
-                      className="glass-card rounded-2xl bg-background p-6 md:p-8 shadow-md ring-1 ring-primary/10 transition-transform duration-200 card-elevate"
+                      ref={(el) => (cardRefs.current[index] = el)}
+                      className="glass-card p-6 md:p-8 rounded-2xl border-primary/10 hover:border-primary/30 transition-colors duration-300 card-elevate group"
                     >
-                      <div className="flex flex-wrap items-baseline justify-between gap-4">
-                        <h3 className="font-heading text-2xl font-semibold text-primary">
-                          {entry.degree}
-                        </h3>
-                        <span className="text-sm font-medium uppercase tracking-[0.2em] text-foreground/60">
-                          {entry.year}
-                        </span>
-                      </div>
-                      <p className="mt-2 text-lg font-medium text-foreground">
+                      <span className="inline-block px-3 py-1 mb-3 text-xs font-bold uppercase tracking-wider text-primary bg-primary/10 rounded-full border border-primary/10">
+                        {entry.year}
+                      </span>
+                      <h3 className="font-heading text-xl md:text-2xl font-bold text-foreground group-hover:text-primary transition-colors">
+                        {entry.degree}
+                      </h3>
+                      <p className="text-lg font-medium text-foreground/80 mt-1">
                         {entry.institution}
                       </p>
-                      <p className="mt-3 text-sm leading-relaxed text-foreground/75">
+                      <p className="mt-4 text-sm leading-relaxed text-foreground/70">
                         {entry.highlight}
                       </p>
                     </div>

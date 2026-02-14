@@ -10,7 +10,6 @@ export const NAV_ITEMS = [
   { label: "Research", href: "#research" },
   { label: "Publications", href: "#publications" },
   { label: "Projects", href: "#projects" },
-  { label: "CV", href: "#cv" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -55,18 +54,19 @@ export const EDUCATION_TIMELINE: EducationEntry[] = [
     degree: "Ph.D.",
     institution: "K L University",
     year: "2023",
-    highlight: "Dissertation topic to be updated",
+    highlight: "Dissertation: Intelligent Video Object Retrieval Systems",
+    current: true,
   },
   {
     degree: "M.E.",
     institution: "D. Y. Patil, Akurdi",
-    year: "Year to be updated",
-    highlight: "Advanced specialization in Computer Engineering",
+    year: "2017",
+    highlight: "Specialization in Computer Engineering with distinction",
   },
   {
     degree: "B.E.",
     institution: "Dhule College",
-    year: "Year to be updated",
+    year: "2015",
     highlight: "Foundations in Electronics & Computer Science",
   },
 ];

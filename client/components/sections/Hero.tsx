@@ -74,11 +74,8 @@ export const HeroSection = () => {
   }, []);
 
   return (
-    <section
-      id="home"
-      className="relative overflow-hidden bg-secondary/40 pb-12 pt-24 md:pb-24 md:pt-36 scroll-mt-24"
-    >
-      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-primary/15 via-background to-background" />
+    <section id="hero" className="section-base relative flex min-h-[90vh] flex-col justify-center overflow-hidden section-padding pt-32 lg:pt-40">
+      <div className="hero-glow" />
 
       <Container className="flex flex-col-reverse items-center gap-12 md:gap-16 lg:flex-row lg:items-start">
         {/* Text Section */}
@@ -115,12 +112,12 @@ export const HeroSection = () => {
             ref={ctasRef}
             className="mt-8 flex flex-wrap items-center gap-4 justify-center lg:justify-start"
           >
-            <Button asChild size="lg" className="min-h-[48px] px-6">
+            <Button asChild size="lg" className="h-auto py-4 px-6 md:h-11 md:px-8 text-base">
               <a href="#publications" className="btn-cta">
                 View Publications
               </a>
             </Button>
-            <Button asChild variant="outline" size="lg" className="min-h-[48px] px-6">
+            <Button asChild variant="outline" size="lg" className="h-auto py-4 px-6 md:h-11 md:px-8 text-base">
               <a
                 href={DOWNLOAD_CV_URL}
                 target="_blank"
@@ -130,7 +127,7 @@ export const HeroSection = () => {
                 Download CV
               </a>
             </Button>
-            <Button asChild variant="outline" size="lg" className="min-h-[48px] px-6">
+            <Button asChild variant="outline" size="lg" className="h-auto py-4 px-6 md:h-11 md:px-8 text-base">
               <a
                 href={RESEARCH_SUMMARY_URL}
                 target="_blank"
@@ -146,9 +143,9 @@ export const HeroSection = () => {
         {/* Image Section */}
         <div
           ref={imgRef}
-          className="w-full max-w-sm lg:w-2/5 flex justify-center lg:justify-end opacity-0" // Start hidden for animation
+          className="w-full lg:w-2/5 flex justify-center lg:justify-end opacity-0" // Start hidden for animation
         >
-          <div className="relative mx-auto aspect-[3/4] w-full overflow-hidden rounded-3xl border border-primary/20 bg-background shadow-2xl">
+          <div className="relative mx-auto aspect-square w-48 h-48 lg:w-auto lg:h-auto lg:aspect-[3/4] overflow-hidden rounded-full lg:rounded-3xl border border-primary/20 bg-background shadow-2xl">
             <div className="absolute inset-0 bg-gradient-to-b from-primary/30 via-primary/10 to-transparent" />
             <img
               src={HERO_IMAGE_URL}
@@ -156,9 +153,6 @@ export const HeroSection = () => {
               className="h-full w-full object-cover"
               loading="lazy"
             />
-            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-foreground/80 to-transparent px-6 py-4 text-sm font-medium text-background">
-              Dedicated to advancing intelligent vision systems
-            </div>
           </div>
         </div>
       </Container>

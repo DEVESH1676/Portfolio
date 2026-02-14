@@ -98,29 +98,11 @@ export const animateEntrance = (
     endFrame.transform += ` translateY(0px)`;
   }
 
-  if (opts?.scale !== undefined) {
-    // If scale is provided, we animate from 0 or 1? 
-    // Usually entrance implies appearing.
-    // Let's assume scale is target scale? 
-    // Or maybe we should animate FROM smaller scale?
-    // Hero.tsx uses: scale: 1.2 (target?) No, animejs usually animates TO values.
-    // If we want keyframes, we need start and end.
-    // Let's assume we start at scale 0.8 and go to `opts.scale`? Or standard entrance is safe defaults.
-    // Actually Hero.tsx usage seems to imply scaling UP to 1.2. 
-    // Wait, let's look at Hero again. `animateEntrance(badgeRef, { scale: 1.2, opacity: 1 })`.
-    // It probably means animate TO scale 1.2. But from what? 0? 1?
-    // Given it's an entrance, 0 makes sense, or 0.5.
-    // Let's implement a safe fade-in-up logic that incorporates strict params if present.
-
-    // Simplification for WAAPI: define clear From -> To.
-    // If translateY is present, we move Y.
-    // If scale is present, we scale.
-
-    if (opts.scale) {
-      startFrame.transform += ` scale(0.8)`;
-      endFrame.transform += ` scale(${opts.scale})`;
-    }
+  if (opts.scale) {
+    startFrame.transform += ` scale(0.8)`;
+    endFrame.transform += ` scale(${opts.scale})`;
   }
+
 
   // Override opacity if start is implied 0 -> 1
   if (opts?.opacity !== undefined) {

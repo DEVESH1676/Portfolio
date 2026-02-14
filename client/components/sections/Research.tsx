@@ -31,7 +31,7 @@ export const ResearchSection = () => {
   }, []);
 
   return (
-    <section id="research" className="bg-background section-padding scroll-mt-24">
+    <section id="research" className="section-alt section-padding scroll-mt-24">
       <div className="mx-auto max-w-6xl px-6">
         <div className="grid gap-10 lg:grid-cols-[1.1fr_1fr] lg:items-center">
           <div>
@@ -53,7 +53,7 @@ export const ResearchSection = () => {
               <span
                 key={tag}
                 ref={(el) => (tagRefs.current[i] = el)}
-                className="tag text-sm mb-2 whitespace-nowrap"
+                className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium font-sans bg-primary/10 text-primary border border-primary/20 mb-2 mr-2 whitespace-nowrap transition-colors hover:bg-primary/20"
               >
                 {tag}
               </span>

@@ -69,7 +69,7 @@ export const ContactSection = () => {
     <section
       ref={sectionRef}
       id="contact"
-      className="bg-background py-24 scroll-mt-24"
+      className="section-base py-24 scroll-mt-24"
     >
       <div className="mx-auto max-w-6xl px-6">
         <div className="grid gap-10 lg:grid-cols-[1.1fr_1fr]">
