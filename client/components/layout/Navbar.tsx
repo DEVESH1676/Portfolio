@@ -127,10 +127,9 @@ export const Navbar = () => {
             <a
               key={item.href}
               href={item.href}
-              // ref={(el) => (navRefs.current[item.href] = el)} // REMOVED
               onClick={() => handleNavClick(item.href)}
               className={cn(
-                "relative px-3 lg:px-5 py-2 text-sm font-medium transition-colors duration-300 rounded-full cursor-pointer",
+                "relative group px-3 lg:px-5 py-2 text-sm font-medium transition-colors duration-300 rounded-full cursor-pointer",
                 activeSection === item.href
                   ? "text-primary font-semibold"
                   : "text-foreground/70 hover:text-foreground"
@@ -143,7 +142,14 @@ export const Navbar = () => {
                   transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 />
               )}
-              {item.label}
+              {/* Text Expansion Effect */}
+              <motion.span
+                animate={{ letterSpacing: activeSection === item.href ? "0.1em" : "0em" }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="inline-block"
+              >
+                {item.label}
+              </motion.span>
             </a>
           ))}
         </nav>
