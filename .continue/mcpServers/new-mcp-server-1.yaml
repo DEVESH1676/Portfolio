@@ -2,9 +2,24 @@ name: New MCP server
 version: 0.0.1
 schema: v1
 mcpServers:
-  - name: New MCP server
+  - name: ollama
+    command: C:\Users\dcghu\AppData\Local\Programs\Python\Python312\python.exe
+    args:
+      - -m
+      - mcp_ollama_python
+    env:
+      OLLAMA_HOST: http://localhost:11434
+      OLLAMA_NUM_CTX: "12288"
+
+  - name: devtools
     command: npx
     args:
       - -y
-      - <your-mcp-server>
-    env: {}
+      - chrome-devtools-mcp@latest
+      - --browser-url=http://127.0.0.1:9222
+
+  - name: context7
+    command: npx
+    args:
+      - -y
+      - "@upstash/context7-mcp@latest"
