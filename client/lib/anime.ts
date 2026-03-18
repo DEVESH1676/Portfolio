@@ -91,15 +91,15 @@ export const animateEntrance = (
     filter: opts?.blur ? "blur(6px)" : "none"
   };
 
+  if (opts?.translateY !== undefined) {
+    startFrame.transform = `translate3d(0, ${opts.translateY}px, 0)`;
+  }
+
   const endFrame: Keyframe = {
     transform: "translate3d(0, 0, 0)",
     opacity: 1,
     filter: "blur(0px)"
   };
-
-  if (opts?.translateY !== undefined) {
-    startFrame.transform += ` translateY(${opts.translateY}px)`;
-  }
 
   if (opts?.scale !== undefined) {
     startFrame.transform += ` scale(${opts.scale})`;
@@ -156,19 +156,6 @@ export const animateStaggeredChildren = (
   });
 };
 
-// New: Premium Hover Effect for Cards
-export const animatePremiumHover = (
-  el: HTMLElement,
-) => {
-  // We use event listeners for hover to ensure it uses WAAPI
-  // But often CSS :hover is better for performance. 
-  // However, for spring physics or complex transforms, JS is useful.
-  // For now, we'll keep this simple and rely on CSS classes for hover in this project
-  // unless strictly requested.
-  // Returning a simple object to match pattern if needed later.
-  return;
-};
-
 export default {
   runAnime,
   prefersReducedMotion,
@@ -177,3 +164,4 @@ export default {
   animateStaggeredChildren,
   ANIME
 };
+

@@ -4,31 +4,44 @@ import { PROJECTS, CONTENT_INTROS } from "@/data/portfolio";
 import { animateEntrance, animateStaggeredChildren } from "@/lib/anime";
 
 export const ProjectsSection = () => {
+  const sectionRef = React.useRef<HTMLElement>(null);
   const headingRef = React.useRef<HTMLHeadingElement | null>(null);
   const introRef = React.useRef<HTMLParagraphElement | null>(null);
   const gridRef = React.useRef<HTMLDivElement | null>(null);
 
   React.useEffect(() => {
-    if (headingRef.current)
-      animateEntrance(headingRef.current, { translateY: 24, blur: true });
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          if (headingRef.current)
+            animateEntrance(headingRef.current, { translateY: 24, blur: true });
 
-    if (introRef.current)
-      animateEntrance(introRef.current, {
-        translateY: 20,
-        staggerIndex: 1,
-        blur: true,
-      });
+          if (introRef.current)
+            animateEntrance(introRef.current, {
+              translateY: 20,
+              staggerIndex: 1,
+              blur: true,
+            });
 
-    if (gridRef.current) {
-      animateStaggeredChildren(gridRef.current, ".project-card", {
-        translateY: 40,
-        baseDelay: 200, // Wait for intro
-      });
-    }
+          if (gridRef.current) {
+            animateStaggeredChildren(gridRef.current, ".project-card", {
+              translateY: 40,
+              baseDelay: 200, // Wait for intro
+            });
+          }
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
   }, []);
 
   return (
-    <section id="projects" className="section-alt section-padding scroll-mt-24">
+    <section ref={sectionRef} id="projects" className="section-alt section-padding scroll-mt-24">
+
       <div className="mx-auto max-w-6xl px-6">
         <div className="max-w-3xl">
           <h2

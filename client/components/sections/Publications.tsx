@@ -10,45 +10,57 @@ import { ExternalLink } from "lucide-react";
 import { animateEntrance } from "@/lib/anime";
 
 export const PublicationsSection = () => {
+  const sectionRef = React.useRef<HTMLElement>(null);
   const headingRef = React.useRef<HTMLHeadingElement | null>(null);
   const introRef = React.useRef<HTMLParagraphElement | null>(null);
   const featuredRef = React.useRef<HTMLDivElement | null>(null);
   const additionalRef = React.useRef<HTMLDivElement | null>(null);
 
   React.useEffect(() => {
-    if (headingRef.current)
-      animateEntrance(headingRef.current, {
-        translateY: 24,
-        blur: true
-      });
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          if (headingRef.current)
+            animateEntrance(headingRef.current, {
+              translateY: 24,
+              blur: true
+            });
 
-    if (introRef.current)
-      animateEntrance(introRef.current, {
-        translateY: 20,
-        staggerIndex: 1,
-        blur: true,
-      });
+          if (introRef.current)
+            animateEntrance(introRef.current, {
+              translateY: 20,
+              staggerIndex: 1,
+              blur: true,
+            });
 
-    if (featuredRef.current)
-      animateEntrance(featuredRef.current, {
-        translateY: 40,
-        staggerIndex: 2,
-        // Card is large, so slower fade in
-        duration: 900,
-        blur: true,
-      });
+          if (featuredRef.current)
+            animateEntrance(featuredRef.current, {
+              translateY: 40,
+              staggerIndex: 2,
+              duration: 900,
+              blur: true,
+            });
 
-    if (additionalRef.current)
-      animateEntrance(additionalRef.current, {
-        translateY: 40,
-        staggerIndex: 3,
-        duration: 900,
-        blur: true,
-      });
+          if (additionalRef.current)
+            animateEntrance(additionalRef.current, {
+              translateY: 40,
+              staggerIndex: 3,
+              duration: 900,
+              blur: true,
+            });
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
   }, []);
 
   return (
-    <section id="publications" className="section-base section-padding scroll-mt-24">
+    <section ref={sectionRef} id="publications" className="section-base section-padding scroll-mt-24">
+
       <div className="mx-auto max-w-6xl px-6">
         <div className="mb-12 max-w-3xl">
           <h2

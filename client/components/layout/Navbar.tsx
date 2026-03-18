@@ -45,8 +45,12 @@ export const Navbar = () => {
       for (const entry of observerEntries) {
         const el = document.getElementById(entry.id);
         if (!el) continue;
-        // If the section's top has scrolled past the detection point, it's "active"
-        if (el.offsetTop - offset <= scrollY) {
+        
+        // Use getBoundingClientRect for more reliable top calculation relative to viewport
+        const rect = el.getBoundingClientRect();
+        const top = rect.top + scrollY;
+        
+        if (top - offset <= scrollY) {
           current = entry.href;
         }
       }
@@ -59,22 +63,11 @@ export const Navbar = () => {
     return () => window.removeEventListener("scroll", handleActiveSection);
   }, [observerEntries]);
 
-  // Update Sliding Pill Position - REMOVED
-  // React.useEffect(() => {
-  //   const activeEl = navRefs.current[activeSection];
-  //   if (activeEl) {
-  //     setIndicatorStyle({
-  //       left: activeEl.offsetLeft,
-  //       width: activeEl.offsetWidth,
-  //       opacity: 1,
-  //     });
-  //   }
-  // }, [activeSection]);
-
   const handleNavClick = (href: string) => {
     setActiveSection(href);
     setIsSheetOpen(false);
   };
+
 
   return (
     <header

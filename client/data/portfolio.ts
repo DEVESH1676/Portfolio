@@ -1,5 +1,3 @@
-export const CV_DOWNLOAD_URL = "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf";
-
 export const RESEARCH_SUMMARY_URL = "https://unec.edu.az/application/uploads/2014/12/pdf-sample.pdf";
 export const DOWNLOAD_CV_URL = "https://unec.edu.az/application/uploads/2014/12/pdf-sample.pdf";
 
@@ -134,26 +132,28 @@ export const PROJECTS = [
   },
 ];
 
+// NOTE: These are placeholder links. Actual profiles should be added here.
 export const CONTACT_LINKS = [
   {
     label: "LinkedIn",
-    href: "https://www.linkedin.com",
+    href: "https://www.linkedin.com/in/chandrashekhar-ghuge",
     icon: "linkedin",
   },
   {
     label: "Google Scholar",
-    href: "https://scholar.google.com",
+    href: "https://scholar.google.com/citations?user=placeholder",
     icon: "graduationCap",
   },
   {
     label: "ResearchGate",
-    href: "https://www.researchgate.net",
+    href: "https://www.researchgate.net/profile/Chandrashekhar-Ghuge",
     icon: "network",
   },
 ];
 
 export const HERO_IMAGE_URL =
-  "https://imagehs.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=900&q=80";
+  "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=900&q=80";
+
 
 export const BIO_DATA = {
   name: "Dr. Chandrashekhar Arvind Ghuge",

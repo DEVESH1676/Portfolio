@@ -174,7 +174,7 @@ export const EducationSection = () => {
             <div className="flex flex-col gap-8 md:gap-0">
               {EDUCATION_TIMELINE.map((entry, index) => {
                 const isEven = index % 2 === 0;
-                const isCurrent = (entry as any).current ?? index === 0;
+                const isCurrent = entry.current ?? false;
 
                 return (
                   <div
