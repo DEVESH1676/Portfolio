@@ -85,7 +85,7 @@ export const HeroSection = () => {
       <div className="hero-glow" />
       <NeuralBackground />
 
-      <Container className="flex flex-col-reverse items-center gap-12 md:gap-16 lg:flex-row lg:items-start">
+      <Container className="relative z-10 flex flex-col-reverse items-center gap-12 md:gap-16 lg:flex-row lg:items-start">
         {/* Text Section */}
         <div className="w-full lg:w-3/5 flex flex-col items-center lg:items-start text-center lg:text-left">
           <span
