@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import { handleDemo } from "./routes/demo";
 import { handleTrackEvent } from "./routes/analytics";
+import { ContactRequestSchema } from "../shared/api";
 
 export function createServer() {
   const app = express();
@@ -26,6 +27,16 @@ export function createServer() {
 
   app.get("/api/demo", handleDemo);
   app.post("/api/analytics", handleTrackEvent);
+
+  app.post("/api/contact", (req, res) => {
+    try {
+      const data = ContactRequestSchema.parse(req.body);
+      console.log(`[Contact] Message from ${data.name} (${data.email}): ${data.message}`);
+      res.json({ success: true, message: "Message received" });
+    } catch (error) {
+      res.status(400).json({ success: false, error: "Invalid payload" });
+    }
+  });
 
   return app;
 }

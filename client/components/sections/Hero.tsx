@@ -164,7 +164,8 @@ export const HeroSection = () => {
               src={HERO_IMAGE_URL}
               alt={`Professional portrait of ${BIO_DATA.name}`}
               className="h-full w-full object-cover"
-              loading="lazy"
+              loading="eager"
+              fetchPriority="high"
             />
           </div>
         </div>

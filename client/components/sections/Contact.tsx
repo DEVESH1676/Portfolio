@@ -1,11 +1,12 @@
-import { FormEvent, useEffect, useRef } from "react";
-import { GraduationCap, Linkedin, Mail, Network } from "lucide-react";
+import { FormEvent, useEffect, useRef, useState } from "react";
+import { GraduationCap, Linkedin, Mail, Network, Loader2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { CONTACT_LINKS } from "@/data/portfolio";
 import { animateEntrance } from "@/lib/anime";
+import { toast } from "@/hooks/use-toast";
 
 const iconMap = {
   linkedin: Linkedin,
@@ -21,6 +22,7 @@ export const ContactSection = () => {
   const textRef = useRef<HTMLParagraphElement>(null);
   const iconsRef = useRef<HTMLDivElement>(null);
   const formRef = useRef<HTMLDivElement>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -48,21 +50,51 @@ export const ContactSection = () => {
     return () => observer.disconnect();
   }, []);
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const name = formData.get("name")?.toString().trim() ?? "";
-    const email = formData.get("email")?.toString().trim() ?? "";
-    const subject = formData.get("subject")?.toString().trim() ?? "";
-    const message = formData.get("message")?.toString().trim() ?? "";
+    setIsSubmitting(true);
 
-    const mailSubject = subject || "Portfolio Enquiry";
-    const bodyLines = [`Name: ${name}`, `Email: ${email}`, "", message];
-    const mailto = `mailto:${emailRecipient}?subject=${encodeURIComponent(
-      mailSubject,
-    )}&body=${encodeURIComponent(bodyLines.join("\n"))}`;
-    window.location.href = mailto;
-    event.currentTarget.reset();
+    const formData = new FormData(event.currentTarget);
+    const payload = {
+      name: formData.get("name")?.toString().trim() ?? "",
+      email: formData.get("email")?.toString().trim() ?? "",
+      subject: formData.get("subject")?.toString().trim() ?? "",
+      message: formData.get("message")?.toString().trim() ?? "",
+    };
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (response.ok) {
+        toast({
+          title: "Message Sent",
+          description: "Thank you for reaching out. Dr. Ghuge will get back to you soon.",
+        });
+        (event.target as HTMLFormElement).reset();
+      } else {
+        throw new Error("Failed to send via API");
+      }
+    } catch (error) {
+      console.warn("API submission failed, falling back to mailto", error);
+      // Fallback to mailto
+      const mailSubject = payload.subject || "Portfolio Enquiry";
+      const bodyLines = [`Name: ${payload.name}`, `Email: ${payload.email}`, "", payload.message];
+      const mailto = `mailto:${emailRecipient}?subject=${encodeURIComponent(
+        mailSubject,
+      )}&body=${encodeURIComponent(bodyLines.join("\n"))}`;
+      window.location.href = mailto;
+      
+      toast({
+        title: "Opening Email Client",
+        description: "Your message was prepared in your default email application.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -180,8 +212,15 @@ export const ContactSection = () => {
                   required
                 />
               </div>
-              <Button type="submit" size="lg" className="w-full md:w-auto">
-                Send Message
+              <Button type="submit" size="lg" className="w-full md:w-auto" disabled={isSubmitting}>
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Sending...
+                  </>
+                ) : (
+                  "Send Message"
+                )}
               </Button>
             </form>
           </div>

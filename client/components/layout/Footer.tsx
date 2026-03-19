@@ -7,7 +7,6 @@ export const Footer = () => {
       "#about",
       "#publications",
       "#projects",
-      "#cv",
       "#contact",
     ].includes(item.href),
   );

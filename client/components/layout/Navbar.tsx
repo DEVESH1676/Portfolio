@@ -5,7 +5,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { NAV_ITEMS, DOWNLOAD_CV_URL } from "@/data/portfolio";
 import ThemeToggle from "@/components/ui/theme-toggle";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 export const Navbar = () => {
   const [activeSection, setActiveSection] = React.useState<string>("#home");

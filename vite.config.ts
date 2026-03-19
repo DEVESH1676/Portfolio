@@ -19,7 +19,7 @@ function searchForWorkspaceRoot(cwd: string): string {
 // Import the createServer function from your server module
 import { createServer } from "./server/index";
 
-export default defineConfig(({ mode }) => ({
+export default defineConfig(({ mode: _mode }) => ({
   server: {
     host: "::",
     port: 8080,
@@ -28,7 +28,6 @@ export default defineConfig(({ mode }) => ({
         "./client",
         "./shared",
         searchForWorkspaceRoot(process.cwd()), // Dynamically find the workspace root
-        "/workspaces/Portfolio", // Optionally still include the fixed path if needed
       ],
       deny: [".env", ".env.*", "*.{crt,pem}", "**/.git/**", "server/**"],
     },
