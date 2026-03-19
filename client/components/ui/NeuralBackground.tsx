@@ -57,17 +57,20 @@ export const NeuralBackground: React.FC = () => {
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
-      // Get primary color from CSS variable
-      const primaryColor = getComputedStyle(document.documentElement)
+      // Get primary color from CSS variable (e.g. "221 83% 53%")
+      const primaryColorRaw = getComputedStyle(document.documentElement)
         .getPropertyValue("--primary")
         .trim();
       
-      const isDark = document.documentElement.classList.contains("dark");
-      const opacity = isDark ? 0.15 : 0.1;
-      const nodeOpacity = isDark ? 0.4 : 0.2;
+      // Ensure we have a valid color format for HSLA
+      const primaryColor = primaryColorRaw.includes("%") ? primaryColorRaw : primaryColorRaw.split(' ').map((v, i) => i === 0 ? v : v + '%').join(' ');
 
-      ctx.strokeStyle = `hsla(${primaryColor}, ${opacity})`;
-      ctx.fillStyle = `hsla(${primaryColor}, ${nodeOpacity})`;
+      const isDark = document.documentElement.classList.contains("dark");
+      
+      // Increased opacities for better visibility
+      const lineBaseOpacity = isDark ? 0.3 : 0.2;
+      const nodeBaseOpacity = isDark ? 0.6 : 0.4;
+
       ctx.lineWidth = 1;
 
       for (let i = 0; i < nodes.length; i++) {
@@ -95,6 +98,7 @@ export const NeuralBackground: React.FC = () => {
         }
 
         // Draw Node
+        ctx.fillStyle = `hsla(${primaryColor}, ${nodeBaseOpacity})`;
         ctx.beginPath();
         ctx.arc(node.x, node.y, 1.5, 0, Math.PI * 2);
         ctx.fill();
@@ -107,7 +111,7 @@ export const NeuralBackground: React.FC = () => {
           const distance = Math.sqrt(dx * dx + dy * dy);
 
           if (distance < connectionDistance) {
-            const lineAlpha = (1 - distance / connectionDistance) * opacity;
+            const lineAlpha = (1 - distance / connectionDistance) * lineBaseOpacity;
             ctx.strokeStyle = `hsla(${primaryColor}, ${lineAlpha})`;
             ctx.beginPath();
             ctx.moveTo(node.x, node.y);
@@ -119,6 +123,7 @@ export const NeuralBackground: React.FC = () => {
 
       animationFrameId = requestAnimationFrame(draw);
     };
+
 
     const handleMouseMove = (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
