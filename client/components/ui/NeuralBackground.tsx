@@ -155,8 +155,7 @@ export const NeuralBackground: React.FC = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 -z-10 pointer-events-none opacity-60 transition-opacity duration-1000"
-      style={{ mixBlendMode: "multiply" }} // Better integration with background colors
+      className="absolute inset-0 -z-10 pointer-events-none opacity-100 transition-opacity duration-1000"
     />
   );
 };
