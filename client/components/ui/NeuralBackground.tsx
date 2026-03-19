@@ -65,8 +65,6 @@ export const NeuralBackground: React.FC = () => {
       // Ensure we have a valid color format for HSLA
       const primaryColor = primaryColorRaw.includes("%") ? primaryColorRaw : primaryColorRaw.split(' ').map((v, i) => i === 0 ? v : v + '%').join(' ');
 
-      const isDark = document.documentElement.classList.contains("dark");
-      
       // Reduced opacities for better subtle appearance
       const lineBaseOpacity = 0.15;
       const nodeBaseOpacity = 0.4;
