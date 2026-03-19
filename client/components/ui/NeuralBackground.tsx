@@ -5,8 +5,8 @@ interface Node {
   y: number;
   vx: number;
   vy: number;
-  baseX: number;
-  baseY: number;
+  originX: number;
+  originY: number;
 }
 
 export const NeuralBackground: React.FC = () => {
@@ -46,8 +46,8 @@ export const NeuralBackground: React.FC = () => {
         nodes.push({
           x,
           y,
-          baseX: x,
-          baseY: y,
+          originX: x,
+          originY: y,
           vx: (Math.random() - 0.5) * 0.5,
           vy: (Math.random() - 0.5) * 0.5,
         });
@@ -67,9 +67,9 @@ export const NeuralBackground: React.FC = () => {
 
       const isDark = document.documentElement.classList.contains("dark");
       
-      // Increased opacities for better visibility
-      const lineBaseOpacity = isDark ? 0.3 : 0.2;
-      const nodeBaseOpacity = isDark ? 0.6 : 0.4;
+      // Reduced opacities for better subtle appearance
+      const lineBaseOpacity = 0.15;
+      const nodeBaseOpacity = 0.4;
 
       ctx.lineWidth = 1;
 
@@ -77,15 +77,19 @@ export const NeuralBackground: React.FC = () => {
         const node = nodes[i];
 
         if (!prefersReducedMotion) {
-          // Subtle movement
-          node.x += node.vx;
-          node.y += node.vy;
+          // 1. Update origin with random drift
+          node.originX += node.vx;
+          node.originY += node.vy;
 
-          // Boundary bounce
-          if (node.x < 0 || node.x > canvas.width) node.vx *= -1;
-          if (node.y < 0 || node.y > canvas.height) node.vy *= -1;
+          // 2. Boundary bounce for origin
+          if (node.originX < 0 || node.originX > canvas.width) node.vx *= -1;
+          if (node.originY < 0 || node.originY > canvas.height) node.vy *= -1;
 
-          // Mouse Interaction (Magnetic Pull)
+          // 3. Spring force towards origin
+          node.x += (node.originX - node.x) * 0.02;
+          node.y += (node.originY - node.y) * 0.02;
+
+          // 4. Mouse Interaction (Magnetic Pull)
           const dx = mouseRef.current.x - node.x;
           const dy = mouseRef.current.y - node.y;
           const distance = Math.sqrt(dx * dx + dy * dy);
@@ -123,6 +127,7 @@ export const NeuralBackground: React.FC = () => {
 
       animationFrameId = requestAnimationFrame(draw);
     };
+
 
 
     const handleMouseMove = (e: MouseEvent) => {
