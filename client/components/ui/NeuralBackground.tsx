@@ -98,7 +98,7 @@ export const NeuralBackground: React.FC = () => {
         }
 
         // Draw Node
-        ctx.fillStyle = `hsla(${primaryColor}, ${nodeBaseOpacity})`;
+        ctx.fillStyle = `hsl(${primaryColor} / ${nodeBaseOpacity})`;
         ctx.beginPath();
         ctx.arc(node.x, node.y, 1.5, 0, Math.PI * 2);
         ctx.fill();
@@ -112,7 +112,7 @@ export const NeuralBackground: React.FC = () => {
 
           if (distance < connectionDistance) {
             const lineAlpha = (1 - distance / connectionDistance) * lineBaseOpacity;
-            ctx.strokeStyle = `hsla(${primaryColor}, ${lineAlpha})`;
+            ctx.strokeStyle = `hsl(${primaryColor} / ${lineAlpha})`;
             ctx.beginPath();
             ctx.moveTo(node.x, node.y);
             ctx.lineTo(other.x, other.y);
