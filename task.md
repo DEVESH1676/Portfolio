@@ -1,6 +1,6 @@
 🏆 Tier 1 — Do First (High Impact, Reasonable Effort)
 #	Feature	Why
-1	Neural Network Background	Instant "wow" factor. Defines the site's identity. Canvas-based = lightweight.
+[x] 1	Neural Network Background	Instant "wow" factor. Defines the site's identity. Canvas-based = lightweight.
 6	Magnetic CTA Buttons	Premium feel, ~30 lines of code. Huge polish-per-effort ratio.
 2	Citation Copy (BibTeX)	Direct academic utility. Simple clipboard + toast. 20 min max.
 🥈 Tier 2 — Strong Follow-ups
@@ -20,7 +20,7 @@ Which ones do you want me to build? Or should I start with all three from Tier 1
  
  
  
- 1. AI-Inspired "Neural Network" Background
+ [x] 1. AI-Inspired "Neural Network" Background
    * The Idea: A subtle, interactive background for the Hero section using canvas
      or Three.js that visualizes nodes and connections (neural pathways).        
    * Why it's innovative: It immediately visually communicates the "AI & Machine 
