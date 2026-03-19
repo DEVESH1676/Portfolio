@@ -158,7 +158,7 @@ export const NeuralBackground: React.FC = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 -z-10 pointer-events-none opacity-100 transition-opacity duration-1000"
+      className="absolute inset-0 z-0 pointer-events-none opacity-100 transition-opacity duration-1000"
     />
   );
 };
