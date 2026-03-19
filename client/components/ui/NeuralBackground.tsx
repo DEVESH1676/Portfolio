@@ -22,7 +22,6 @@ export const NeuralBackground: React.FC = () => {
 
     let animationFrameId: number;
     let nodes: Node[] = [];
-    const nodeCount = 60;
     const connectionDistance = 150;
     const mouseRadius = 200;
     const mouseStrength = 0.05;
@@ -40,6 +39,7 @@ export const NeuralBackground: React.FC = () => {
 
     const initNodes = () => {
       nodes = [];
+      const nodeCount = Math.floor((canvas.width * canvas.height) / 10000);
       for (let i = 0; i < nodeCount; i++) {
         const x = Math.random() * canvas.width;
         const y = Math.random() * canvas.height;
@@ -66,8 +66,9 @@ export const NeuralBackground: React.FC = () => {
       const primaryColor = primaryColorRaw.includes("%") ? primaryColorRaw : primaryColorRaw.split(' ').map((v, i) => i === 0 ? v : v + '%').join(' ');
 
       // Reduced opacities for better subtle appearance
-      const lineBaseOpacity = 0.15;
-      const nodeBaseOpacity = 0.4;
+      const lineBaseOpacity = 0.25;
+      const nodeBaseOpacity = 0.6;
+
 
       ctx.lineWidth = 1;
 
@@ -161,4 +162,4 @@ export const NeuralBackground: React.FC = () => {
       className="absolute inset-0 z-0 pointer-events-none opacity-100 transition-opacity duration-1000"
     />
   );
-};
+  };
