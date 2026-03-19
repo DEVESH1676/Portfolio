@@ -196,11 +196,39 @@ Theme tokens: add custom colors in `client/global.css` (HSL variables) and `tail
 ### The Gemini Protocol (ULTRA CRITICAL)
 
 You have access to the `gemini` CLI tool. Use it to offload tasks that exceed your context or require live data.
+Refer to `.agents/gemini-analyzer.md` for sub-agent execution patterns.
 
-- **Large Scale Analysis**: If a task requires reading >20 files or the entire repo, use: `gemini --all-files -p "Analysis prompt"`.
-- **Web Search/Grounding**: For latest documentation or Arch package info, use: `gemini --search "Latest features/fixes for [package]"`.
-- **Budget Management**: Use Gemini for broad refactoring or "brainstorming" to save your Claude API limits.
-use gemini-analyzer.md in agent folder. 
+#### How to Invoke Gemini (Step-by-Step)
+
+> **ALWAYS use interactive (graphical) mode. NEVER use `-p` for headless prompts.**
+
+1. **Open WSL terminal** (never PowerShell):
+   ```bash
+   wsl
+   ```
+
+2. **Navigate to the project root**:
+   ```bash
+   cd /mnt/d/VSCode/website
+   ```
+
+3. **Resume an existing session** (preferred — continues the previous conversation context):
+   ```bash
+   gemini /resume
+   ```
+   If no previous session exists or you need a fresh start, use:
+   ```bash
+   gemini
+   ```
+
+4. **Paste your prompt** directly into the interactive chat as input. Do NOT pipe or use flags.
+
+#### When to Use Gemini
+
+- **Large Scale Analysis**: If a task requires reading >20 files or the entire repo.
+- **Web Search/Grounding**: For latest documentation or Arch package info.
+- **Budget Management**: Use Gemini for broad refactoring or "brainstorming" to save Claude API limits.
+- **Cross-Verification**: After your own audit, send findings to Gemini for a second opinion.
 
 ### Coding Standards
 
