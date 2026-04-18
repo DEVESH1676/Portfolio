@@ -151,8 +151,7 @@ export const CONTACT_LINKS = [
   },
 ];
 
-export const HERO_IMAGE_URL =
-  "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=900&q=80";
+export const HERO_IMAGE_URL = "/images/dr-ghuge.jpg";
 
 
 export const BIO_DATA = {

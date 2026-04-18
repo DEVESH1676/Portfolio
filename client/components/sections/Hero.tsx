@@ -14,7 +14,7 @@ export const HeroSection = () => {
   const titleRef = React.useRef<HTMLHeadingElement | null>(null);
   const subtitle1Ref = React.useRef<HTMLParagraphElement | null>(null);
   const subtitle2Ref = React.useRef<HTMLParagraphElement | null>(null);
-  const descRef = React.useRef<HTMLParagraphElement | null>(null);
+
   const ctasRef = React.useRef<HTMLDivElement | null>(null);
   const badgeRef = React.useRef<HTMLDivElement | null>(null);
   const imgRef = React.useRef<HTMLDivElement | null>(null);
@@ -53,12 +53,7 @@ export const HeroSection = () => {
         blur: true,
       });
 
-    if (descRef.current)
-      animateEntrance(descRef.current, {
-        translateY: 16,
-        staggerIndex: 4,
-        blur: true,
-      });
+
 
     if (ctasRef.current)
       animateEntrance(ctasRef.current, {
@@ -116,12 +111,7 @@ export const HeroSection = () => {
             {BIO_DATA.shortBio}
           </p>
 
-          <p
-            ref={descRef}
-            className="mt-4 max-w-2xl text-foreground/70 hidden"
-          >
-            {/* Reserved for extra bio logic if needed, currently reusing shortBio logic above */}
-          </p>
+
 
           <div
             ref={ctasRef}

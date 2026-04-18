@@ -1,13 +1,15 @@
+import React, { Suspense } from "react";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
-import { AboutSection } from "@/components/sections/About";
-import { ContactSection } from "@/components/sections/Contact";
-
-import { EducationSection } from "@/components/sections/Education";
 import { HeroSection } from "@/components/sections/Hero";
-import { ProjectsSection } from "@/components/sections/Projects";
-import { PublicationsSection } from "@/components/sections/Publications";
-import { ResearchSection } from "@/components/sections/Research";
+
+// Lazy-load below-the-fold sections for faster initial paint
+const AboutSection = React.lazy(() => import("@/components/sections/About").then(m => ({ default: m.AboutSection })));
+const EducationSection = React.lazy(() => import("@/components/sections/Education").then(m => ({ default: m.EducationSection })));
+const ResearchSection = React.lazy(() => import("@/components/sections/Research").then(m => ({ default: m.ResearchSection })));
+const PublicationsSection = React.lazy(() => import("@/components/sections/Publications").then(m => ({ default: m.PublicationsSection })));
+const ProjectsSection = React.lazy(() => import("@/components/sections/Projects").then(m => ({ default: m.ProjectsSection })));
+const ContactSection = React.lazy(() => import("@/components/sections/Contact").then(m => ({ default: m.ContactSection })));
 
 export default function Index() {
   return (
@@ -15,13 +17,14 @@ export default function Index() {
       <Navbar />
       <main className="flex flex-col">
         <HeroSection />
-        <AboutSection />
-        <EducationSection />
-        <ResearchSection />
-        <PublicationsSection />
-        <ProjectsSection />
-
-        <ContactSection />
+        <Suspense fallback={null}>
+          <AboutSection />
+          <EducationSection />
+          <ResearchSection />
+          <PublicationsSection />
+          <ProjectsSection />
+          <ContactSection />
+        </Suspense>
       </main>
       <Footer />
     </div>

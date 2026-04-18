@@ -12,9 +12,7 @@ export const Navbar = () => {
   const [isSheetOpen, setIsSheetOpen] = React.useState(false);
   const [isScrolled, setIsScrolled] = React.useState(false);
 
-  // Active Indicator State - REMOVED
-  // const [indicatorStyle, setIndicatorStyle] = React.useState({ left: 0, width: 0, opacity: 0 });
-  // const navRefs = React.useRef<{ [key: string]: HTMLAnchorElement | null }>({});
+
 
   const observerEntries = React.useMemo(
     () =>
@@ -106,15 +104,7 @@ export const Navbar = () => {
 
         {/* DESKTOP NAV (Center - Framer Motion Pill) */}
         <nav className="hidden md:flex items-center gap-1 p-1">
-          {/* Animated Active Pill (The Glide) - REMOVED */}
-          {/* <div
-            className="absolute h-[calc(100%-8px)] top-1 bg-primary/10 rounded-full transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] -z-10"
-            style={{
-              left: indicatorStyle.left,
-              width: indicatorStyle.width,
-              opacity: indicatorStyle.opacity,
-            }}
-          /> */}
+
 
           {NAV_ITEMS.map((item) => (
             <a
