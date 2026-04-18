@@ -1,18 +1,18 @@
 # Project Roadmap
 
-**Current Phase:** 1 (Foundation & Fixes)
-**Objective:** Stabilize the cultivation base and implement premium interactive aesthetics.
+**Current Phase:** 4 (Academic Utility)
+**Objective:** Enhance the research and utility features of the cultivation base.
 
 ## Milestone 1: The Core Foundation (v1.0)
 Goal: A bug-free, perfectly animated, SEO-optimized portfolio ready for production (`dao`).
 
 ### Phase 1: Qi Realignment (Critical Fixes)
-- Status: ⏳ Pending
+- Status: ✅ Completed
 - Scope:
-  1. Fix broken hero image URL `/images/dr-ghuge.jpg` (or add placeholder)
-  2. Implement proper meta tags, OpenGraph, and title updates `index.html`
-  3. Clean up dead code in `client/data/portfolio.ts`
-  4. Fix lazy-loading for above-the-fold content
+  1. Fix broken hero image URL `/images/dr-ghuge.jpg` (✅ Done)
+  2. Implement proper meta tags, OpenGraph, and title updates `index.html` (✅ Done)
+  3. Clean up dead code in `client/data/portfolio.ts` (✅ Done)
+  4. Fix lazy-loading for above-the-fold content (✅ Done)
 
 ### Phase 2: Neural Canvas Elevation
 - Status: ✅ Completed
@@ -38,4 +38,5 @@ Goal: A bug-free, perfectly animated, SEO-optimized portfolio ready for producti
 ---
 
 ## Completed Phases
-*(None yet)*
+1. **Phase 2: Neural Canvas Elevation** (Canvas backgrounds)
+2. **Phase 1: Qi Realignment** (Foundation & Meta)
