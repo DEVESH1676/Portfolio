@@ -129,6 +129,7 @@ export const Navbar = () => {
               <motion.span
                 initial={{ letterSpacing: "0em" }}
                 animate={{ letterSpacing: activeSection === item.href ? "0.15em" : "0em" }}
+                whileHover={{ letterSpacing: "0.15em" }}
                 transition={{ duration: 0.3, ease: "easeOut" }}
                 className="inline-block whitespace-nowrap"
               >
