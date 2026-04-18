@@ -10,27 +10,19 @@ Here is your practical guide to using this Git strategy in your everyday develop
 
 ### 1. `dao` (or `main`) — *The Ultimate Truth*
 - **Concept:** Production. This is the live code that the world sees.
-- **Rule:** **Never commit directly to this branch.** Code only reaches here once it has survived every tribulation.
+- **Rule:** **Never commit directly to this branch.** Code only reaches here once it merges from `zenith`.
 
-### 2. `zenith` — *Staging / V1.0*
+### 2. `zenith` — *Staging / Release Candidate*
 - **Concept:** The absolute peak before ascension.
-- **Rule:** This branch holds the final, polished version of an upcoming release. No new features are added here, only final tweaks before deploying.
+- **Rule:** This branch holds the final, polished version of an upcoming release. Merged from `core`.
 
-### 3. `quasi` (Optional) — *Release Candidate*
-- **Concept:** Code that survived testing and is just waiting for the final push.
-- **Rule:** Used for very large projects where you need a "pre-production" environment. (We can skip this for your portfolio for now).
-
-### 4. `tribulation` — *Testing / QA*
-- **Concept:** The lightning strikes. Where your code is tested to ensure it doesn't break.
-- **Rule:** You merge your `core` branch here to run tests, check for responsive UI bugs, or share with reviewers before it goes to `zenith`.
-
-### 5. `core` (or `dev`) — *The Golden Core*
+### 3. `core` (or `dev`) — *The Golden Core*
 - **Concept:** The centralized foundation where all your `qi` gathers.
 - **Rule:** This is your primary development branch. All completed features are merged into here. **You shouldn't write code directly here either.**
 
-### 6. `qi-*` / `forge-*` / `shatter-*` / `elixir-*` — *The Actions*
+### 4. `qi-*` / `forge-*` / `elixir-*` / `shatter-*` — *The Active Cultivation*
 - **Concept:** The daily practice. 
-- **Rule:** Every time you sit down to work, you branch off `core` and create one of these functional branches.
+- **Rule:** Every time you sit down to work, you branch off `core` and create one of these functional branches. **These branches stay locally on your machine—never push them to remote.**
 
 ---
 
@@ -52,50 +44,46 @@ git checkout -b qi-contact-form
 git add .
 git commit -m "feat: added functional contact form UI"
 
-# 5. Push your Qi to the heavens (GitHub)
-git push -u origin qi-contact-form
+# 5. Iteratively test and commit until requested to Merge by the user.
 ```
-*After pushing, you would go to GitHub and create a "Pull Request" to merge `qi-contact-form` into `core`.*
 
-### 2. Body Tempering (Refactoring/Optimizing)
-When your code works, but it's ugly or slow, and you want to rewrite it without breaking the current version.
+### 2. Merge to Core (Once Features Are Perfected)
+When the user explicitly says "looks good, merge it", follow this ascension step:
 ```bash
 git checkout core
-git checkout -b forge-navbar-animations
-# ... make your improvements ...
-git commit -m "refactor: optimized navbar rendering speed"
+git merge qi-contact-form
+git push origin core
+git branch -d qi-contact-form
 ```
+*Note: Feature branches are NEVER pushed directly. Only the consolidated `core` branch pushes.*
 
 ### 3. Healing a Critical Wound (Hotfixes in Production)
 A catastrophic bug is found on the live website (`dao`/`main`)!
 ```bash
-# 1. Branch directly from the live code, NOT core.
-git checkout main
-git pull origin main
-
-# 2. Formulate the Elixir
+# 1. Branch directly from the live code
+git checkout dao
 git checkout -b elixir-fix-broken-links
 
-# 3. Apply the medicine
+# 2. Apply the medicine locally
 git add .
 git commit -m "fix: corrected broken routing to projects page"
 
-# 4. Give the medicine back to both Dao and Core
-# You push this, then on GitHub merge it into `main` to fix the live site immediately, AND merge it into `core` so the bug doesn't accidentally return in the next update.
-```
-
-### 4. Shattering Old Artifacts (Removing Code)
-You have old components you no longer need and want to safely delete them.
-```bash
+# 3. Formally merge the Elixir up the chain
+git checkout dao
+git merge elixir-fix-broken-links
+git checkout zenith
+git merge elixir-fix-broken-links
 git checkout core
-git checkout -b shatter-old-hero-section
+git merge elixir-fix-broken-links
+
+# 4. Push the fixed realms
+git push origin dao zenith core
 ```
 
 ---
 
-## 🌀 The Ascension Path (The Merge Flow)
+## 🌀 The Ascension Path (Deployment Flow)
 The life cycle of a piece of code moving from your mind to the live internet looks exactly like this:
-1. `qi-[feature]` ➔ merges into ➔ `core`
-2. `core` ➔ merges into ➔ `tribulation` (for testing on different devices)
-3. `tribulation` ➔ merges into ➔ `zenith` (final polish before release)
-4. `zenith` ➔ merges into ➔ `dao`/`main` (the live portfolio site)
+1. `qi-[feature]` (LOCAL ONLY) ➔ merges into ➔ `core`
+2. `core` ➔ merges into ➔ `zenith` (staging preparation)
+3. `zenith` ➔ merges into ➔ `dao`/`main` (live portfolio deployment)
