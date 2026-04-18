@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/button";
 import Container from "@/components/ui/container";
 import { animateEntrance, ANIME } from "@/lib/anime";
 import { NeuralBackground } from "@/components/ui/NeuralBackground";
-import { MagneticWrapper } from "@/components/ui/magnetic-wrapper";
 
 export const HeroSection = () => {
   const titleRef = React.useRef<HTMLHeadingElement | null>(null);
@@ -128,37 +127,31 @@ export const HeroSection = () => {
             ref={ctasRef}
             className="mt-8 flex flex-wrap items-center gap-4 justify-center lg:justify-start opacity-0"
           >
-            <MagneticWrapper>
-              <Button asChild size="lg" className="h-auto py-4 px-6 md:h-11 md:px-8 text-base">
-                <a href="#publications" className="btn-cta">
-                  View Publications
-                </a>
-              </Button>
-            </MagneticWrapper>
-            <MagneticWrapper>
-              <Button asChild variant="outline" size="lg" className="h-auto py-4 px-6 md:h-11 md:px-8 text-base">
-                <a
-                  href={DOWNLOAD_CV_URL}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="btn-cta"
-                >
-                  Download CV
-                </a>
-              </Button>
-            </MagneticWrapper>
-            <MagneticWrapper>
-              <Button asChild variant="outline" size="lg" className="h-auto py-4 px-6 md:h-11 md:px-8 text-base">
-                <a
-                  href={RESEARCH_SUMMARY_URL}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="btn-cta"
-                >
-                  Research Summary
-                </a>
-              </Button>
-            </MagneticWrapper>
+            <Button asChild size="lg" className="h-auto py-4 px-6 md:h-11 md:px-8 text-base">
+              <a href="#publications" className="btn-cta">
+                View Publications
+              </a>
+            </Button>
+            <Button asChild variant="outline" size="lg" className="h-auto py-4 px-6 md:h-11 md:px-8 text-base">
+              <a
+                href={DOWNLOAD_CV_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="btn-cta"
+              >
+                Download CV
+              </a>
+            </Button>
+            <Button asChild variant="outline" size="lg" className="h-auto py-4 px-6 md:h-11 md:px-8 text-base">
+              <a
+                href={RESEARCH_SUMMARY_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="btn-cta"
+              >
+                Research Summary
+              </a>
+            </Button>
           </div>
         </div>
 

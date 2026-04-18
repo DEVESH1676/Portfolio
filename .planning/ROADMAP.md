@@ -15,18 +15,18 @@ Goal: A bug-free, perfectly animated, SEO-optimized portfolio ready for producti
   4. Fix lazy-loading for above-the-fold content
 
 ### Phase 2: Neural Canvas Elevation
-- Status: ✅ Completed
+- Status: ⏳ Pending
 - Scope:
   1. Implement `NeuralBackground.tsx` using `canvas` and Anime.js
   2. Hook up responsive resize event listeners and clean memory on unmount
   3. Integrate into Hero background while maintaining glassmorphism hierarchy
 
-### Phase 3: Premium Kinetics
-- Status: ✅ Completed
-- Scope:
-  1. Add magnetic hover effects to Contact/CV buttons using Framer Motion physics
-  2. Implement letter-spacing expansion for active navbar items (`0.1em`)
-  3. Ensure active pill indicator in Navbar smoothly slides (layoutId)
+### Phase 3: Premium Kinetics (Magnetic Elements)
+- Status: ⏳ Pending
+- Scope: 
+  1. Create a `MagneticButton` wrapper component
+  2. Implement physics-based hover tracking using Anime.js
+  3. Apply to Contact CTA, Resume download, and social links
 
 ### Phase 4: Academic Utility
 - Status: ⏳ Pending
