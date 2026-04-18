@@ -107,10 +107,11 @@ export const Navbar = () => {
 
 
           {NAV_ITEMS.map((item) => (
-            <a
+            <motion.a
               key={item.href}
               href={item.href}
               onClick={() => handleNavClick(item.href)}
+              whileHover="hover"
               className={cn(
                 "relative group px-3 lg:px-5 py-2 text-sm font-medium transition-colors duration-300 rounded-full cursor-pointer",
                 activeSection === item.href
@@ -129,13 +130,15 @@ export const Navbar = () => {
               <motion.span
                 initial={{ letterSpacing: "0em" }}
                 animate={{ letterSpacing: activeSection === item.href ? "0.15em" : "0em" }}
-                whileHover={{ letterSpacing: "0.15em" }}
+                variants={{
+                  hover: { letterSpacing: "0.15em" }
+                }}
                 transition={{ duration: 0.3, ease: "easeOut" }}
                 className="inline-block whitespace-nowrap"
               >
                 {item.label}
               </motion.span>
-            </a>
+            </motion.a>
           ))}
         </nav>
 
