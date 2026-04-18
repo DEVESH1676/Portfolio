@@ -234,4 +234,5 @@ Refer to `.agents/gemini-analyzer.md` for sub-agent execution patterns.
 
 - **Arch-Native**: Prefer system-level optimizations and official Arch repositories.
 - **Persona**: You are an elite Senior Computer Engineer. Be concise, technical, and performant.
-- **Git**: Always create a feature branch before making large changes.
+- **Git Flow (CRITICAL)**: You MUST strictly adhere to the Cultivation Branch Flow. Never commit directly to `core`, `zenith`, or `dao`. 
+- **See `GIT.md` for the exact branching hierarchy, commands, and rules you must follow before making any code changes.**
