@@ -21,8 +21,14 @@ Prettier is the formatting source of truth: 2-space indentation, no tabs, traili
 ## Testing Guidelines
 Vitest is the active test runner. Add focused unit tests next to the code they cover, following `client/lib/utils.spec.ts`. Run `npm run test` before opening a PR, and run `npm run typecheck` for any API, schema, or route change. There is no published coverage gate yet, so add tests for new logic and bug fixes instead of relying on manual checks.
 
-## Commit & Pull Request Guidelines
-Recent Git history uses timestamp-only commit subjects, which are not descriptive enough for collaboration. Use short imperative commit messages instead, for example `Add contact form validation` or `Fix analytics route payload parsing`. Keep pull requests scoped, explain user-visible changes, list validation steps, and link the related issue or task. Include screenshots for UI changes and call out any new environment variables.
+## Cultivation Branch Workflow & Commits
+This project strictly follows the "Cultivation Branch Flow" to protect production code:
+1. **`dao` (Production):** The live site. Never push directly here.
+2. **`zenith` (Staging):** Polish and pre-release. 
+3. **`core` (Dev Base):** The central development branch. All features merge here. Do not code directly on `core`.
+4. **`qi-*` (Feature Branches):** Always branch off `core` into a `qi-[feature]` branch to write code.
+**Merge Path:** `qi-[feature]` → `core` → `zenith` → `dao`.
+**Commits:** Never use timestamp-only messages. Use short imperative messages (e.g., `feat: add contact form`, `fix: correct image URL`, `chore: update config`).
 
 ## Configuration & Security Tips
 Do not commit secrets from `.env`. The dev server blocks direct access to `.env`, certificate files, `.git`, and `server/**`; keep that boundary intact when editing Vite config. When adding API inputs, validate them in shared Zod schemas before they reach route logic.
