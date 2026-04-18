@@ -29,17 +29,25 @@ When an AI agent is instructed to write code, it **MUST** execute the following 
 2. `git pull origin core` (if remote exists)
 3. `git checkout -b qi-<descriptive-name>`
 
-### Phase B: Execute & Commit
+### Phase B: Execute & Commit (Iterative — Stay on `qi-*`)
 1. Write the code, test locally.
 2. `git add .`
 3. `git commit -m "<type>: <imperative description>"`
+   *Commit Rules: Use conventional commits (e.g., `feat:`, `fix:`, `chore:`, `refactor:`). No timestamp-only messages.*
 4. `git push origin qi-<descriptive-name>` (Push to GitHub for visibility/backup)
+5. **Repeat steps 1–4** as many times as needed. Fix bugs, add features, iterate — all on the same `qi-*` branch.
 
-### Phase C: Merge to Core
+> ⚠️ **CRITICAL RULE:** Do **NOT** merge to `core` on your own.
+> Stay on the `qi-*` branch until the **user explicitly confirms** that all work is done 
+> (e.g., "merge it", "looks good", "done", "ship it").
+
+### Phase C: Merge to Core (User-Approved Only)
+**Only execute this phase when the user gives explicit approval.**
 1. `git checkout core`
 2. `git merge qi-<descriptive-name>`
 3. `git push origin core`
-4. **DO NOT** delete the `qi-` branch immediately. Keep it local and on origin for the user to review history.
+4. `git branch -d qi-<descriptive-name>` (Clean up local branch)
+5. `git push origin --delete qi-<descriptive-name>` (Clean up remote branch)
 
 ---
 
