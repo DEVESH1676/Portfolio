@@ -127,9 +127,10 @@ export const Navbar = () => {
               )}
               {/* Text Expansion Effect */}
               <motion.span
-                animate={{ letterSpacing: activeSection === item.href ? "0.1em" : "0em" }}
+                initial={{ letterSpacing: "0em" }}
+                animate={{ letterSpacing: activeSection === item.href ? "0.15em" : "0em" }}
                 transition={{ duration: 0.3, ease: "easeOut" }}
-                className="inline-block"
+                className="inline-block whitespace-nowrap"
               >
                 {item.label}
               </motion.span>
