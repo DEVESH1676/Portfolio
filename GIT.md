@@ -33,13 +33,13 @@ When an AI agent is instructed to write code, it **MUST** execute the following 
 1. Write the code, test locally.
 2. `git add .`
 3. `git commit -m "<type>: <imperative description>"`
-   *Commit Rules: Do NOT use timestamp-only commits. Use standard conventional commits (e.g., `feat:`, `fix:`, `chore:`, `refactor:`).*
+4. `git push origin qi-<descriptive-name>` (Push to GitHub for visibility/backup)
 
 ### Phase C: Merge to Core
 1. `git checkout core`
 2. `git merge qi-<descriptive-name>`
 3. `git push origin core`
-4. `git branch -d qi-<descriptive-name>` (Clean up local workspace)
+4. **DO NOT** delete the `qi-` branch immediately. Keep it local and on origin for the user to review history.
 
 ---
 
