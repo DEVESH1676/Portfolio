@@ -16,67 +16,38 @@ const MobileDevNotice: React.FC<MobileDevNoticeProps> = ({
   onDismiss,
   showOnDesktop = true,
 }) => {
-  // Check if we should show on initial render
-  const shouldShow = React.useMemo(() => {
-    if (typeof window === "undefined") return false;
+  const [isVisible, setIsVisible] = React.useState(false);
 
-    try {
-      const stored = localStorage.getItem(MOBILE_NOTICE_KEY);
-      if (stored) return false;
+  React.useEffect(() => {
+    if (typeof window === "undefined") return;
 
-      // Only show on mobile devices
-      const isMobile =
-        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-          navigator.userAgent
-        ) || window.innerWidth < 768;
+    // Only show on mobile devices
+    const isMobile =
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+      ) || window.innerWidth < 768;
 
-      if (isMobile) {
-        // Store that we've shown it
-        localStorage.setItem(MOBILE_NOTICE_KEY, "true");
-        return true;
-      }
-    } catch {
-      // Ignore errors
+    if (isMobile) {
+      setIsVisible(true);
     }
-    return false;
-  }, []);
 
-  const [isVisible, setIsVisible] = React.useState(shouldShow);
+    // SSR/SSG: Create container if it doesn't exist
+    const existing = document.getElementById("mobile-dev-notice");
+    if (!existing) {
+      const container = document.createElement("div");
+      container.id = "mobile-dev-notice";
+      document.body.appendChild(container);
+    }
+  }, []);
 
   const dismiss = () => {
     setIsVisible(false);
-    try {
-      localStorage.setItem(MOBILE_NOTICE_KEY, "true");
-      onDismiss?.();
-    } catch {
-      // Ignore
-    }
+    onDismiss?.();
   };
 
-  // Always render content, but conditionally show
   if (!isVisible) {
     return null;
   }
-
-  // SSR/SSG: Create container if it doesn't exist
-  React.useEffect(() => {
-    if (typeof window !== "undefined") {
-      const existing = document.getElementById("mobile-dev-notice");
-      if (!existing) {
-        const container = document.createElement("div");
-        container.id = "mobile-dev-notice";
-        document.body.appendChild(container);
-        // React will hydrate into this container
-        setTimeout(() => {
-          const root = document.getElementById("mobile-dev-notice");
-          if (root) {
-            // React will handle hydration automatically
-            // No manual DOM manipulation needed
-          }
-        }, 0);
-      }
-    }
-  }, []);
 
   return (
     <div

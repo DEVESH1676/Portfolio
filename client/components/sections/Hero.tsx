@@ -157,7 +157,7 @@ export const HeroSection = () => {
               alt={`Professional portrait of ${BIO_DATA.name}`}
               className="h-full w-full object-cover"
               loading="eager"
-              fetchPriority="high"
+              fetchpriority="high"
             />
           </div>
         </div>
