@@ -19,8 +19,8 @@ function searchForWorkspaceRoot(cwd: string): string {
 // Import the createServer function from your server module
 import { createServer } from "./server/index";
 
-export default defineConfig(({ mode: _mode }) => ({
-  base: "/Portfolio/",
+export default defineConfig(({ command, mode: _mode }) => ({
+  base: command === "build" ? "/Portfolio/" : "/",
   server: {
     host: "::",
     port: 8080,
