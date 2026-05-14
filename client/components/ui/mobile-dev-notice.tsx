@@ -16,7 +16,8 @@ const MobileDevNotice: React.FC<MobileDevNoticeProps> = ({
   onDismiss,
   showOnDesktop = true,
 }) => {
-  const [isVisible, setIsVisible] = React.useState<boolean>(() => {
+  // Check if we should show on initial render
+  const shouldShow = React.useMemo(() => {
     if (typeof window === "undefined") return false;
 
     try {
@@ -38,7 +39,9 @@ const MobileDevNotice: React.FC<MobileDevNoticeProps> = ({
       // Ignore errors
     }
     return false;
-  });
+  }, []);
+
+  const [isVisible, setIsVisible] = React.useState(shouldShow);
 
   const dismiss = () => {
     setIsVisible(false);
@@ -50,7 +53,10 @@ const MobileDevNotice: React.FC<MobileDevNoticeProps> = ({
     }
   };
 
-  if (!isVisible) return null;
+  // Always render content, but conditionally show
+  if (!isVisible) {
+    return null;
+  }
 
   // SSR/SSG: Create container if it doesn't exist
   React.useEffect(() => {

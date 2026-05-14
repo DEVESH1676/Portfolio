@@ -184,40 +184,61 @@ export const Navbar = () => {
                   <span className="sr-only">Toggle navigation</span>
                 </button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-full max-w-xs border-l border-border bg-background/95 backdrop-blur-xl">
-                {/* ... Mobile Menu Content ... */}
-                <div className="mt-12 flex flex-col gap-6">
-                  <div className="flex flex-col space-y-2">
-                    {NAV_ITEMS.map((item) => (
-                      <a
-                        key={item.href}
-                        href={item.href}
-                        onClick={() => handleNavClick(item.href)}
-                        className={cn(
-                          "px-4 py-3 text-lg font-medium transition-colors rounded-lg",
-                          activeSection === item.href
-                            ? "bg-primary/10 text-primary border border-primary/20"
-                            : "text-foreground/80 hover:bg-muted"
-                        )}
-                      >
-                        {item.label}
-                      </a>
-                    ))}
-                  </div>
-                  <div className="h-px bg-border/50 my-2" />
-                  <div className="flex flex-col gap-3">
-                    <Button asChild variant="outline" size="lg" className="w-full justify-start">
-                      <a href="#publications" onClick={() => setIsSheetOpen(false)}>
-                        <FileText className="h-4 w-4 mr-3" />
-                        View Publications
-                      </a>
-                    </Button>
-                    <Button asChild size="lg" className="w-full justify-start bg-primary text-primary-foreground">
-                      <a href={DOWNLOAD_CV_URL} target="_blank" rel="noreferrer" onClick={() => setIsSheetOpen(false)}>
-                        <Download className="h-4 w-4 mr-3" />
-                        Download CV
-                      </a>
-                    </Button>
+              <SheetContent
+                side="right"
+                className="w-full max-w-xs border-l border-border bg-background/95 backdrop-blur-xl"
+                onCloseAutoFocus={(e) => {
+                  // Prevent focus from moving to trigger when already focused
+                  if (document.activeElement?.tagName === 'BUTTON' && document.activeElement.closest('[data-radix-root-sheet-trigger]')) {
+                    e.preventDefault();
+                  }
+                }}
+              >
+                <div className="flex flex-col h-full">
+                  {/* Close Button (Top Right) */}
+                  <button
+                    type="button"
+                    onClick={() => setIsSheetOpen(false)}
+                    className="absolute top-4 right-4 z-50 p-2 rounded-md border border-border/70 bg-background/50 text-foreground hover:border-primary/60 hover:text-primary transition-all"
+                    aria-label="Close navigation menu"
+                  >
+                    <X className="h-4 w-4" aria-hidden />
+                  </button>
+
+                  {/* Mobile Menu Content */}
+                  <div className="mt-6 flex flex-col gap-6">
+                    <div className="flex flex-col space-y-2">
+                      {NAV_ITEMS.map((item) => (
+                        <a
+                          key={item.href}
+                          href={item.href}
+                          onClick={() => handleNavClick(item.href)}
+                          className={cn(
+                            "px-4 py-3 text-lg font-medium transition-colors rounded-lg",
+                            activeSection === item.href
+                              ? "bg-primary/10 text-primary border border-primary/20"
+                              : "text-foreground/80 hover:bg-muted"
+                          )}
+                        >
+                          {item.label}
+                        </a>
+                      ))}
+                    </div>
+                    <div className="h-px bg-border/50 my-2" />
+                    <div className="flex flex-col gap-3">
+                      <Button asChild variant="outline" size="lg" className="w-full justify-start">
+                        <a href="#publications" onClick={() => setIsSheetOpen(false)}>
+                          <FileText className="h-4 w-4 mr-3" />
+                          View Publications
+                        </a>
+                      </Button>
+                      <Button asChild size="lg" className="w-full justify-start bg-primary text-primary-foreground">
+                        <a href={DOWNLOAD_CV_URL} target="_blank" rel="noreferrer" onClick={() => setIsSheetOpen(false)}>
+                          <Download className="h-4 w-4 mr-3" />
+                          Download CV
+                        </a>
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </SheetContent>
