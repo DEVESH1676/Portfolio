@@ -20,7 +20,7 @@ function searchForWorkspaceRoot(cwd: string): string {
 import { createServer } from "./server/index";
 
 export default defineConfig(({ mode: _mode }) => ({
-  base: "/website/",
+  base: "/Portfolio/",
   server: {
     host: "::",
     port: 8080,
