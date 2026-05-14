@@ -41,26 +41,3 @@ const App = () => {
 };
 
 createRoot(document.getElementById("root")!).render(<App />);
-
-// Graceful fallback for SSR/SSG environments
-if (typeof window !== "undefined") {
-  // Check viewport on hydration
-  const isMobile =
-    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-      navigator.userAgent
-    ) || window.innerWidth < 768;
-
-  if (isMobile) {
-    // Show notice only on first load
-    const stored = localStorage.getItem(MOBILE_NOTICE_KEY);
-    if (!stored) {
-      const notice = document.createElement("div");
-      notice.id = "mobile-dev-notice";
-      document.body.appendChild(notice);
-      // Notice will be rendered by React on next tick
-      setTimeout(() => {
-        document.getElementById("mobile-dev-notice")?.querySelector("#root").innerHTML = document.getElementById("root").innerHTML;
-      }, 100);
-    }
-  }
-}
