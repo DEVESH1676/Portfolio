@@ -21,6 +21,9 @@ export const HeroSection = () => {
   const badgeRef = React.useRef<HTMLDivElement | null>(null);
   const imgRef = React.useRef<HTMLDivElement | null>(null);
 
+  // Mobile refs (separate to avoid conflict with desktop)
+  const mobileImgRef = React.useRef<HTMLDivElement | null>(null);
+
   React.useEffect(() => {
     // Premium Academic Staggered Entrance
 
@@ -64,15 +67,27 @@ export const HeroSection = () => {
         blur: false, // Buttons better sharp
       });
 
-    // Image: Intelligent Fade + Subtle Scale
+    // Desktop image: Intelligent Fade + Subtle Scale
     if (imgRef.current) {
       animateEntrance(imgRef.current, {
         translateY: 40,
         opacity: 1,
         duration: 1200,
         delay: 200,
-        scale: 1, // Triggers 0.8 -> 1
+        scale: 1,
         easing: "cubic-bezier(0.2, 0.8, 0.2, 1)",
+      });
+    }
+
+    // Mobile image entrance
+    if (mobileImgRef.current) {
+      animateEntrance(mobileImgRef.current, {
+        translateY: 20,
+        opacity: 1,
+        duration: 800,
+        delay: 100,
+        scale: 1,
+        easing: ANIME.premiumEasing,
       });
     }
   }, []);
@@ -88,11 +103,11 @@ export const HeroSection = () => {
           {/* Profile Photo — Squircle */}
           <div className="relative flex-shrink-0">
             {/* Background Orbs */}
-            <div className="absolute -top-4 -left-4 w-28 h-28 rounded-full bg-primary/15 blur-2xl pointer-events-none" />
-            <div className="absolute -bottom-2 -right-3 w-20 h-20 rounded-full bg-violet-500/12 blur-xl pointer-events-none" />
+            <div className="absolute -top-4 -left-4 w-28 h-28 rounded-full bg-primary/15 blur-2xl pointer-events-none orb-breathe" />
+            <div className="absolute -bottom-2 -right-3 w-20 h-20 rounded-full bg-violet-500/12 blur-xl pointer-events-none orb-breathe" style={{ animationDelay: "3s" }} />
 
             <div
-              ref={imgRef}
+              ref={mobileImgRef}
               className="relative w-20 h-20 overflow-hidden rounded-2xl border border-primary/20 bg-background shadow-lg opacity-0"
             >
               <div className="absolute inset-0 bg-gradient-to-b from-primary/20 via-primary/5 to-transparent" />
@@ -216,33 +231,23 @@ export const HeroSection = () => {
           </div>
         </div>
 
-        {/* ─── Mobile Text Content ─── */}
+        {/* ─── Mobile Text Content (no animation refs — renders immediately) ─── */}
         <div className="md:hidden text-center">
           <span
-            ref={badgeRef}
-            className="inline-flex items-center rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-primary mb-4 opacity-0"
+            className="inline-flex items-center rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-primary mb-4"
           >
             Professional Academic Portfolio
           </span>
 
-          <h1
-            ref={titleRef}
-            className="font-heading font-semibold text-foreground opacity-0"
-          >
+          <h1 className="font-heading font-semibold text-foreground">
             {BIO_DATA.name}
           </h1>
 
-          <p
-            ref={subtitle1Ref}
-            className="mt-4 text-lg font-medium text-primary opacity-0"
-          >
+          <p className="mt-4 text-lg font-medium text-primary">
             {BIO_DATA.role}
           </p>
 
-          <p
-            ref={subtitle2Ref}
-            className="mt-6 text-foreground/80 opacity-0"
-          >
+          <p className="mt-6 text-foreground/80">
             {BIO_DATA.shortBio}
           </p>
         </div>
