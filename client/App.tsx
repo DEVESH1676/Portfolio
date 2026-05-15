@@ -26,7 +26,7 @@ const App = () => {
         <TooltipProvider>
           <Toaster />
           {/* Mobile development notice */}
-          {isMobile && <MobileDevNotice showOnDesktop={false} />}
+          {isMobile && <MobileDevNotice />}
           <BrowserRouter basename={import.meta.env.BASE_URL}>
             <Routes>
               <Route path="/" element={<Index />} />

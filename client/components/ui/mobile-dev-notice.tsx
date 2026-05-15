@@ -3,18 +3,14 @@ import { X, Smartphone, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-const MOBILE_NOTICE_KEY = "mobile-dev-notice-dismissed";
-
 interface MobileDevNoticeProps {
   className?: string;
   onDismiss?: () => void;
-  showOnDesktop?: boolean;
 }
 
 const MobileDevNotice: React.FC<MobileDevNoticeProps> = ({
   className,
   onDismiss,
-  showOnDesktop = true,
 }) => {
   const [isVisible, setIsVisible] = React.useState(false);
 
