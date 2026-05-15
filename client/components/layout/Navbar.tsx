@@ -1,27 +1,15 @@
 import * as React from "react";
-import { Menu, X, Download, FileText } from "lucide-react";
+import { Download, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { NAV_ITEMS, DOWNLOAD_CV_URL } from "@/data/portfolio";
 import ThemeToggle from "@/components/ui/theme-toggle";
 import { motion } from "framer-motion";
+import { useActiveSection } from "@/hooks/use-active-section";
 
 export const Navbar = () => {
-  const [activeSection, setActiveSection] = React.useState<string>("#home");
-  const [isSheetOpen, setIsSheetOpen] = React.useState(false);
+  const [activeSection, setActiveSection] = useActiveSection();
   const [isScrolled, setIsScrolled] = React.useState(false);
-
-
-
-  const observerEntries = React.useMemo(
-    () =>
-      NAV_ITEMS.map((item) => ({
-        id: item.href.replace("#", ""),
-        href: item.href,
-      })),
-    []
-  );
 
   // Scroll Detection
   React.useEffect(() => {
@@ -32,38 +20,8 @@ export const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Scroll-based active section detection (handles tall sections)
-  React.useEffect(() => {
-    const handleActiveSection = () => {
-      const scrollY = window.scrollY;
-      const offset = window.innerHeight * 0.35; // Detection point at 35% from top
-
-      let current = observerEntries[0]?.href ?? "#home";
-
-      for (const entry of observerEntries) {
-        const el = document.getElementById(entry.id);
-        if (!el) continue;
-        
-        // Use getBoundingClientRect for more reliable top calculation relative to viewport
-        const rect = el.getBoundingClientRect();
-        const top = rect.top + scrollY;
-        
-        if (top - offset <= scrollY) {
-          current = entry.href;
-        }
-      }
-
-      setActiveSection(current);
-    };
-
-    handleActiveSection(); // Run once on mount
-    window.addEventListener("scroll", handleActiveSection, { passive: true });
-    return () => window.removeEventListener("scroll", handleActiveSection);
-  }, [observerEntries]);
-
   const handleNavClick = (href: string) => {
     setActiveSection(href);
-    setIsSheetOpen(false);
   };
 
 
@@ -71,10 +29,10 @@ export const Navbar = () => {
     <header
       className={cn(
         "fixed z-50 transition-all duration-500 ease-spring",
-        // Mobile: Full width top bar
-        "inset-x-0 top-0 border-b border-white/10 dark:border-white/5 bg-background/50 backdrop-blur-2xl backdrop-saturate-150 md:border-none md:bg-transparent md:backdrop-filter-none",
+        // Hidden on mobile (MobileHeader handles it)
+        "hidden md:block",
         // Desktop: Floating Glass Pill Position (Refined)
-        "md:inset-x-auto md:left-1/2 md:-translate-x-1/2 md:w-auto md:max-w-[95%] xl:max-w-7xl",
+        "inset-x-0 top-0 md:inset-x-auto md:left-1/2 md:-translate-x-1/2 md:w-auto md:max-w-[95%] xl:max-w-7xl",
         isScrolled ? "md:top-3" : "md:top-6"
       )}
     >
@@ -171,79 +129,7 @@ export const Navbar = () => {
             <ThemeToggle />
           </div>
 
-          {/* Mobile Toggle & Menu */}
-          <div className="flex items-center gap-4 lg:hidden">
-            <ThemeToggle />
-            <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
-              <SheetTrigger asChild>
-                <button
-                  type="button"
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border/70 bg-background/50 text-foreground transition hover:border-primary/60 hover:text-primary"
-                >
-                  {isSheetOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-                  <span className="sr-only">Toggle navigation</span>
-                </button>
-              </SheetTrigger>
-              <SheetContent
-                side="right"
-                className="w-full max-w-xs border-l border-border bg-background/95 backdrop-blur-xl"
-                onCloseAutoFocus={(e) => {
-                  // Prevent focus from moving to trigger when already focused
-                  if (document.activeElement?.tagName === 'BUTTON' && document.activeElement.closest('[data-radix-root-sheet-trigger]')) {
-                    e.preventDefault();
-                  }
-                }}
-              >
-                <div className="flex flex-col h-full">
-                  {/* Close Button (Top Right) */}
-                  <button
-                    type="button"
-                    onClick={() => setIsSheetOpen(false)}
-                    className="absolute top-4 right-4 z-50 p-2 rounded-md border border-border/70 bg-background/50 text-foreground hover:border-primary/60 hover:text-primary transition-all"
-                    aria-label="Close navigation menu"
-                  >
-                    <X className="h-4 w-4" aria-hidden />
-                  </button>
-
-                  {/* Mobile Menu Content */}
-                  <div className="mt-6 flex flex-col gap-6">
-                    <div className="flex flex-col space-y-2">
-                      {NAV_ITEMS.map((item) => (
-                        <a
-                          key={item.href}
-                          href={item.href}
-                          onClick={() => handleNavClick(item.href)}
-                          className={cn(
-                            "px-4 py-3 text-lg font-medium transition-colors rounded-lg",
-                            activeSection === item.href
-                              ? "bg-primary/10 text-primary border border-primary/20"
-                              : "text-foreground/80 hover:bg-muted"
-                          )}
-                        >
-                          {item.label}
-                        </a>
-                      ))}
-                    </div>
-                    <div className="h-px bg-border/50 my-2" />
-                    <div className="flex flex-col gap-3">
-                      <Button asChild variant="outline" size="lg" className="w-full justify-start">
-                        <a href="#publications" onClick={() => setIsSheetOpen(false)}>
-                          <FileText className="h-4 w-4 mr-3" />
-                          View Publications
-                        </a>
-                      </Button>
-                      <Button asChild size="lg" className="w-full justify-start bg-primary text-primary-foreground">
-                        <a href={DOWNLOAD_CV_URL} target="_blank" rel="noreferrer" onClick={() => setIsSheetOpen(false)}>
-                          <Download className="h-4 w-4 mr-3" />
-                          Download CV
-                        </a>
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </SheetContent>
-            </Sheet>
-          </div>
+          {/* Mobile nav is handled by MobileHeader component */}
         </div>
       </div>
     </header>

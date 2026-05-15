@@ -1,6 +1,7 @@
 import React, { Suspense } from "react";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import { MobileHeader } from "@/components/layout/MobileHeader";
 import { HeroSection } from "@/components/sections/Hero";
 
 // Lazy-load below-the-fold sections for faster initial paint
@@ -14,6 +15,7 @@ const ContactSection = React.lazy(() => import("@/components/sections/Contact").
 export default function Index() {
   return (
     <div className="bg-background text-foreground">
+      <MobileHeader />
       <Navbar />
       <main className="flex flex-col">
         <HeroSection />
