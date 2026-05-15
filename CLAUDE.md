@@ -16,7 +16,7 @@ Premium academic portfolio website for Dr. C. A. Ghuge (Associate Professor & He
 - **Icons**: Lucide React
 - **Fonts**: Satoshi (headings via Fontshare CDN) + Inter (body via Google Fonts)
 - **Testing**: Vitest (`.spec.ts` files)
-- **Deployment**: Netlify
+- **Deployment**: GitHub Pages (via `gh-pages` branch)
 
 ## Architecture
 

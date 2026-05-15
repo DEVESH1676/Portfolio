@@ -1,20 +1,6 @@
 import { defineConfig, Plugin } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "node:path";
-import fs from "node:fs";
-
-// Function to search for the workspace root
-function searchForWorkspaceRoot(cwd: string): string {
-  let currentDir = cwd;
-  while (currentDir !== path.parse(currentDir).root) {
-    const packageJsonPath = path.join(currentDir, 'package.json');
-    if (fs.existsSync(packageJsonPath)) {
-      return currentDir;
-    }
-    currentDir = path.dirname(currentDir);
-  }
-  throw new Error('Workspace root not found');
-}
 
 // Import the createServer function from your server module
 import { createServer } from "./server/index";
@@ -24,13 +10,12 @@ export default defineConfig(({ command, mode: _mode }) => ({
   server: {
     host: "::",
     port: 8080,
+    watch: {
+      usePolling: true,
+    },
     fs: {
-      allow: [
-        "./client",
-        "./shared",
-        searchForWorkspaceRoot(process.cwd()), // Dynamically find the workspace root
-      ],
-      deny: [".env", ".env.*", "*.{crt,pem}", "**/.git/**", "server/**"],
+      allow: ["."],
+      deny: [".env", ".env.*", "*.{crt,pem}", "**/.git/**"],
     },
   },
   build: {
