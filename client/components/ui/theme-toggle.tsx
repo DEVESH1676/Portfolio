@@ -10,10 +10,8 @@ export const ThemeToggle: React.FC = () => {
       if (typeof window !== 'undefined') {
         const stored = localStorage.getItem(THEME_KEY);
         if (stored) return stored === "dark";
-        return (
-          window.matchMedia &&
-          window.matchMedia("(prefers-color-scheme: dark)").matches
-        );
+        // Always default to light mode if no preference is stored
+        return false;
       }
       return false;
     } catch {
