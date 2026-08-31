@@ -25,11 +25,19 @@ export const QUICK_FACTS = [
     ],
   },
   {
-    title: "Interests",
+    title: "Web Stack",
     items: [
-      "full-stack web development",
-      "arch linux & wayland",
-      "ui animations & shaders",
+      "typescript / react / node.js",
+      "gsap / ui animations",
+      "python / sql / bash",
+    ],
+  },
+  {
+    title: "Systems & Cloud",
+    items: [
+      "arch linux / wsl / hyprland",
+      "server hosting (aws, cloudflare)",
+      "git / neovim / gnu toolchain"
     ],
   },
 ];
@@ -99,7 +107,7 @@ export const CONTACT_LINKS = [
 ];
 
 // Provide a placeholder image URL for now
-export const HERO_IMAGE_URL = "/images/placeholder.jpg"; 
+export const HERO_IMAGE_URL = "/images/placeholder.jpg";
 
 export const BIO_DATA = {
   name: "devesh",
