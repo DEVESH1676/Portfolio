@@ -64,7 +64,7 @@ export const MobileHeader: React.FC = () => {
           onClick={() => handleNavClick("#home")}
           className="font-heading text-[15px] font-bold tracking-tight text-foreground whitespace-nowrap"
         >
-          Dr. C. A. Ghuge
+          Devesh Ghuge
         </a>
 
         <div className="flex items-center gap-3">
@@ -82,18 +82,6 @@ export const MobileHeader: React.FC = () => {
             CV
           </motion.a>
 
-          {/* Papers button */}
-          <motion.a
-            href="#publications"
-            onClick={() => handleNavClick("#publications")}
-            whileTap={{ scale: 0.95 }}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium
-              text-foreground/70 border border-border/40
-              active:bg-muted/50 transition-colors"
-          >
-            <FileText className="h-3 w-3" />
-            Papers
-          </motion.a>
 
           <ThemeToggle />
         </div>

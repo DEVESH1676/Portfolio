@@ -1,12 +1,9 @@
-export const RESEARCH_SUMMARY_URL = "https://unec.edu.az/application/uploads/2014/12/pdf-sample.pdf";
-export const DOWNLOAD_CV_URL = "https://unec.edu.az/application/uploads/2014/12/pdf-sample.pdf";
+export const DOWNLOAD_CV_URL = "#";
 
 export const NAV_ITEMS = [
   { label: "Home", href: "#home" },
   { label: "About", href: "#about" },
   { label: "Education", href: "#education" },
-  { label: "Research", href: "#research" },
-  { label: "Publications", href: "#publications" },
   { label: "Projects", href: "#projects" },
   { label: "Contact", href: "#contact" },
 ];
@@ -15,26 +12,24 @@ export const QUICK_FACTS = [
   {
     title: "Education",
     items: [
-      "Ph.D. — K L University (2023)",
-      "M.E. — D. Y. Patil, Akurdi",
-      "B.E. — Dhule College",
+      "B.E. IT — SKNCOE (Expected 2027)",
+      "Higher Secondary (HSC) — MP International",
+      "Secondary Education (SSC) — Millennium National School",
     ],
   },
   {
-    title: "Current Role",
+    title: "Current Status",
     items: [
-      "Associate Professor & Head",
-      "AI & ML, P.E.S.'s Modern COE, Pune",
+      "3rd Year B.E. Information Technology",
+      "Sinhgad College of Engineering (SKNCOE)",
     ],
   },
   {
-    title: "Research Areas",
+    title: "Interests",
     items: [
-      "Computer Vision",
-      "Object Tracking",
-      "Video Retrieval",
-      "Feature Extraction",
-      "Machine Learning",
+      "Software Development",
+      "Web Technologies",
+      "Server Hosting & Administration",
     ],
   },
 ];
@@ -49,127 +44,59 @@ export interface EducationEntry {
 
 export const EDUCATION_TIMELINE: EducationEntry[] = [
   {
-    degree: "Ph.D.",
-    institution: "K L University",
-    year: "2023",
-    highlight: "Dissertation: Intelligent Video Object Retrieval Systems",
+    degree: "B.E. Information Technology",
+    institution: "SKNCOE (Sinhgad College of Engineering)",
+    year: "2024 - Present",
+    highlight: "Currently in 3rd Year. Pursuing degree in Information Technology.",
     current: true,
   },
   {
-    degree: "M.E.",
-    institution: "D. Y. Patil, Akurdi",
-    year: "2017",
-    highlight: "Specialization in Computer Engineering with distinction",
+    degree: "Higher Secondary Certificate (HSC)",
+    institution: "MP International",
+    year: "Completed",
+    highlight: "Focused on foundational sciences and mathematics.",
   },
   {
-    degree: "B.E.",
-    institution: "Dhule College",
-    year: "2015",
-    highlight: "Foundations in Electronics & Computer Science",
-  },
-];
-
-export const RESEARCH_TAGS = [
-  "Computer Vision",
-  "Video Retrieval",
-  "Object Tracking",
-  "Machine Learning",
-  "Feature Extraction",
-  "Deep Learning",
-];
-
-export const FEATURED_PUBLICATION = {
-  title: "Query-Specific Distance and Hybrid Tracking Model for Video Object Retrieval",
-  authors: "C. A. Ghuge, Sachin D. Ruikar, V. Chandra Prakash",
-  venue: "Journal of Intelligent Systems, 2018",
-  abstract:
-    "A hybrid model introducing a query-specific distance metric and hybrid tracking approach to improve retrieval under occlusion and small-object conditions.",
-  doiLabel: "View DOI",
-  doiUrl: "https://doi.org/10.1515/jisys-2016-0106",
-};
-
-export const ADDITIONAL_PUBLICATIONS = [
-  {
-    title: "Hybrid Feature Fusion for Intelligent Surveillance",
-    year: "2022",
-  },
-  {
-    title: "Cross-View Video Retrieval using Attention-Guided Embeddings",
-    year: "2021",
-  },
-  {
-    title: "Lightweight Object Tracking Pipelines for Edge Devices",
-    year: "2020",
-  },
-  {
-    title: "Deep Feature Selection Strategies for Video Analytics",
-    year: "2019",
-  },
-  {
-    title: "Scene-Aware Retrieval for Complex Video Archives",
-    year: "2017",
+    degree: "Secondary School Certificate (SSC)",
+    institution: "Millennium National School",
+    year: "Completed",
+    highlight: "Primary and Secondary Education.",
   },
 ];
 
 export const PROJECTS = [
   {
-    title: "Intelligent Video Object Retrieval System",
-    role: "Principal Investigator",
+    title: "Personal Portfolio & Server",
+    role: "Full Stack Developer",
     description:
-      "Built a hybrid tracking pipeline combining feature fusion and adaptive distance measures for robust retrieval under occlusion.",
-  },
-  {
-    title: "Student Research Mentorship Program",
-    role: "Lead Mentor",
-    description:
-      "Guiding final-year students to deploy machine learning solutions for industrial partners and academic labs.",
-  },
-  {
-    title: "Edge-Optimized Vision Analytics",
-    role: "Research Supervisor",
-    description:
-      "Designing efficient models for real-time vision analytics on constrained hardware and IoT platforms.",
-  },
+      "Hosted on deveshg.dev. Built using React, Vite, and Node.js. Used for multiple purposes including showcasing projects and server hosting.",
+  }
 ];
 
-// NOTE: These are placeholder links. Actual profiles should be added here.
 export const CONTACT_LINKS = [
   {
-    label: "LinkedIn",
-    href: "https://www.linkedin.com/in/chandrashekhar-ghuge",
-    icon: "linkedin",
-  },
-  {
-    label: "Google Scholar",
-    href: "https://scholar.google.com/citations?user=placeholder",
-    icon: "graduationCap",
-  },
-  {
-    label: "ResearchGate",
-    href: "https://www.researchgate.net/profile/Chandrashekhar-Ghuge",
-    icon: "network",
-  },
+    label: "GitHub",
+    href: "https://github.com/devesh1676",
+    icon: "github",
+  }
 ];
 
-export const HERO_IMAGE_URL = "/images/dr-ghuge.jpg";
-
+// Provide a placeholder image URL for now
+export const HERO_IMAGE_URL = "/images/placeholder.jpg"; 
 
 export const BIO_DATA = {
-  name: "Dr. Chandrashekhar Arvind Ghuge",
-  role: "Associate Professor · Computer Vision Researcher · Ph.D., K L University (2023)",
+  name: "Devesh Ghuge",
+  role: "Student & Developer · Information Technology (B.E.)",
   shortBio:
-    "Dr. C. A. Ghuge is an Associate Professor and researcher in computer vision and machine learning, focusing on video object retrieval and object tracking. He has published in peer-reviewed journals and leads research and student projects at P.E.S.’s Modern College of Engineering, Pune.",
+    "I'm Devesh Ghuge, a 3rd-year Information Technology student at SKNCOE. I have a strong interest in software development, building web applications, and server hosting.",
   fullBio: [
-    "Dr. Chandrashekhar Arvind Ghuge completed his Ph.D. from K L University in 2023. He holds an M.E. from D. Y. Patil, Akurdi, and a B.E. from a college in Dhule. He currently serves as Associate Professor and Head of AI & Machine Learning (Information Technology) at P.E.S.’s Modern College of Engineering, Pune.",
-    "His research interests include Computer Vision, Video Retrieval, Object Tracking, and Machine Learning. He collaborates with multidisciplinary teams to deliver impactful research outcomes and to mentor the next generation of engineers and scientists.",
+    "I began my academic journey at Millennium National School, completing my primary and secondary education. I subsequently pursued my Higher Secondary Certificate (HSC) at MP International, establishing a strong foundation in science and mathematics.",
+    "Currently, I am in my third year of the Bachelor of Engineering (B.E.) program in Information Technology at Sinhgad College of Engineering (SKNCOE), having commenced my engineering studies in 2024.",
+    "I am deeply passionate about modern web technologies and server administration. I leverage my domain, deveshg.dev, as a live portfolio and a sandbox for deploying full-stack web applications and server-side experiments."
   ],
 };
 
 export const CONTENT_INTROS = {
   projects:
-    "Guiding research projects and final-year students in the domains of machine learning, deep learning, and computer vision. Past works include hybrid tracking systems, object recognition models, and intelligent video analysis tools.",
-  publications:
-    "Below are selected peer-reviewed publications. For the complete and updated list, visit Dr. Ghuge’s Google Scholar profile.",
-  research:
-    "My research focuses on computer vision and video analytics — object detection and tracking across frames, query-based video retrieval, hybrid machine learning models, and practical deployment of intelligent vision systems.",
+    "A showcase of the projects I am currently working on, including web development and server hosting experiments.",
 };

@@ -2,7 +2,6 @@ import {
   DOWNLOAD_CV_URL,
   HERO_IMAGE_URL,
   BIO_DATA,
-  RESEARCH_SUMMARY_URL,
 } from "@/data/portfolio";
 import * as React from "react";
 import { Button } from "@/components/ui/button";
@@ -100,9 +99,8 @@ export const HeroSection = () => {
       <Container className="relative z-10">
         {/* ─── Mobile Hero Action Row ─── */}
         <div className="flex md:hidden items-center gap-4 mb-8">
-          {/* Profile Photo — Squircle */}
+          {/* Profile Photo — Squircle (Commented out temporarily)
           <div className="relative flex-shrink-0">
-            {/* Background Orbs */}
             <div className="absolute -top-4 -left-4 w-28 h-28 rounded-full bg-primary/15 blur-2xl pointer-events-none orb-breathe" />
             <div className="absolute -bottom-2 -right-3 w-20 h-20 rounded-full bg-violet-500/12 blur-xl pointer-events-none orb-breathe" style={{ animationDelay: "3s" }} />
 
@@ -120,6 +118,7 @@ export const HeroSection = () => {
               />
             </div>
           </div>
+          */}
 
           {/* Action Buttons — Stacked */}
           <div className="flex flex-col gap-2 flex-1 min-w-0">
@@ -135,17 +134,6 @@ export const HeroSection = () => {
               <Download className="h-3.5 w-3.5 text-primary" />
               Download CV
             </motion.a>
-            <motion.a
-              href="#publications"
-              whileTap={{ scale: 0.97 }}
-              className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold
-                bg-primary text-primary-foreground
-                shadow-[0_0_20px_-4px_hsl(var(--primary)/0.4)]
-                active:shadow-[0_0_10px_-4px_hsl(var(--primary)/0.3)] transition-all"
-            >
-              <FileText className="h-3.5 w-3.5" />
-              View Papers
-            </motion.a>
           </div>
         </div>
 
@@ -157,7 +145,7 @@ export const HeroSection = () => {
               ref={badgeRef}
               className="inline-flex items-center rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-primary mb-4 opacity-0"
             >
-              Professional Academic Portfolio
+              Full Stack Developer Portfolio
             </span>
 
             <h1
@@ -186,8 +174,8 @@ export const HeroSection = () => {
               className="mt-8 flex flex-wrap items-center gap-4 justify-center lg:justify-start opacity-0"
             >
               <Button asChild size="lg" className="h-auto py-4 px-6 md:h-11 md:px-8 text-base">
-                <a href="#publications" className="btn-cta">
-                  View Publications
+                <a href="#projects" className="btn-cta">
+                  View Projects
                 </a>
               </Button>
               <Button asChild variant="outline" size="lg" className="h-auto py-4 px-6 md:h-11 md:px-8 text-base">
@@ -200,20 +188,10 @@ export const HeroSection = () => {
                   Download CV
                 </a>
               </Button>
-              <Button asChild variant="outline" size="lg" className="h-auto py-4 px-6 md:h-11 md:px-8 text-base">
-                <a
-                  href={RESEARCH_SUMMARY_URL}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="btn-cta"
-                >
-                  Research Summary
-                </a>
-              </Button>
             </div>
           </div>
 
-          {/* Image Section (Desktop) */}
+          {/* Image Section (Desktop) (Commented out temporarily)
           <div
             ref={imgRef}
             className="w-full lg:w-2/5 flex justify-center lg:justify-end opacity-0"
@@ -229,6 +207,7 @@ export const HeroSection = () => {
               />
             </div>
           </div>
+          */}
         </div>
 
         {/* ─── Mobile Text Content (no animation refs — renders immediately) ─── */}
@@ -236,7 +215,7 @@ export const HeroSection = () => {
           <span
             className="inline-flex items-center rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-primary mb-4"
           >
-            Professional Academic Portfolio
+            Full Stack Developer Portfolio
           </span>
 
           <h1 className="font-heading font-semibold text-foreground">

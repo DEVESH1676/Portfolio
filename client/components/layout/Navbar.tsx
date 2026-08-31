@@ -57,7 +57,7 @@ export const Navbar = () => {
           transition={{ duration: 0.3 }}
           className="font-heading text-lg font-bold tracking-tight text-foreground md:ml-4 md:mr-6 whitespace-nowrap cursor-pointer"
         >
-          Dr. C. A. Ghuge
+          Devesh Ghuge
         </motion.a>
 
         {/* DESKTOP NAV (Center - Framer Motion Pill) */}
@@ -99,13 +99,6 @@ export const Navbar = () => {
         {/* ACTIONS (Right) */}
         <div className="flex items-center gap-2 md:ml-4 lg:ml-6 md:mr-1">
           <div className="hidden md:flex items-center gap-2">
-            <Button asChild variant="ghost" size="sm" className="rounded-full text-foreground/70 hover:text-primary px-2 text-xs lg:text-sm h-9 hover:bg-primary/5 transition-all">
-              <a href="#publications" className="flex items-center gap-2">
-                <FileText className="h-4 w-4 opacity-70" />
-                <span className="hidden xl:inline">Papers</span>
-              </a>
-            </Button>
-
             {/* Holographic CV Button (Compact on MD) */}
             <motion.a
               href={DOWNLOAD_CV_URL}

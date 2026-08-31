@@ -14,7 +14,7 @@ const iconMap = {
   network: Network,
 };
 
-const emailRecipient = "chandrashekar.ghuge@moderncoe.edu.in";
+const emailRecipient = "dcghuge167@gmail.com";
 
 export const ContactSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -72,7 +72,7 @@ export const ContactSection = () => {
       if (response.ok) {
         toast({
           title: "Message Sent",
-          description: "Thank you for reaching out. Dr. Ghuge will get back to you soon.",
+          description: "Thank you for reaching out. Devesh will get back to you soon.",
         });
         (event.target as HTMLFormElement).reset();
       } else {
@@ -87,7 +87,7 @@ export const ContactSection = () => {
         mailSubject,
       )}&body=${encodeURIComponent(bodyLines.join("\n"))}`;
       window.location.href = mailto;
-      
+
       toast({
         title: "Opening Email Client",
         description: "Your message was prepared in your default email application.",
@@ -194,7 +194,7 @@ export const ContactSection = () => {
                 <Input
                   id="subject"
                   name="subject"
-                  placeholder="How can Dr. Ghuge help?"
+                  placeholder="How can Devesh help?"
                 />
               </div>
               <div className="space-y-2">
