@@ -27,9 +27,9 @@ export const QUICK_FACTS = [
   {
     title: "Interests",
     items: [
-      "Software Development",
-      "Web Technologies",
-      "Server Hosting & Administration",
+      "full-stack web development",
+      "arch linux & wayland",
+      "ui animations & shaders",
     ],
   },
 ];
@@ -66,10 +66,22 @@ export const EDUCATION_TIMELINE: EducationEntry[] = [
 
 export const PROJECTS = [
   {
-    title: "Personal Portfolio & Server",
+    title: "hyprland dotfiles",
+    role: "System Customization",
+    description:
+      "highly customized arch linux wayland setup. features dual color engines (pywal & matugen), a live 60fps audio visualizer (cava) with gpu glsl shaders, and a fully riced notification center.",
+  },
+  {
+    title: "mechanical movements",
+    role: "Front-end Developer",
+    description:
+      "interactive, scroll-driven presentation of classical mechanical movements. built from scratch with react, gsap, and animated svgs.",
+  },
+  {
+    title: "deveshg.dev",
     role: "Full Stack Developer",
     description:
-      "Hosted on deveshg.dev. Built using React, Vite, and Node.js. Used for multiple purposes including showcasing projects and server hosting.",
+      "full-stack portfolio and personal server environment. built with react and node.js. functions as a live sandbox for web deployments and server-side experiments.",
   }
 ];
 
@@ -90,18 +102,18 @@ export const CONTACT_LINKS = [
 export const HERO_IMAGE_URL = "/images/placeholder.jpg"; 
 
 export const BIO_DATA = {
-  name: "Devesh Ghuge",
-  role: "Student & Developer · Information Technology (B.E.)",
+  name: "devesh",
+  role: "student & developer · systems · web · linux",
   shortBio:
-    "I'm Devesh Ghuge, a 3rd-year Information Technology student at SKNCOE. I have a strong interest in software development, building web applications, and server hosting.",
+    "hey, i'm devesh — a third-year IT engineering student from pune. i focus heavily on full-stack web architectures and linux systems customization.",
   fullBio: [
-    "I began my academic journey at Millennium National School, completing my primary and secondary education. I subsequently pursued my Higher Secondary Certificate (HSC) at MP International, establishing a strong foundation in science and mathematics.",
-    "Currently, I am in my third year of the Bachelor of Engineering (B.E.) program in Information Technology at Sinhgad College of Engineering (SKNCOE), having commenced my engineering studies in 2024.",
-    "I am deeply passionate about modern web technologies and server administration. I leverage my domain, deveshg.dev, as a live portfolio and a sandbox for deploying full-stack web applications and server-side experiments."
+    "hey, i'm devesh — a third-year IT engineering student at skncoe, pune.",
+    "i spend most of my time building interactive web applications and working with systems customization. my core stack is typescript, react, and node.js, often paired with gsap and svgs for physics-based ui animations.",
+    "my daily workflow lives entirely in open source — arch linux, hyprland, waybar, and the gnu/linux toolchain. when i'm not writing code, i'm usually ricing a linux box, writing custom glsl shaders, or experimenting with server hosting."
   ],
 };
 
 export const CONTENT_INTROS = {
   projects:
-    "A showcase of the projects I am currently working on, including web development and server hosting experiments.",
+    "a showcase of the projects i am currently working on, ranging from full-stack web applications to deep system customizations.",
 };
