@@ -10,7 +10,6 @@ interface Node {
   originY: number;
   size: number;
   magnitude: number; // 0: minor vertex, 1: major constellation star
-  zone: "core" | "ring" | "outer";
   connections: number[]; // Active constellation neighbor indices
 }
 
@@ -74,7 +73,7 @@ export const NeuralBackground: React.FC = () => {
       attributeFilter: ["class"],
     });
 
-    // ── Sizing & Concentric Node Initialization ──
+    // ── Sizing ──
     const resize = () => {
       const parent = canvas.parentElement;
       const w = parent?.clientWidth || window.innerWidth;
@@ -88,88 +87,41 @@ export const NeuralBackground: React.FC = () => {
       nodes = [];
       const w = canvas.width;
       const h = canvas.height;
-      const centerX = w / 2;
-      const centerY = h * 0.40; // Focal center behind DEVESH title
 
-      const totalNodes = Math.max(28, Math.floor((w * h) / 11500));
-      const coreCount = Math.max(7, Math.floor(totalNodes * 0.26));
-      const ringCount = Math.max(11, Math.floor(totalNodes * 0.42));
-      const outerCount = Math.max(8, totalNodes - coreCount - ringCount);
+      // Stratified spatial grid for balanced, even spread across entire section
+      const cols = Math.max(4, Math.floor(w / 140));
+      const rows = Math.max(3, Math.floor(h / 130));
+      const cellW = (w - 40) / cols;
+      const cellH = (h - 55) / rows;
 
-      // 1. Zone 1: Core DEVESH Transiting Nodes (Directly in and around name)
-      for (let i = 0; i < coreCount; i++) {
-        const angle = Math.random() * Math.PI * 2;
-        const rx = Math.random() * Math.min(w * 0.32, 140);
-        const ry = Math.random() * 48;
-        const ox = centerX + Math.cos(angle) * rx;
-        const oy = centerY + Math.sin(angle) * ry;
-        const isMajor = Math.random() < 0.3;
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          const ox = 20 + (c + 0.15 + Math.random() * 0.7) * cellW;
+          const oy = 20 + (r + 0.15 + Math.random() * 0.7) * cellH;
+          const isMajorStar = Math.random() < 0.28;
 
-        nodes.push({
-          x: ox,
-          y: oy,
-          originX: ox,
-          originY: oy,
-          vx: (Math.random() - 0.5) * 0.20,
-          vy: (Math.random() - 0.5) * 0.18,
-          size: isMajor ? 2.5 : 1.7 + Math.random() * 0.5,
-          magnitude: isMajor ? 1 : 0,
-          zone: "core",
-          connections: [],
-        });
+          nodes.push({
+            x: ox,
+            y: oy,
+            originX: ox,
+            originY: oy,
+            vx: (Math.random() - 0.5) * 0.22,
+            vy: (Math.random() - 0.5) * 0.22,
+            size: isMajorStar ? 2.6 : 1.7 + Math.random() * 0.6,
+            magnitude: isMajorStar ? 1 : 0,
+            connections: [],
+          });
+        }
       }
 
-      // 2. Zone 2: Middle Orbital Constellation Ring (Encircling DEVESH)
-      for (let i = 0; i < ringCount; i++) {
-        const angle = (i / ringCount) * Math.PI * 2 + (Math.random() - 0.5) * 0.3;
-        const radX = Math.min(w * 0.44, 175 + Math.random() * 110);
-        const radY = Math.min(h * 0.28, 85 + Math.random() * 55);
-        const ox = centerX + Math.cos(angle) * radX;
-        const oy = centerY + Math.sin(angle) * radY;
-        const isMajor = Math.random() < 0.35;
-
-        nodes.push({
-          x: ox,
-          y: oy,
-          originX: ox,
-          originY: oy,
-          vx: (Math.random() - 0.5) * 0.22,
-          vy: (Math.random() - 0.5) * 0.20,
-          size: isMajor ? 2.6 : 1.8 + Math.random() * 0.6,
-          magnitude: isMajor ? 1 : 0,
-          zone: "ring",
-          connections: [],
-        });
-      }
-
-      // 3. Zone 3: Outermost Expansive Field (Corners, wide wings, top field)
-      for (let i = 0; i < outerCount; i++) {
-        const ox = 25 + Math.random() * (w - 50);
-        // Keep strictly above the bottom section boundary (h - 45)
-        const oy = 25 + Math.random() * (h - 75);
-        const isMajor = Math.random() < 0.25;
-
-        nodes.push({
-          x: ox,
-          y: oy,
-          originX: ox,
-          originY: oy,
-          vx: (Math.random() - 0.5) * 0.24,
-          vy: (Math.random() - 0.5) * 0.22,
-          size: isMajor ? 2.5 : 1.6 + Math.random() * 0.6,
-          magnitude: isMajor ? 1 : 0,
-          zone: "outer",
-          connections: [],
-        });
-      }
-
-      // Pre-allocate persistent long-range constellation backbone bridges
+      // Pre-allocate 12-15 persistent long-range constellation backbone bridges
       bridges = [];
       if (nodes.length > 3) {
         for (let b = 0; b < bridgeCount; b++) {
           const a = Math.floor(Math.random() * nodes.length);
           let bIdx = (a + 1 + Math.floor(Math.random() * (nodes.length - 1))) % nodes.length;
-
+          
+          // Find a pair with meaningful distance
           for (let attempt = 0; attempt < 8; attempt++) {
             const candidate = Math.floor(Math.random() * nodes.length);
             if (candidate === a) continue;
@@ -211,10 +163,10 @@ export const NeuralBackground: React.FC = () => {
       const nodeBaseOpacity = 0.68;
       const w = canvas.width;
       const h = canvas.height;
-      const centerX = w / 2;
-      const centerY = h * 0.40;
 
-      // 1. Update node physics with soft radial containment & strict bottom bounds
+      ctx.lineWidth = 1.35;
+
+      // 1. Update node physics & clear connection lists
       for (let i = 0; i < nodes.length; i++) {
         const node = nodes[i];
         node.connections = [];
@@ -223,26 +175,11 @@ export const NeuralBackground: React.FC = () => {
           node.originX += node.vx;
           node.originY += node.vy;
 
-          // Strict boundary containment (never bleed into bottom About section)
-          if (node.originX < 20) { node.originX = 20; node.vx = Math.abs(node.vx); }
-          if (node.originX > w - 20) { node.originX = w - 20; node.vx = -Math.abs(node.vx); }
-          if (node.originY < 20) { node.originY = 20; node.vy = Math.abs(node.vy); }
-          if (node.originY > h - 45) { node.originY = h - 45; node.vy = -Math.abs(node.vy); }
-
-          // Soft radial restoring forces per concentric zone
-          const distToCenter = Math.hypot(node.originX - centerX, node.originY - centerY);
-          if (node.zone === "core" && distToCenter > 165) {
-            node.vx += (centerX - node.originX) * 0.0004;
-            node.vy += (centerY - node.originY) * 0.0004;
-          } else if (node.zone === "ring") {
-            if (distToCenter < 125) {
-              node.vx -= (centerX - node.originX) * 0.0003;
-              node.vy -= (centerY - node.originY) * 0.0003;
-            } else if (distToCenter > 330) {
-              node.vx += (centerX - node.originX) * 0.0003;
-              node.vy += (centerY - node.originY) * 0.0003;
-            }
-          }
+          // Bounded containment (never bleed into bottom About section or past margins)
+          if (node.originX < 15) { node.originX = 15; node.vx = Math.abs(node.vx); }
+          if (node.originX > w - 15) { node.originX = w - 15; node.vx = -Math.abs(node.vx); }
+          if (node.originY < 15) { node.originY = 15; node.vy = Math.abs(node.vy); }
+          if (node.originY > h - 35) { node.originY = h - 35; node.vy = -Math.abs(node.vy); }
 
           node.x += (node.originX - node.x) * 0.02;
           node.y += (node.originY - node.y) * 0.02;
@@ -479,10 +416,18 @@ export const NeuralBackground: React.FC = () => {
     // Mouse handlers on window (not canvas) so pointer-events-none works
     const handleMouseMove = (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
-      mouseRef.current = {
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
-      };
+      const localX = e.clientX - rect.left;
+      const localY = e.clientY - rect.top;
+
+      // Only track if cursor is within Hero section bounds (ignores hover in About section below)
+      if (localX >= 0 && localX <= rect.width && localY >= 0 && localY <= rect.height) {
+        mouseRef.current = {
+          x: localX,
+          y: localY,
+        };
+      } else {
+        mouseRef.current = { x: -1000, y: -1000 };
+      }
     };
 
     const handleMouseLeave = () => {
