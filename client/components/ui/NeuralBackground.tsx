@@ -31,8 +31,9 @@ export const NeuralBackground: React.FC = () => {
     const resize = () => {
       const parent = canvas.parentElement;
       if (parent) {
-        canvas.width = parent.offsetWidth;
-        canvas.height = parent.offsetHeight;
+        // Use ResizeObserver for accurate tracking instead of just reading offsetHeight once
+        canvas.width = parent.clientWidth;
+        canvas.height = parent.clientHeight;
       }
       initNodes();
     };
@@ -141,7 +142,14 @@ export const NeuralBackground: React.FC = () => {
       mouseRef.current = { x: -1000, y: -1000 };
     };
 
-    window.addEventListener("resize", resize);
+    const resizeObserver = new ResizeObserver(() => {
+      resize();
+    });
+
+    if (canvas.parentElement) {
+      resizeObserver.observe(canvas.parentElement);
+    }
+
     window.addEventListener("mousemove", handleMouseMove);
     canvas.addEventListener("mouseleave", handleMouseLeave);
 
@@ -149,7 +157,7 @@ export const NeuralBackground: React.FC = () => {
     draw();
 
     return () => {
-      window.removeEventListener("resize", resize);
+      resizeObserver.disconnect();
       window.removeEventListener("mousemove", handleMouseMove);
       canvas.removeEventListener("mouseleave", handleMouseLeave);
       cancelAnimationFrame(animationFrameId);
@@ -159,7 +167,7 @@ export const NeuralBackground: React.FC = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 z-0 pointer-events-none opacity-100 transition-opacity duration-1000"
+      className="absolute inset-0 w-full h-full z-0 pointer-events-none opacity-100 transition-opacity duration-1000"
     />
   );
   };
