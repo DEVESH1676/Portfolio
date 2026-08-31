@@ -8,10 +8,11 @@ import Container from "@/components/ui/container";
 import { animateEntrance, ANIME } from "@/lib/anime";
 import { NeuralBackground } from "@/components/ui/NeuralBackground";
 import { motion } from "framer-motion";
-import { Download, FileText } from "lucide-react";
+import { Download } from "lucide-react";
+import { PixelName } from "@/components/ui/PixelName";
 
 export const HeroSection = () => {
-  const titleRef = React.useRef<HTMLHeadingElement | null>(null);
+  const titleRef = React.useRef<HTMLDivElement | null>(null);
   const subtitle1Ref = React.useRef<HTMLParagraphElement | null>(null);
   const subtitle2Ref = React.useRef<HTMLParagraphElement | null>(null);
 
@@ -91,13 +92,13 @@ export const HeroSection = () => {
   }, []);
 
   return (
-    <section id="home" className="section-base relative flex min-h-[90vh] flex-col justify-center overflow-hidden section-padding pt-32 lg:pt-40">
+    <section id="home" className="section-base relative flex min-h-[92vh] flex-col justify-center items-center overflow-hidden pt-24 pb-16 md:pt-28 md:pb-20">
       <div className="hero-glow" />
       <NeuralBackground />
 
       <Container className="relative z-10">
         {/* ─── Mobile Hero Action Row ─── */}
-        <div className="flex md:hidden items-center justify-center gap-4 mb-8">
+        <div className="flex md:hidden items-center justify-center gap-4 mb-6">
 
           {/* Action Buttons — Stacked */}
           <div className="flex flex-col gap-2 flex-1 min-w-0">
@@ -107,7 +108,7 @@ export const HeroSection = () => {
               rel="noreferrer"
               whileTap={{ scale: 0.97 }}
               className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium
-                bg-background/70 backdrop-blur-md border border-white/15 text-foreground/90
+                bg-background/70 backdrop-blur-md border border-border text-foreground/90
                 shadow-sm active:shadow-none transition-all"
             >
               <Download className="h-3.5 w-3.5 text-primary" />
@@ -122,42 +123,39 @@ export const HeroSection = () => {
           <div className="w-full max-w-3xl flex flex-col items-center text-center">
             <span
               ref={badgeRef}
-              className="inline-flex items-center rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-primary mb-4 opacity-0"
+              className="inline-flex items-center rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-primary mb-2 opacity-0"
             >
               Full Stack Developer Portfolio
             </span>
 
-            <h1
-              ref={titleRef}
-              className="font-heading font-semibold text-foreground opacity-0"
-            >
-              {BIO_DATA.name}
-            </h1>
+            <div ref={titleRef} className="w-full flex justify-center">
+              <PixelName />
+            </div>
 
             <p
               ref={subtitle1Ref}
-              className="mt-4 text-lg font-medium text-primary md:text-xl opacity-0"
+              className="mt-2 text-lg font-medium text-primary md:text-xl opacity-0"
             >
               {BIO_DATA.role}
             </p>
 
             <p
               ref={subtitle2Ref}
-              className="mt-6 max-w-2xl text-foreground/80 md:text-lg opacity-0"
+              className="mt-4 max-w-2xl text-foreground/80 md:text-lg opacity-0 leading-relaxed"
             >
               {BIO_DATA.shortBio}
             </p>
 
             <div
               ref={ctasRef}
-              className="mt-8 flex flex-wrap items-center gap-4 justify-center opacity-0"
+              className="mt-6 flex flex-wrap items-center gap-4 justify-center opacity-0"
             >
-              <Button asChild size="lg" className="h-auto py-4 px-6 md:h-11 md:px-8 text-base">
+              <Button asChild size="lg" className="h-auto py-3 px-6 md:h-11 md:px-8 text-base">
                 <a href="#projects" className="btn-cta">
                   View Projects
                 </a>
               </Button>
-              <Button asChild variant="outline" size="lg" className="h-auto py-4 px-6 md:h-11 md:px-8 text-base">
+              <Button asChild variant="outline" size="lg" className="h-auto py-3 px-6 md:h-11 md:px-8 text-base">
                 <a
                   href={DOWNLOAD_CV_URL}
                   target="_blank"
@@ -172,22 +170,22 @@ export const HeroSection = () => {
         </div>
 
         {/* ─── Mobile Text Content (no animation refs — renders immediately) ─── */}
-        <div className="md:hidden text-center">
+        <div className="md:hidden text-center w-full overflow-hidden">
           <span
-            className="inline-flex items-center rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-primary mb-4"
+            className="inline-flex items-center rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-primary mb-3"
           >
             Full Stack Developer Portfolio
           </span>
 
-          <h1 className="font-heading font-semibold text-foreground">
-            {BIO_DATA.name}
-          </h1>
+          <div className="w-full flex justify-center scale-90 transform origin-center my-2">
+            <PixelName />
+          </div>
 
-          <p className="mt-4 text-lg font-medium text-primary">
+          <p className="mt-2 text-base font-medium text-primary">
             {BIO_DATA.role}
           </p>
 
-          <p className="mt-6 text-foreground/80">
+          <p className="mt-4 text-sm text-foreground/80 leading-relaxed">
             {BIO_DATA.shortBio}
           </p>
         </div>
