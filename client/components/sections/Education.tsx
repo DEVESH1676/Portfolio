@@ -136,7 +136,7 @@ export const EducationSection = () => {
   }, []);
 
   return (
-    <section id="education" className="section-base relative section-padding scroll-mt-24">
+    <section id="education" className="section-alt relative section-padding scroll-mt-24">
       {/* Background accent removed for strict semantic compliance */}
 
       <Container>

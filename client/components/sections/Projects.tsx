@@ -40,7 +40,7 @@ export const ProjectsSection = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} id="projects" className="section-alt section-padding scroll-mt-24">
+    <section ref={sectionRef} id="projects" className="section-base section-padding scroll-mt-24">
 
       <div className="mx-auto max-w-6xl px-6">
         <div className="max-w-3xl">
