@@ -195,10 +195,17 @@ export const PixelName: React.FC = () => {
           const dy = mouse.y - curY;
           const r = Math.hypot(dx, dy);
 
-          // 1. Mouse Interaction Activation
-          if (r < influenceRadius) {
+          // 1. Mouse Interaction Activation & Magnetic Vector Attraction
+          let magX = 0;
+          let magY = 0;
+          if (r < influenceRadius && r > 0.001) {
             const q = 1 - (r / influenceRadius);
             p.activity = Math.min(p.activity + q * 0.25, 1);
+
+            // Gentle magnetic attraction towards cursor (collects towards mouse)
+            const pullStrength = q * q * 5.2;
+            magX = (dx / r) * pullStrength;
+            magY = (dy / r) * pullStrength;
           } else {
             p.activity = Math.max(p.activity - 0.04, 0);
           }
@@ -222,9 +229,12 @@ export const PixelName: React.FC = () => {
           // Soft 0.3s fading ripple tail
           p.flashIntensity = Math.max(0, p.flashIntensity - 0.045);
 
-          // Gentle spring physics for micro-breathing
-          p.vx = (p.vx + (waveX - p.offsetX) * 0.15) * 0.8;
-          p.vy = (p.vy + (waveY - p.offsetY) * 0.15) * 0.8;
+          // Smooth elastic spring physics (attracts on hover, smoothly recovers to origin)
+          const targetOffsetX = waveX + magX;
+          const targetOffsetY = waveY + magY;
+
+          p.vx = (p.vx + (targetOffsetX - p.offsetX) * 0.14) * 0.78;
+          p.vy = (p.vy + (targetOffsetY - p.offsetY) * 0.14) * 0.78;
           p.offsetX += p.vx;
           p.offsetY += p.vy;
 
