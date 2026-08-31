@@ -35,10 +35,9 @@ export const NeuralBackground: React.FC = () => {
     let nodes: Node[] = [];
     let synapses: BackgroundSynapse[] = [];
     let running = true;
-    const localConnectionDist = 160;
-    const farConnectionDist = 290;
-    const maxLocalLinks = 3;
-    const mouseRadius = 220;
+    const connectionDistance = 150;
+    const maxConnectionsPerNode = 3;
+    const mouseRadius = 200;
     const mouseStrength = 0.04;
 
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -76,11 +75,11 @@ export const NeuralBackground: React.FC = () => {
 
     const initNodes = () => {
       nodes = [];
-      const nodeCount = Math.floor((canvas.width * canvas.height) / 12000);
+      const nodeCount = Math.floor((canvas.width * canvas.height) / 11500);
       for (let i = 0; i < nodeCount; i++) {
         const x = Math.random() * canvas.width;
         const y = Math.random() * canvas.height;
-        const isMajorStar = Math.random() < 0.32;
+        const isMajorStar = Math.random() < 0.28;
         nodes.push({
           x, y,
           originX: x,
@@ -95,7 +94,7 @@ export const NeuralBackground: React.FC = () => {
 
       // Pre-allocate traveling synaptic impulses
       synapses = [];
-      for (let s = 0; s < 16; s++) {
+      for (let s = 0; s < 14; s++) {
         synapses.push({
           nodeA: Math.floor(Math.random() * Math.max(1, nodes.length)),
           nodeB: Math.floor(Math.random() * Math.max(1, nodes.length)),
@@ -112,7 +111,7 @@ export const NeuralBackground: React.FC = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       const primaryColor = cachedPrimaryColor;
-      const lineBaseOpacity = 0.34;
+      const lineBaseOpacity = 0.35;
       const nodeBaseOpacity = 0.68;
 
       ctx.lineWidth = 1.35;
@@ -154,67 +153,40 @@ export const NeuralBackground: React.FC = () => {
         }
       }
 
-      // 2. Build Constellation Network Topology (Short local asterisms + Far cosmic bridge links)
+      // 2. Build Constellation Network Topology (Dynamic nearest neighbors per star)
       const drawnLinks = new Set<string>();
 
       for (let i = 0; i < nodes.length; i++) {
         const node = nodes[i];
 
-        const localCandidates: { index: number; dist: number }[] = [];
-        const farCandidates: { index: number; dist: number }[] = [];
-
+        // Find nearest candidates within range
+        const candidates: { index: number; dist: number }[] = [];
         for (let j = 0; j < nodes.length; j++) {
           if (i === j) continue;
           const other = nodes[j];
           const dist = Math.hypot(node.x - other.x, node.y - other.y);
-
-          if (dist < localConnectionDist) {
-            localCandidates.push({ index: j, dist });
-          } else if (dist < farConnectionDist) {
-            // Far connections: allow bridges, especially for major constellation stars
-            farCandidates.push({ index: j, dist });
+          if (dist < connectionDistance) {
+            candidates.push({ index: j, dist });
           }
         }
 
-        localCandidates.sort((a, b) => a.dist - b.dist);
-        farCandidates.sort((a, b) => a.dist - b.dist);
+        // Sort by distance to prioritize closest constellation bonds
+        candidates.sort((a, b) => a.dist - b.dist);
 
-        // A. Form closest local constellation bonds (2-3 connections)
-        const localLinksCount = Math.min(localCandidates.length, maxLocalLinks);
-        for (let k = 0; k < localLinksCount; k++) {
-          const { index: j, dist } = localCandidates[k];
+        // Link up to maxConnectionsPerNode nearest stars
+        const linksToMake = Math.min(candidates.length, maxConnectionsPerNode);
+        for (let k = 0; k < linksToMake; k++) {
+          const { index: j, dist } = candidates[k];
           node.connections.push(j);
 
           const linkKey = i < j ? `${i}-${j}` : `${j}-${i}`;
           if (!drawnLinks.has(linkKey)) {
             drawnLinks.add(linkKey);
 
-            const normalized = dist / localConnectionDist;
+            // Smooth cosine ease-out for fading in and smoothly losing connections as nodes drift
+            const normalized = dist / connectionDistance;
             const ease = Math.cos(normalized * (Math.PI / 2));
-            const lineAlpha = ease * lineBaseOpacity;
-
-            ctx.strokeStyle = `hsl(${primaryColor} / ${lineAlpha})`;
-            ctx.beginPath();
-            ctx.moveTo(node.x, node.y);
-            ctx.lineTo(nodes[j].x, nodes[j].y);
-            ctx.stroke();
-          }
-        }
-
-        // B. Form long-range constellation bridge connections (1-2 far spanning links)
-        const farLinksCount = Math.min(farCandidates.length, node.magnitude === 1 ? 2 : 1);
-        for (let k = 0; k < farLinksCount; k++) {
-          const { index: j, dist } = farCandidates[k];
-          node.connections.push(j);
-
-          const linkKey = i < j ? `${i}-${j}` : `${j}-${i}`;
-          if (!drawnLinks.has(linkKey)) {
-            drawnLinks.add(linkKey);
-
-            // Far lines have gentle, elegant fading
-            const normalized = (dist - localConnectionDist) / (farConnectionDist - localConnectionDist);
-            const ease = Math.cos(normalized * (Math.PI / 2));
-            const lineAlpha = ease * ease * (lineBaseOpacity * 0.75);
+            const lineAlpha = ease * ease * lineBaseOpacity;
 
             ctx.strokeStyle = `hsl(${primaryColor} / ${lineAlpha})`;
             ctx.beginPath();
@@ -255,7 +227,7 @@ export const NeuralBackground: React.FC = () => {
         const d = Math.hypot(nA.x - nB.x, nA.y - nB.y);
 
         // Check if connection is still active in current constellation topology
-        const isConnected = d < farConnectionDist && nA.connections.includes(syn.nodeB);
+        const isConnected = d < connectionDistance && nA.connections.includes(syn.nodeB);
 
         if (isConnected) {
           syn.progress += syn.speed;
