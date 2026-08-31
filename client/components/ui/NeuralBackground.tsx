@@ -153,48 +153,80 @@ export const NeuralBackground: React.FC = () => {
         }
       }
 
-      // 2. Build Constellation Network Topology (Dynamic nearest neighbors per star)
+      // 2. Build Constellation Network Topology (Local bonds + 10-15 Long-Range Bridges)
       const drawnLinks = new Set<string>();
+      const longRangeCandidates: { i: number; j: number; dist: number }[] = [];
+      const maxLongRangeBridges = 14;
+      const minLongDistance = connectionDistance;
+      const maxLongDistance = 330;
 
       for (let i = 0; i < nodes.length; i++) {
         const node = nodes[i];
 
-        // Find nearest candidates within range
-        const candidates: { index: number; dist: number }[] = [];
-        for (let j = 0; j < nodes.length; j++) {
-          if (i === j) continue;
+        // Find nearest candidates within local range and collect distant candidates
+        const localCandidates: { index: number; dist: number }[] = [];
+        for (let j = i + 1; j < nodes.length; j++) {
           const other = nodes[j];
           const dist = Math.hypot(node.x - other.x, node.y - other.y);
+
           if (dist < connectionDistance) {
-            candidates.push({ index: j, dist });
+            localCandidates.push({ index: j, dist });
+          } else if (dist >= minLongDistance && dist <= maxLongDistance) {
+            longRangeCandidates.push({ i, j, dist });
           }
         }
 
         // Sort by distance to prioritize closest constellation bonds
-        candidates.sort((a, b) => a.dist - b.dist);
+        localCandidates.sort((a, b) => a.dist - b.dist);
 
         // Link up to maxConnectionsPerNode nearest stars
-        const linksToMake = Math.min(candidates.length, maxConnectionsPerNode);
+        const linksToMake = Math.min(localCandidates.length, maxConnectionsPerNode);
         for (let k = 0; k < linksToMake; k++) {
-          const { index: j, dist } = candidates[k];
+          const { index: j, dist } = localCandidates[k];
           node.connections.push(j);
+          nodes[j].connections.push(i);
 
-          const linkKey = i < j ? `${i}-${j}` : `${j}-${i}`;
-          if (!drawnLinks.has(linkKey)) {
-            drawnLinks.add(linkKey);
+          const linkKey = `${i}-${j}`;
+          drawnLinks.add(linkKey);
 
-            // Smooth cosine ease-out for fading in and smoothly losing connections as nodes drift
-            const normalized = dist / connectionDistance;
-            const ease = Math.cos(normalized * (Math.PI / 2));
-            const lineAlpha = ease * ease * lineBaseOpacity;
+          // Smooth cosine ease-out for fading in and smoothly losing connections as nodes drift
+          const normalized = dist / connectionDistance;
+          const ease = Math.cos(normalized * (Math.PI / 2));
+          const lineAlpha = ease * ease * lineBaseOpacity;
 
-            ctx.strokeStyle = `hsl(${primaryColor} / ${lineAlpha})`;
-            ctx.beginPath();
-            ctx.moveTo(node.x, node.y);
-            ctx.lineTo(nodes[j].x, nodes[j].y);
-            ctx.stroke();
-          }
+          ctx.strokeStyle = `hsl(${primaryColor} / ${lineAlpha})`;
+          ctx.beginPath();
+          ctx.moveTo(node.x, node.y);
+          ctx.lineTo(nodes[j].x, nodes[j].y);
+          ctx.stroke();
         }
+      }
+
+      // Render 10 to 15 Long-Range Bridge Connections across distant clusters
+      // Prioritize major star vertices and well-spaced pairs
+      longRangeCandidates.sort((a, b) => a.dist - b.dist);
+      let longBridgesCount = 0;
+
+      for (let b = 0; b < longRangeCandidates.length && longBridgesCount < maxLongRangeBridges; b++) {
+        const { i, j, dist } = longRangeCandidates[b];
+        const linkKey = `${i}-${j}`;
+        if (drawnLinks.has(linkKey)) continue;
+
+        drawnLinks.add(linkKey);
+        nodes[i].connections.push(j);
+        nodes[j].connections.push(i);
+        longBridgesCount++;
+
+        // Smooth cosine fade for long distances (150px -> 330px)
+        const progress = (dist - minLongDistance) / (maxLongDistance - minLongDistance);
+        const ease = Math.cos(progress * (Math.PI / 2));
+        const bridgeAlpha = ease * ease * (lineBaseOpacity * 0.75);
+
+        ctx.strokeStyle = `hsl(${primaryColor} / ${bridgeAlpha})`;
+        ctx.beginPath();
+        ctx.moveTo(nodes[i].x, nodes[i].y);
+        ctx.lineTo(nodes[j].x, nodes[j].y);
+        ctx.stroke();
       }
 
       // 3. Draw Constellation Star Nodes
