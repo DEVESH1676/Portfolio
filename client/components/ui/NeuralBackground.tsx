@@ -148,7 +148,6 @@ export const NeuralBackground: React.FC = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       const primaryColor = cachedPrimaryColor;
-      const lineBaseOpacity = 0.35;
       const nodeBaseOpacity = 0.68;
 
       ctx.lineWidth = 1.35;
@@ -190,13 +189,38 @@ export const NeuralBackground: React.FC = () => {
         }
       }
 
-      // 2. Build Constellation Network Topology (Dynamic nearest neighbors per star)
+      // 2. Build Constellation Network Topology & Dual-Tier Line System
       const drawnLinks = new Set<string>();
+      const ambientDistance = 185;
 
+      // 2a. Draw Ambient Light Lines (Faint background neural matrix)
+      ctx.lineWidth = 0.9;
+      for (let i = 0; i < nodes.length; i++) {
+        const node = nodes[i];
+        for (let j = i + 1; j < nodes.length; j++) {
+          const other = nodes[j];
+          const dist = Math.hypot(node.x - other.x, node.y - other.y);
+
+          if (dist < ambientDistance) {
+            const norm = dist / ambientDistance;
+            const faintAlpha = Math.cos(norm * (Math.PI / 2)) * 0.12;
+            if (faintAlpha > 0.01) {
+              ctx.strokeStyle = `hsl(${primaryColor} / ${faintAlpha})`;
+              ctx.beginPath();
+              ctx.moveTo(node.x, node.y);
+              ctx.lineTo(other.x, other.y);
+              ctx.stroke();
+            }
+          }
+        }
+      }
+
+      // 2b. Draw Bright Active Links (Symbolizes established constellation bonds)
+      ctx.lineWidth = 1.45;
       for (let i = 0; i < nodes.length; i++) {
         const node = nodes[i];
 
-        // Find nearest candidates within range
+        // Find nearest candidates within active connection range
         const candidates: { index: number; dist: number }[] = [];
         for (let j = 0; j < nodes.length; j++) {
           if (i === j) continue;
@@ -220,12 +244,12 @@ export const NeuralBackground: React.FC = () => {
           if (!drawnLinks.has(linkKey)) {
             drawnLinks.add(linkKey);
 
-            // Smooth cosine ease-out for fading in and smoothly losing connections as nodes drift
+            // Silky smooth cosine ease-out for link/unlink transitions
             const normalized = dist / connectionDistance;
             const ease = Math.cos(normalized * (Math.PI / 2));
-            const lineAlpha = ease * ease * lineBaseOpacity;
+            const activeAlpha = ease * ease * 0.52;
 
-            ctx.strokeStyle = `hsl(${primaryColor} / ${lineAlpha})`;
+            ctx.strokeStyle = `hsl(${primaryColor} / ${activeAlpha})`;
             ctx.beginPath();
             ctx.moveTo(node.x, node.y);
             ctx.lineTo(nodes[j].x, nodes[j].y);
@@ -250,7 +274,7 @@ export const NeuralBackground: React.FC = () => {
           bridge.targetAlpha = 0;
         }
 
-        // Smooth gradual fade without flickering
+        // Smooth continuous gradual fade without flickering
         bridge.alpha += (bridge.targetAlpha - bridge.alpha) * 0.02;
 
         // If completely faded out, gracefully re-anchor to another distant node
@@ -299,9 +323,9 @@ export const NeuralBackground: React.FC = () => {
           ctx.fillRect(node.x - node.size / 2, node.y - node.size / 2, node.size, node.size);
 
           // Subtle diamond glow accent
-          ctx.fillStyle = `hsl(${primaryColor} / 0.3)`;
-          ctx.fillRect(node.x - node.size * 1.2, node.y - 0.5, node.size * 2.4, 1);
-          ctx.fillRect(node.x - 0.5, node.y - node.size * 1.2, 1, node.size * 2.4);
+          ctx.fillStyle = `hsl(${primaryColor} / 0.35)`;
+          ctx.fillRect(node.x - node.size * 1.3, node.y - 0.5, node.size * 2.6, 1);
+          ctx.fillRect(node.x - 0.5, node.y - node.size * 1.3, 1, node.size * 2.6);
         } else {
           // Minor network node
           ctx.fillStyle = `hsl(${primaryColor} / ${nodeBaseOpacity})`;
@@ -309,7 +333,7 @@ export const NeuralBackground: React.FC = () => {
         }
       }
 
-      // 5. Draw Traveling Synaptic Impulses across active constellation routes
+      // 5. Draw Traveling Synaptic Flash Pulses across active links
       for (let s = 0; s < synapses.length; s++) {
         const syn = synapses[s];
         if (syn.nodeA >= nodes.length || syn.nodeB >= nodes.length) continue;
@@ -335,10 +359,24 @@ export const NeuralBackground: React.FC = () => {
             }
           }
 
+          // Draw Flash Pulse head
           const sx = nA.x + (nB.x - nA.x) * syn.progress;
           const sy = nA.y + (nB.y - nA.y) * syn.progress;
-          ctx.fillStyle = `hsl(${primaryColor} / 0.88)`;
-          ctx.fillRect(sx - 1.25, sy - 1.25, 2.5, 2.5);
+
+          // Traveling beam head (bright laser flash)
+          ctx.fillStyle = `hsl(${primaryColor} / 0.95)`;
+          ctx.fillRect(sx - 1.5, sy - 1.5, 3, 3);
+
+          // Subtle glowing tail behind the flash
+          const tailProgress = Math.max(0, syn.progress - 0.12);
+          const tx = nA.x + (nB.x - nA.x) * tailProgress;
+          const ty = nA.y + (nB.y - nA.y) * tailProgress;
+          ctx.strokeStyle = `hsl(${primaryColor} / 0.45)`;
+          ctx.lineWidth = 2.0;
+          ctx.beginPath();
+          ctx.moveTo(tx, ty);
+          ctx.lineTo(sx, sy);
+          ctx.stroke();
         } else {
           // Find a valid active connection to jump onto
           if (nA.connections.length > 0) {
