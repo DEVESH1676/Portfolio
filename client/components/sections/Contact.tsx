@@ -1,5 +1,5 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
-import { GraduationCap, Linkedin, Mail, Network, Loader2 } from "lucide-react";
+import { GraduationCap, Linkedin, Mail, Network, Loader2, Github } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,6 +12,8 @@ const iconMap = {
   linkedin: Linkedin,
   graduationCap: GraduationCap,
   network: Network,
+  github: Github,
+  mail: Mail,
 };
 
 const emailRecipient = "dcghuge167@gmail.com";

@@ -78,6 +78,11 @@ export const CONTACT_LINKS = [
     label: "GitHub",
     href: "https://github.com/devesh1676",
     icon: "github",
+  },
+  {
+    label: "Email",
+    href: "mailto:dcghuge167@gmail.com",
+    icon: "mail",
   }
 ];
 
