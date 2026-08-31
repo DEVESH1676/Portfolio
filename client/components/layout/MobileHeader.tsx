@@ -4,7 +4,7 @@ import { NAV_ITEMS, DOWNLOAD_CV_URL } from "@/data/portfolio";
 import { useActiveSection } from "@/hooks/use-active-section";
 import ThemeToggle from "@/components/ui/theme-toggle";
 import { cn } from "@/lib/utils";
-import { Download, FileText } from "lucide-react";
+import { Download } from "lucide-react";
 
 /**
  * MobileHeader — The "Glassmorphic Sandwich"
@@ -54,7 +54,7 @@ export const MobileHeader: React.FC = () => {
         className={cn(
           "flex items-center justify-between px-4 py-2.5",
           "bg-background/60 backdrop-blur-2xl backdrop-saturate-150",
-          "border-b border-white/[0.08]",
+          "border-b border-border/40",
           "transition-all duration-500",
           isScrolled && "bg-background/80 shadow-sm"
         )}
@@ -92,7 +92,7 @@ export const MobileHeader: React.FC = () => {
         className={cn(
           "relative",
           "bg-background/50 backdrop-blur-xl backdrop-saturate-125",
-          "border-b border-white/[0.06]",
+          "border-b border-border/30",
           "transition-all duration-500",
           isScrolled && "bg-background/70"
         )}

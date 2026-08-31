@@ -3,6 +3,7 @@ export const DOWNLOAD_CV_URL = "#";
 export const NAV_ITEMS = [
   { label: "Home", href: "#home" },
   { label: "About", href: "#about" },
+  { label: "Skills", href: "#skills" },
   { label: "Education", href: "#education" },
   { label: "Projects", href: "#projects" },
   { label: "Contact", href: "#contact" },
@@ -24,22 +25,15 @@ export const QUICK_FACTS = [
       "Sinhgad College of Engineering (SKNCOE)",
     ],
   },
-  {
-    title: "Web Stack",
-    items: [
-      "typescript / react / node.js",
-      "gsap / ui animations",
-      "python / sql / bash",
-    ],
-  },
-  {
-    title: "Systems & Cloud",
-    items: [
-      "arch linux / wsl / hyprland",
-      "server hosting (aws, cloudflare)",
-      "git / neovim / gnu toolchain"
-    ],
-  },
+];
+
+export const SKILLS = [
+  "typescript", "react", "node.js",
+  "gsap", "ui animations",
+  "python", "sql", "bash", "zsh",
+  "arch linux", "wsl", "hyprland",
+  "server hosting", "aws", "cloudflare",
+  "git", "neovim", "gnu toolchain"
 ];
 
 export interface EducationEntry {

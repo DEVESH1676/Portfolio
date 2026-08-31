@@ -1,6 +1,5 @@
 import * as React from "react";
-import { Download, FileText } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Download } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { NAV_ITEMS, DOWNLOAD_CV_URL } from "@/data/portfolio";
 import ThemeToggle from "@/components/ui/theme-toggle";
@@ -42,7 +41,7 @@ export const Navbar = () => {
           // Desktop Container Style (The Morphing Object)
           "md:rounded-full md:border",
           isScrolled
-            ? "py-2 md:bg-background/50 md:backdrop-blur-2xl md:backdrop-saturate-150 md:shadow-lg md:border-white/10 dark:md:border-white/5" // Scrolled (Elite Glass)
+            ? "py-2 md:bg-background/50 md:backdrop-blur-2xl md:backdrop-saturate-150 md:shadow-lg md:border-border/60" // Scrolled (Elite Glass)
             : "py-3 md:bg-transparent md:backdrop-blur-none md:shadow-none md:border-transparent" // Top
         )}
       >
