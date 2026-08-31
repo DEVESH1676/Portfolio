@@ -85,33 +85,21 @@ export const NeuralBackground: React.FC = () => {
 
     const initNodes = () => {
       nodes = [];
-      const w = canvas.width;
-      const h = canvas.height;
-
-      // Stratified spatial grid for balanced, even spread across entire section
-      const cols = Math.max(4, Math.floor(w / 140));
-      const rows = Math.max(3, Math.floor(h / 130));
-      const cellW = (w - 40) / cols;
-      const cellH = (h - 55) / rows;
-
-      for (let r = 0; r < rows; r++) {
-        for (let c = 0; c < cols; c++) {
-          const ox = 20 + (c + 0.15 + Math.random() * 0.7) * cellW;
-          const oy = 20 + (r + 0.15 + Math.random() * 0.7) * cellH;
-          const isMajorStar = Math.random() < 0.28;
-
-          nodes.push({
-            x: ox,
-            y: oy,
-            originX: ox,
-            originY: oy,
-            vx: (Math.random() - 0.5) * 0.22,
-            vy: (Math.random() - 0.5) * 0.22,
-            size: isMajorStar ? 2.6 : 1.7 + Math.random() * 0.6,
-            magnitude: isMajorStar ? 1 : 0,
-            connections: [],
-          });
-        }
+      const nodeCount = Math.floor((canvas.width * canvas.height) / 11500);
+      for (let i = 0; i < nodeCount; i++) {
+        const x = Math.random() * canvas.width;
+        const y = Math.random() * canvas.height;
+        const isMajorStar = Math.random() < 0.28;
+        nodes.push({
+          x, y,
+          originX: x,
+          originY: y,
+          vx: (Math.random() - 0.5) * 0.22,
+          vy: (Math.random() - 0.5) * 0.22,
+          size: isMajorStar ? 2.6 : 1.7 + Math.random() * 0.6,
+          magnitude: isMajorStar ? 1 : 0,
+          connections: [],
+        });
       }
 
       // Pre-allocate 12-15 persistent long-range constellation backbone bridges
@@ -161,8 +149,6 @@ export const NeuralBackground: React.FC = () => {
 
       const primaryColor = cachedPrimaryColor;
       const nodeBaseOpacity = 0.68;
-      const w = canvas.width;
-      const h = canvas.height;
 
       ctx.lineWidth = 1.35;
 
@@ -175,11 +161,8 @@ export const NeuralBackground: React.FC = () => {
           node.originX += node.vx;
           node.originY += node.vy;
 
-          // Bounded containment (never bleed into bottom About section or past margins)
-          if (node.originX < 15) { node.originX = 15; node.vx = Math.abs(node.vx); }
-          if (node.originX > w - 15) { node.originX = w - 15; node.vx = -Math.abs(node.vx); }
-          if (node.originY < 15) { node.originY = 15; node.vy = Math.abs(node.vy); }
-          if (node.originY > h - 35) { node.originY = h - 35; node.vy = -Math.abs(node.vy); }
+          if (node.originX < 0 || node.originX > canvas.width) node.vx *= -1;
+          if (node.originY < 0 || node.originY > canvas.height) node.vy *= -1;
 
           node.x += (node.originX - node.x) * 0.02;
           node.y += (node.originY - node.y) * 0.02;
@@ -416,18 +399,10 @@ export const NeuralBackground: React.FC = () => {
     // Mouse handlers on window (not canvas) so pointer-events-none works
     const handleMouseMove = (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
-      const localX = e.clientX - rect.left;
-      const localY = e.clientY - rect.top;
-
-      // Only track if cursor is within Hero section bounds (ignores hover in About section below)
-      if (localX >= 0 && localX <= rect.width && localY >= 0 && localY <= rect.height) {
-        mouseRef.current = {
-          x: localX,
-          y: localY,
-        };
-      } else {
-        mouseRef.current = { x: -1000, y: -1000 };
-      }
+      mouseRef.current = {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
+      };
     };
 
     const handleMouseLeave = () => {
