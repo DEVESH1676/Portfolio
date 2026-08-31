@@ -9,6 +9,8 @@ interface Node {
   originX: number;
   originY: number;
   size: number;
+  magnitude: number; // 0: minor vertex, 1: major constellation star
+  connections: number[]; // Active constellation neighbor indices
 }
 
 interface BackgroundSynapse {
@@ -33,7 +35,8 @@ export const NeuralBackground: React.FC = () => {
     let nodes: Node[] = [];
     let synapses: BackgroundSynapse[] = [];
     let running = true;
-    const connectionDistance = 140;
+    const connectionDistance = 150;
+    const maxConnectionsPerNode = 3;
     const mouseRadius = 200;
     const mouseStrength = 0.04;
 
@@ -72,23 +75,26 @@ export const NeuralBackground: React.FC = () => {
 
     const initNodes = () => {
       nodes = [];
-      const nodeCount = Math.floor((canvas.width * canvas.height) / 12000);
+      const nodeCount = Math.floor((canvas.width * canvas.height) / 11500);
       for (let i = 0; i < nodeCount; i++) {
         const x = Math.random() * canvas.width;
         const y = Math.random() * canvas.height;
+        const isMajorStar = Math.random() < 0.28;
         nodes.push({
           x, y,
           originX: x,
           originY: y,
           vx: (Math.random() - 0.5) * 0.22,
           vy: (Math.random() - 0.5) * 0.22,
-          size: 1.8 + Math.random() * 0.8,
+          size: isMajorStar ? 2.6 : 1.7 + Math.random() * 0.6,
+          magnitude: isMajorStar ? 1 : 0,
+          connections: [],
         });
       }
 
       // Pre-allocate traveling synaptic impulses
       synapses = [];
-      for (let s = 0; s < 12; s++) {
+      for (let s = 0; s < 14; s++) {
         synapses.push({
           nodeA: Math.floor(Math.random() * Math.max(1, nodes.length)),
           nodeB: Math.floor(Math.random() * Math.max(1, nodes.length)),
@@ -105,13 +111,15 @@ export const NeuralBackground: React.FC = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       const primaryColor = cachedPrimaryColor;
-      const lineBaseOpacity = 0.32;
-      const nodeBaseOpacity = 0.65;
+      const lineBaseOpacity = 0.35;
+      const nodeBaseOpacity = 0.68;
 
       ctx.lineWidth = 1.35;
 
+      // 1. Update node physics & clear connection lists
       for (let i = 0; i < nodes.length; i++) {
         const node = nodes[i];
+        node.connections = [];
 
         if (!prefersReducedMotion) {
           node.originX += node.vx;
@@ -134,11 +142,7 @@ export const NeuralBackground: React.FC = () => {
           }
         }
 
-        // Draw Vector Vertex Node
-        ctx.fillStyle = `hsl(${primaryColor} / ${nodeBaseOpacity})`;
-        ctx.fillRect(node.x - node.size / 2, node.y - node.size / 2, node.size, node.size);
-
-        // Sync node position to shared bus
+        // Sync node position to shared bus for DEVESH letter interaction
         if (!sharedNeuralNodes[i]) {
           sharedNeuralNodes[i] = { x: node.x, y: node.y, vx: node.vx, vy: node.vy };
         } else {
@@ -147,26 +151,74 @@ export const NeuralBackground: React.FC = () => {
           sharedNeuralNodes[i].vx = node.vx;
           sharedNeuralNodes[i].vy = node.vy;
         }
+      }
 
-        // Draw Connections
-        for (let j = i + 1; j < nodes.length; j++) {
+      // 2. Build Constellation Network Topology (Dynamic nearest neighbors per star)
+      const drawnLinks = new Set<string>();
+
+      for (let i = 0; i < nodes.length; i++) {
+        const node = nodes[i];
+
+        // Find nearest candidates within range
+        const candidates: { index: number; dist: number }[] = [];
+        for (let j = 0; j < nodes.length; j++) {
+          if (i === j) continue;
           const other = nodes[j];
-          const dx = node.x - other.x;
-          const dy = node.y - other.y;
-          const distance = Math.hypot(dx, dy);
+          const dist = Math.hypot(node.x - other.x, node.y - other.y);
+          if (dist < connectionDistance) {
+            candidates.push({ index: j, dist });
+          }
+        }
 
-          if (distance < connectionDistance) {
-            const lineAlpha = (1 - distance / connectionDistance) * lineBaseOpacity;
+        // Sort by distance to prioritize closest constellation bonds
+        candidates.sort((a, b) => a.dist - b.dist);
+
+        // Link up to maxConnectionsPerNode nearest stars
+        const linksToMake = Math.min(candidates.length, maxConnectionsPerNode);
+        for (let k = 0; k < linksToMake; k++) {
+          const { index: j, dist } = candidates[k];
+          node.connections.push(j);
+
+          const linkKey = i < j ? `${i}-${j}` : `${j}-${i}`;
+          if (!drawnLinks.has(linkKey)) {
+            drawnLinks.add(linkKey);
+
+            // Smooth cosine ease-out for fading in and smoothly losing connections as nodes drift
+            const normalized = dist / connectionDistance;
+            const ease = Math.cos(normalized * (Math.PI / 2));
+            const lineAlpha = ease * ease * lineBaseOpacity;
+
             ctx.strokeStyle = `hsl(${primaryColor} / ${lineAlpha})`;
             ctx.beginPath();
             ctx.moveTo(node.x, node.y);
-            ctx.lineTo(other.x, other.y);
+            ctx.lineTo(nodes[j].x, nodes[j].y);
             ctx.stroke();
           }
         }
       }
 
-      // Draw Synaptic Impulses traveling along connections
+      // 3. Draw Constellation Star Nodes
+      for (let i = 0; i < nodes.length; i++) {
+        const node = nodes[i];
+        const isMajor = node.magnitude === 1;
+
+        if (isMajor) {
+          // Major constellation star: vertex dot + delicate cross sparkle
+          ctx.fillStyle = `hsl(${primaryColor} / ${nodeBaseOpacity + 0.15})`;
+          ctx.fillRect(node.x - node.size / 2, node.y - node.size / 2, node.size, node.size);
+
+          // Subtle diamond glow accent
+          ctx.fillStyle = `hsl(${primaryColor} / 0.3)`;
+          ctx.fillRect(node.x - node.size * 1.2, node.y - 0.5, node.size * 2.4, 1);
+          ctx.fillRect(node.x - 0.5, node.y - node.size * 1.2, 1, node.size * 2.4);
+        } else {
+          // Minor network node
+          ctx.fillStyle = `hsl(${primaryColor} / ${nodeBaseOpacity})`;
+          ctx.fillRect(node.x - node.size / 2, node.y - node.size / 2, node.size, node.size);
+        }
+      }
+
+      // 4. Draw Traveling Synaptic Impulses across active constellation routes
       for (let s = 0; s < synapses.length; s++) {
         const syn = synapses[s];
         if (syn.nodeA >= nodes.length || syn.nodeB >= nodes.length) continue;
@@ -174,23 +226,41 @@ export const NeuralBackground: React.FC = () => {
         const nB = nodes[syn.nodeB];
         const d = Math.hypot(nA.x - nB.x, nA.y - nB.y);
 
-        if (d < connectionDistance) {
+        // Check if connection is still active in current constellation topology
+        const isConnected = d < connectionDistance && nA.connections.includes(syn.nodeB);
+
+        if (isConnected) {
           syn.progress += syn.speed;
           if (syn.progress >= 1) {
             syn.progress = 0;
-            syn.nodeA = Math.floor(Math.random() * nodes.length);
-            syn.nodeB = Math.floor(Math.random() * nodes.length);
+            // Hop to next connected constellation neighbor
+            syn.nodeA = syn.nodeB;
+            if (nB.connections.length > 0) {
+              const nextIdx = Math.floor(Math.random() * nB.connections.length);
+              syn.nodeB = nB.connections[nextIdx];
+            } else {
+              syn.nodeA = Math.floor(Math.random() * nodes.length);
+              syn.nodeB = Math.floor(Math.random() * nodes.length);
+            }
           }
 
           const sx = nA.x + (nB.x - nA.x) * syn.progress;
           const sy = nA.y + (nB.y - nA.y) * syn.progress;
-          ctx.fillStyle = `hsl(${primaryColor} / 0.85)`;
+          ctx.fillStyle = `hsl(${primaryColor} / 0.88)`;
           ctx.fillRect(sx - 1.25, sy - 1.25, 2.5, 2.5);
         } else {
-          // Re-pick connected pair
-          syn.progress = 0;
-          syn.nodeA = Math.floor(Math.random() * nodes.length);
-          syn.nodeB = Math.floor(Math.random() * nodes.length);
+          // Find a valid active connection to jump onto
+          if (nA.connections.length > 0) {
+            syn.progress = 0;
+            syn.nodeB = nA.connections[Math.floor(Math.random() * nA.connections.length)];
+          } else {
+            syn.progress = 0;
+            syn.nodeA = Math.floor(Math.random() * nodes.length);
+            const chosen = nodes[syn.nodeA];
+            syn.nodeB = chosen.connections.length > 0 
+              ? chosen.connections[Math.floor(Math.random() * chosen.connections.length)] 
+              : Math.floor(Math.random() * nodes.length);
+          }
         }
       }
 
