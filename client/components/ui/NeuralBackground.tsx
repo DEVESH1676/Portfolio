@@ -9,11 +9,6 @@ interface Node {
   originX: number;
   originY: number;
   size: number;
-  type: "ambient" | "perimeter" | "streamer";
-  phase: number;
-  speed: number;
-  ampX: number;
-  ampY: number;
 }
 
 interface BackgroundSynapse {
@@ -38,8 +33,7 @@ export const NeuralBackground: React.FC = () => {
     let nodes: Node[] = [];
     let synapses: BackgroundSynapse[] = [];
     let running = true;
-    let time = 0;
-    const connectionDistance = 145;
+    const connectionDistance = 140;
     const mouseRadius = 200;
     const mouseStrength = 0.04;
 
@@ -78,89 +72,28 @@ export const NeuralBackground: React.FC = () => {
 
     const initNodes = () => {
       nodes = [];
-      const w = canvas.width;
-      const h = canvas.height;
-      const nameCenterX = w / 2;
-      const nameCenterY = h * 0.41;
-
-      // 1. Ambient Background Grid (Covers whole home section)
-      const cols = Math.max(4, Math.floor(w / 140));
-      const rows = Math.max(3, Math.floor(h / 140));
-      const cellW = w / cols;
-      const cellH = h / rows;
-
-      for (let r = 0; r < rows; r++) {
-        for (let c = 0; c < cols; c++) {
-          const ox = (c + 0.3 + Math.random() * 0.4) * cellW;
-          const oy = (r + 0.3 + Math.random() * 0.4) * cellH;
-          nodes.push({
-            x: ox,
-            y: oy,
-            originX: ox,
-            originY: oy,
-            vx: 0,
-            vy: 0,
-            size: 1.8 + Math.random() * 0.8,
-            type: "ambient",
-            phase: Math.random() * Math.PI * 2,
-            speed: 0.008 + Math.random() * 0.008,
-            ampX: 18 + Math.random() * 16,
-            ampY: 14 + Math.random() * 14,
-          });
-        }
-      }
-
-      // 2. Perimeter Constellation (Encircling DEVESH)
-      const perimeterCount = Math.max(10, Math.min(18, Math.floor(w / 70)));
-      for (let i = 0; i < perimeterCount; i++) {
-        const angle = (i / perimeterCount) * Math.PI * 2 + (Math.random() - 0.5) * 0.25;
-        const radX = Math.min(w * 0.42, 260 + Math.random() * 80);
-        const radY = Math.min(h * 0.22, 75 + Math.random() * 35);
-        const ox = nameCenterX + Math.cos(angle) * radX;
-        const oy = nameCenterY + Math.sin(angle) * radY;
+      const nodeCount = Math.floor((canvas.width * canvas.height) / 12000);
+      for (let i = 0; i < nodeCount; i++) {
+        const x = Math.random() * canvas.width;
+        const y = Math.random() * canvas.height;
         nodes.push({
-          x: ox,
-          y: oy,
-          originX: ox,
-          originY: oy,
-          vx: 0,
-          vy: 0,
-          size: 2.2 + Math.random() * 0.6,
-          type: "perimeter",
-          phase: Math.random() * Math.PI * 2,
-          speed: 0.01 + Math.random() * 0.008,
-          ampX: 12 + Math.random() * 10,
-          ampY: 10 + Math.random() * 8,
-        });
-      }
-
-      // 3. Transiting Streamer Nodes (Passing through DEVESH to create flash effect)
-      const streamerCount = 5;
-      for (let s = 0; s < streamerCount; s++) {
-        nodes.push({
-          x: nameCenterX,
-          y: nameCenterY,
-          originX: nameCenterX,
-          originY: nameCenterY,
-          vx: 0,
-          vy: 0,
-          size: 2.6,
-          type: "streamer",
-          phase: (s / streamerCount) * Math.PI * 2,
-          speed: 0.009 + (s % 2 === 0 ? 0.003 : -0.002),
-          ampX: Math.min(w * 0.38, 290),
-          ampY: 50 + (s % 3) * 15,
+          x, y,
+          originX: x,
+          originY: y,
+          vx: (Math.random() - 0.5) * 0.22,
+          vy: (Math.random() - 0.5) * 0.22,
+          size: 1.8 + Math.random() * 0.8,
         });
       }
 
       // Pre-allocate traveling synaptic impulses
       synapses = [];
-      for (let s = 0; s < 16; s++) {
+      for (let s = 0; s < 12; s++) {
         synapses.push({
-          nodeA: Math.floor(Math.random() * nodes.length),
-          nodeB: Math.floor(Math.random() * nodes.length),
+          nodeA: Math.floor(Math.random() * Math.max(1, nodes.length)),
+          nodeB: Math.floor(Math.random() * Math.max(1, nodes.length)),
           progress: Math.random(),
-          speed: 0.01 + Math.random() * 0.014,
+          speed: 0.005 + Math.random() * 0.007,
         });
       }
     };
@@ -168,15 +101,12 @@ export const NeuralBackground: React.FC = () => {
     // ── Draw loop ──
     const draw = () => {
       if (!running) return;
-      time += 0.02;
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       const primaryColor = cachedPrimaryColor;
       const lineBaseOpacity = 0.32;
       const nodeBaseOpacity = 0.65;
-      const nameCenterX = canvas.width / 2;
-      const nameCenterY = canvas.height * 0.41;
 
       ctx.lineWidth = 1.35;
 
@@ -184,33 +114,23 @@ export const NeuralBackground: React.FC = () => {
         const node = nodes[i];
 
         if (!prefersReducedMotion) {
-          let targetX = node.originX;
-          let targetY = node.originY;
+          node.originX += node.vx;
+          node.originY += node.vy;
 
-          if (node.type === "ambient" || node.type === "perimeter") {
-            // Harmonic orbital oscillation around organized anchor point
-            targetX = node.originX + Math.sin(time * node.speed * 50 + node.phase) * node.ampX;
-            targetY = node.originY + Math.cos(time * node.speed * 40 + node.phase) * node.ampY;
-          } else if (node.type === "streamer") {
-            // Smooth Lissajous curve gliding right through DEVESH center
-            const t = time * node.speed * 45 + node.phase;
-            targetX = nameCenterX + Math.sin(t) * node.ampX;
-            targetY = nameCenterY + Math.sin(t * 2 + node.phase) * node.ampY;
-          }
+          if (node.originX < 0 || node.originX > canvas.width) node.vx *= -1;
+          if (node.originY < 0 || node.originY > canvas.height) node.vy *= -1;
 
-          // Elastic spring motion back to designated places
-          node.x += (targetX - node.x) * 0.05;
-          node.y += (targetY - node.y) * 0.05;
+          node.x += (node.originX - node.x) * 0.02;
+          node.y += (node.originY - node.y) * 0.02;
 
-          // Mouse interaction
           const dx = mouseRef.current.x - node.x;
           const dy = mouseRef.current.y - node.y;
           const distance = Math.hypot(dx, dy);
 
-          if (distance < mouseRadius && distance > 0) {
+          if (distance < mouseRadius) {
             const force = (mouseRadius - distance) / mouseRadius;
-            node.x -= (dx / distance) * force * 35 * mouseStrength * 15;
-            node.y -= (dy / distance) * force * 35 * mouseStrength * 15;
+            node.x += dx * force * mouseStrength;
+            node.y += dy * force * mouseStrength;
           }
         }
 
