@@ -20,6 +20,13 @@ interface BackgroundSynapse {
   speed: number;
 }
 
+interface LongRangeBridge {
+  nodeA: number;
+  nodeB: number;
+  alpha: number;
+  targetAlpha: number;
+}
+
 export const NeuralBackground: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mouseRef = useRef({ x: -1000, y: -1000 });
@@ -34,9 +41,12 @@ export const NeuralBackground: React.FC = () => {
     let animationFrameId: number;
     let nodes: Node[] = [];
     let synapses: BackgroundSynapse[] = [];
+    let bridges: LongRangeBridge[] = [];
     let running = true;
-    const connectionDistance = 150;
+    const connectionDistance = 145;
     const maxConnectionsPerNode = 3;
+    const maxBridgeDistance = 420;
+    const bridgeCount = 14;
     const mouseRadius = 200;
     const mouseStrength = 0.04;
 
@@ -90,6 +100,33 @@ export const NeuralBackground: React.FC = () => {
           magnitude: isMajorStar ? 1 : 0,
           connections: [],
         });
+      }
+
+      // Pre-allocate 12-15 persistent long-range constellation backbone bridges
+      bridges = [];
+      if (nodes.length > 3) {
+        for (let b = 0; b < bridgeCount; b++) {
+          const a = Math.floor(Math.random() * nodes.length);
+          let bIdx = (a + 1 + Math.floor(Math.random() * (nodes.length - 1))) % nodes.length;
+          
+          // Find a pair with meaningful distance
+          for (let attempt = 0; attempt < 8; attempt++) {
+            const candidate = Math.floor(Math.random() * nodes.length);
+            if (candidate === a) continue;
+            const d = Math.hypot(nodes[a].x - nodes[candidate].x, nodes[a].y - nodes[candidate].y);
+            if (d > 160 && d < 380) {
+              bIdx = candidate;
+              break;
+            }
+          }
+
+          bridges.push({
+            nodeA: a,
+            nodeB: bIdx,
+            alpha: 0.22,
+            targetAlpha: 0.22,
+          });
+        }
       }
 
       // Pre-allocate traveling synaptic impulses
@@ -153,83 +190,105 @@ export const NeuralBackground: React.FC = () => {
         }
       }
 
-      // 2. Build Constellation Network Topology (Local bonds + 10-15 Long-Range Bridges)
+      // 2. Build Constellation Network Topology (Dynamic nearest neighbors per star)
       const drawnLinks = new Set<string>();
-      const longRangeCandidates: { i: number; j: number; dist: number }[] = [];
-      const maxLongRangeBridges = 14;
-      const minLongDistance = connectionDistance;
-      const maxLongDistance = 330;
 
       for (let i = 0; i < nodes.length; i++) {
         const node = nodes[i];
 
-        // Find nearest candidates within local range and collect distant candidates
-        const localCandidates: { index: number; dist: number }[] = [];
-        for (let j = i + 1; j < nodes.length; j++) {
+        // Find nearest candidates within range
+        const candidates: { index: number; dist: number }[] = [];
+        for (let j = 0; j < nodes.length; j++) {
+          if (i === j) continue;
           const other = nodes[j];
           const dist = Math.hypot(node.x - other.x, node.y - other.y);
-
           if (dist < connectionDistance) {
-            localCandidates.push({ index: j, dist });
-          } else if (dist >= minLongDistance && dist <= maxLongDistance) {
-            longRangeCandidates.push({ i, j, dist });
+            candidates.push({ index: j, dist });
           }
         }
 
         // Sort by distance to prioritize closest constellation bonds
-        localCandidates.sort((a, b) => a.dist - b.dist);
+        candidates.sort((a, b) => a.dist - b.dist);
 
         // Link up to maxConnectionsPerNode nearest stars
-        const linksToMake = Math.min(localCandidates.length, maxConnectionsPerNode);
+        const linksToMake = Math.min(candidates.length, maxConnectionsPerNode);
         for (let k = 0; k < linksToMake; k++) {
-          const { index: j, dist } = localCandidates[k];
+          const { index: j, dist } = candidates[k];
           node.connections.push(j);
-          nodes[j].connections.push(i);
 
-          const linkKey = `${i}-${j}`;
-          drawnLinks.add(linkKey);
+          const linkKey = i < j ? `${i}-${j}` : `${j}-${i}`;
+          if (!drawnLinks.has(linkKey)) {
+            drawnLinks.add(linkKey);
 
-          // Smooth cosine ease-out for fading in and smoothly losing connections as nodes drift
-          const normalized = dist / connectionDistance;
-          const ease = Math.cos(normalized * (Math.PI / 2));
-          const lineAlpha = ease * ease * lineBaseOpacity;
+            // Smooth cosine ease-out for fading in and smoothly losing connections as nodes drift
+            const normalized = dist / connectionDistance;
+            const ease = Math.cos(normalized * (Math.PI / 2));
+            const lineAlpha = ease * ease * lineBaseOpacity;
 
-          ctx.strokeStyle = `hsl(${primaryColor} / ${lineAlpha})`;
-          ctx.beginPath();
-          ctx.moveTo(node.x, node.y);
-          ctx.lineTo(nodes[j].x, nodes[j].y);
-          ctx.stroke();
+            ctx.strokeStyle = `hsl(${primaryColor} / ${lineAlpha})`;
+            ctx.beginPath();
+            ctx.moveTo(node.x, node.y);
+            ctx.lineTo(nodes[j].x, nodes[j].y);
+            ctx.stroke();
+          }
         }
       }
 
-      // Render 10 to 15 Long-Range Bridge Connections across distant clusters
-      // Prioritize major star vertices and well-spaced pairs
-      longRangeCandidates.sort((a, b) => a.dist - b.dist);
-      let longBridgesCount = 0;
+      // 3. Draw Persistent Long-Range Backbone Bridges (10-15 stable far connections)
+      for (let b = 0; b < bridges.length; b++) {
+        const bridge = bridges[b];
+        if (bridge.nodeA >= nodes.length || bridge.nodeB >= nodes.length) continue;
 
-      for (let b = 0; b < longRangeCandidates.length && longBridgesCount < maxLongRangeBridges; b++) {
-        const { i, j, dist } = longRangeCandidates[b];
-        const linkKey = `${i}-${j}`;
-        if (drawnLinks.has(linkKey)) continue;
+        const nA = nodes[bridge.nodeA];
+        const nB = nodes[bridge.nodeB];
+        const dist = Math.hypot(nA.x - nB.x, nA.y - nB.y);
 
-        drawnLinks.add(linkKey);
-        nodes[i].connections.push(j);
-        nodes[j].connections.push(i);
-        longBridgesCount++;
+        if (dist < maxBridgeDistance) {
+          const norm = dist / maxBridgeDistance;
+          bridge.targetAlpha = Math.cos(norm * (Math.PI / 2)) * 0.28;
+        } else {
+          bridge.targetAlpha = 0;
+        }
 
-        // Smooth cosine fade for long distances (150px -> 330px)
-        const progress = (dist - minLongDistance) / (maxLongDistance - minLongDistance);
-        const ease = Math.cos(progress * (Math.PI / 2));
-        const bridgeAlpha = ease * ease * (lineBaseOpacity * 0.75);
+        // Smooth gradual fade without flickering
+        bridge.alpha += (bridge.targetAlpha - bridge.alpha) * 0.02;
 
-        ctx.strokeStyle = `hsl(${primaryColor} / ${bridgeAlpha})`;
-        ctx.beginPath();
-        ctx.moveTo(nodes[i].x, nodes[i].y);
-        ctx.lineTo(nodes[j].x, nodes[j].y);
-        ctx.stroke();
+        // If completely faded out, gracefully re-anchor to another distant node
+        if (bridge.alpha < 0.01 && bridge.targetAlpha === 0) {
+          const newA = Math.floor(Math.random() * nodes.length);
+          for (let attempt = 0; attempt < 8; attempt++) {
+            const candidate = Math.floor(Math.random() * nodes.length);
+            if (candidate === newA) continue;
+            const d = Math.hypot(nodes[newA].x - nodes[candidate].x, nodes[newA].y - nodes[candidate].y);
+            if (d > 180 && d < 340) {
+              bridge.nodeA = newA;
+              bridge.nodeB = candidate;
+              bridge.alpha = 0;
+              break;
+            }
+          }
+        }
+
+        if (bridge.alpha > 0.01) {
+          nA.connections.push(bridge.nodeB);
+          nB.connections.push(bridge.nodeA);
+
+          const linkKey = bridge.nodeA < bridge.nodeB 
+            ? `${bridge.nodeA}-${bridge.nodeB}` 
+            : `${bridge.nodeB}-${bridge.nodeA}`;
+
+          if (!drawnLinks.has(linkKey)) {
+            drawnLinks.add(linkKey);
+            ctx.strokeStyle = `hsl(${primaryColor} / ${bridge.alpha})`;
+            ctx.beginPath();
+            ctx.moveTo(nA.x, nA.y);
+            ctx.lineTo(nB.x, nB.y);
+            ctx.stroke();
+          }
+        }
       }
 
-      // 3. Draw Constellation Star Nodes
+      // 4. Draw Constellation Star Nodes
       for (let i = 0; i < nodes.length; i++) {
         const node = nodes[i];
         const isMajor = node.magnitude === 1;
@@ -250,7 +309,7 @@ export const NeuralBackground: React.FC = () => {
         }
       }
 
-      // 4. Draw Traveling Synaptic Impulses across active constellation routes
+      // 5. Draw Traveling Synaptic Impulses across active constellation routes
       for (let s = 0; s < synapses.length; s++) {
         const syn = synapses[s];
         if (syn.nodeA >= nodes.length || syn.nodeB >= nodes.length) continue;
@@ -259,7 +318,7 @@ export const NeuralBackground: React.FC = () => {
         const d = Math.hypot(nA.x - nB.x, nA.y - nB.y);
 
         // Check if connection is still active in current constellation topology
-        const isConnected = d < connectionDistance && nA.connections.includes(syn.nodeB);
+        const isConnected = d < maxBridgeDistance && nA.connections.includes(syn.nodeB);
 
         if (isConnected) {
           syn.progress += syn.speed;
