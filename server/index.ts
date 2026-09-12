@@ -9,13 +9,16 @@ export function createServer() {
   const app = express();
 
   // Middleware
-  app.use(cors({
-    origin: process.env.NODE_ENV === 'production' 
-      ? ['https://your-domain.netlify.app', /\.netlify\.app$/] 
-      : '*',
-    methods: ['GET', 'POST'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-  }));
+  app.use(
+    cors({
+      origin:
+        process.env.NODE_ENV === "production"
+          ? ["https://your-domain.netlify.app", /\.netlify\.app$/]
+          : "*",
+      methods: ["GET", "POST"],
+      allowedHeaders: ["Content-Type", "Authorization"],
+    }),
+  );
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
 
@@ -31,7 +34,9 @@ export function createServer() {
   app.post("/api/contact", (req, res) => {
     try {
       const data = ContactRequestSchema.parse(req.body);
-      console.log(`[Contact] Message from ${data.name} (${data.email}): ${data.message}`);
+      console.log(
+        `[Contact] Message from ${data.name} (${data.email}): ${data.message}`,
+      );
       res.json({ success: true, message: "Message received" });
     } catch (error) {
       res.status(400).json({ success: false, error: "Invalid payload" });

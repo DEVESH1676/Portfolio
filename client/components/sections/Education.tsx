@@ -31,19 +31,19 @@ export const EducationSection = () => {
             animateLineDraw(lineRef.current, {
               duration: lineDuration,
               delay: 100,
-              easing: "linear" // Linear progress feels most natural for a timeline
+              easing: "linear", // Linear progress feels most natural for a timeline
             });
           }
 
           // 3. Sequential Narrative
           // Item 1 triggers at 100ms (start of line)
           // Item 2 triggers at 100ms + (2500 * 1/N)
-          // ... 
+          // ...
           const baseDelay = 100;
           const interval = lineDuration / EDUCATION_TIMELINE.length;
 
           EDUCATION_TIMELINE.forEach((_, index) => {
-            const delay = baseDelay + (interval * index);
+            const delay = baseDelay + interval * index;
 
             // Dot Pulse (Sync with line arrival)
             const dot = dotRefs.current[index];
@@ -60,15 +60,25 @@ export const EducationSection = () => {
               // Dot Pulse causing "Fill" effect
               dot.animate(
                 [
-                  { transform: "scale(1)", backgroundColor: "hsl(var(--background))" },
-                  { transform: "scale(1.5)", backgroundColor: "hsl(var(--primary))", offset: 0.5 },
-                  { transform: "scale(1)", backgroundColor: "hsl(var(--background))" }
+                  {
+                    transform: "scale(1)",
+                    backgroundColor: "hsl(var(--background))",
+                  },
+                  {
+                    transform: "scale(1.5)",
+                    backgroundColor: "hsl(var(--primary))",
+                    offset: 0.5,
+                  },
+                  {
+                    transform: "scale(1)",
+                    backgroundColor: "hsl(var(--background))",
+                  },
                 ],
                 {
                   duration: 600,
                   delay: delay + 200, // Sync with line arrival
-                  easing: "ease-out"
-                }
+                  easing: "ease-out",
+                },
               );
             }
 
@@ -76,16 +86,13 @@ export const EducationSection = () => {
             const connector = connectorRefs.current[index];
             if (connector) {
               connector.animate(
-                [
-                  { transform: "scaleX(0)" },
-                  { transform: "scaleX(1)" }
-                ],
+                [{ transform: "scaleX(0)" }, { transform: "scaleX(1)" }],
                 {
                   duration: 400,
                   delay: delay + 100, // Start shortly after dot appears
                   easing: ANIME.premiumEasing,
-                  fill: "forwards"
-                }
+                  fill: "forwards",
+                },
               );
             }
 
@@ -102,15 +109,23 @@ export const EducationSection = () => {
 
                 card.animate(
                   [
-                    { opacity: 0, transform: `translate3d(${startX}px, 0, 0)`, filter: "blur(6px)" },
-                    { opacity: 1, transform: `translate3d(0, 0, 0)`, filter: "blur(0px)" }
+                    {
+                      opacity: 0,
+                      transform: `translate3d(${startX}px, 0, 0)`,
+                      filter: "blur(6px)",
+                    },
+                    {
+                      opacity: 1,
+                      transform: `translate3d(0, 0, 0)`,
+                      filter: "blur(0px)",
+                    },
                   ],
                   {
                     duration: 800,
                     delay: delay + 150, // Card 150ms after dot
                     easing: ANIME.premiumEasing,
-                    fill: "forwards"
-                  }
+                    fill: "forwards",
+                  },
                 );
               } else {
                 // Mobile: Standard Slide Up
@@ -128,7 +143,7 @@ export const EducationSection = () => {
           observer.disconnect();
         }
       },
-      { threshold: 0.15 } // Trigger when 15% visible
+      { threshold: 0.15 }, // Trigger when 15% visible
     );
 
     observer.observe(container);
@@ -136,7 +151,10 @@ export const EducationSection = () => {
   }, []);
 
   return (
-    <section id="education" className="section-alt relative section-padding scroll-mt-24">
+    <section
+      id="education"
+      className="section-alt relative section-padding scroll-mt-24"
+    >
       {/* Background accent removed for strict semantic compliance */}
 
       <Container>
@@ -150,11 +168,20 @@ export const EducationSection = () => {
             >
               Academic Milestones
             </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-foreground/75 text-lg opacity-0" ref={(el) => {
-              // Quick inline animation for subtitle if desired, or just let it inherit visibility
-              if (el) animateEntrance(el, { translateY: 16, delay: 100, blur: true });
-            }}>
-              A continuous journey of specialization in Computer Vision and Intelligent Systems.
+            <p
+              className="mx-auto mt-4 max-w-2xl text-foreground/75 text-lg opacity-0"
+              ref={(el) => {
+                // Quick inline animation for subtitle if desired, or just let it inherit visibility
+                if (el)
+                  animateEntrance(el, {
+                    translateY: 16,
+                    delay: 100,
+                    blur: true,
+                  });
+              }}
+            >
+              A continuous journey of specialization in Computer Vision and
+              Intelligent Systems.
             </p>
           </div>
 
@@ -181,7 +208,7 @@ export const EducationSection = () => {
                     key={entry.degree}
                     className={cn(
                       "relative flex items-center md:justify-between group", // Group for hover effects
-                      isEven ? "md:flex-row-reverse" : "md:flex-row"
+                      isEven ? "md:flex-row-reverse" : "md:flex-row",
                     )}
                   >
                     {/* Empty half for desktop spacing */}
@@ -207,12 +234,14 @@ export const EducationSection = () => {
                         )}
 
                         {/* Inner Dot */}
-                        <div className={cn(
-                          "rounded-full transition-all duration-300",
-                          isCurrent
-                            ? "h-2 w-2 bg-background"
-                            : "h-1.5 w-1.5 bg-primary/20 group-hover:bg-primary" // Clean Matte Inner
-                        )} />
+                        <div
+                          className={cn(
+                            "rounded-full transition-all duration-300",
+                            isCurrent
+                              ? "h-2 w-2 bg-background"
+                              : "h-1.5 w-1.5 bg-primary/20 group-hover:bg-primary", // Clean Matte Inner
+                          )}
+                        />
                       </div>
 
                       {/* Connector Line */}
@@ -223,8 +252,10 @@ export const EducationSection = () => {
                           // Mobile: Always Right
                           "left-1/2 origin-left",
                           // Desktop: Alternate
-                          isEven ? "md:right-1/2 md:left-auto md:origin-right" : "md:left-1/2 md:origin-left",
-                          "scale-x-0" // Initial state
+                          isEven
+                            ? "md:right-1/2 md:left-auto md:origin-right"
+                            : "md:left-1/2 md:origin-left",
+                          "scale-x-0", // Initial state
                         )}
                       />
                     </div>
@@ -233,7 +264,7 @@ export const EducationSection = () => {
                     <div
                       className={cn(
                         "pl-20 md:pl-0 w-full md:w-5/12",
-                        isEven ? "md:text-right" : "md:text-left"
+                        isEven ? "md:text-right" : "md:text-left",
                       )}
                     >
                       <div
@@ -265,6 +296,6 @@ export const EducationSection = () => {
           </div>
         </div>
       </Container>
-    </section >
+    </section>
   );
 };

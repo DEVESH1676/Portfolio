@@ -11,18 +11,22 @@ export const SkillsSection = () => {
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
-          if (headingRef.current) animateEntrance(headingRef.current, { translateY: 20 });
+          if (headingRef.current)
+            animateEntrance(headingRef.current, { translateY: 20 });
           if (gridRef.current) {
             const badges = gridRef.current.children;
             Array.from(badges).forEach((badge, i) => {
               // Staggered entrance for the badges
-              animateEntrance(badge as HTMLElement, { translateY: 15, delay: 50 + (i * 30) });
+              animateEntrance(badge as HTMLElement, {
+                translateY: 15,
+                delay: 50 + i * 30,
+              });
             });
           }
           observer.disconnect();
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     if (sectionRef.current) observer.observe(sectionRef.current);
@@ -30,12 +34,19 @@ export const SkillsSection = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} id="skills" className="section-base section-padding scroll-mt-24">
+    <section
+      ref={sectionRef}
+      id="skills"
+      className="section-base section-padding scroll-mt-24"
+    >
       <div className="mx-auto max-w-6xl px-6">
-        <h2 ref={headingRef} className="font-heading font-semibold tracking-tight text-foreground opacity-0 mb-8">
-          Skills & Stack
+        <h2
+          ref={headingRef}
+          className="font-mono uppercase text-3xl font-bold tracking-tight text-foreground opacity-0 mb-8"
+        >
+          Skills
         </h2>
-        
+
         <div ref={gridRef} className="flex flex-wrap gap-4">
           {SKILLS.map((skill) => {
             return (

@@ -19,7 +19,7 @@ export function useActiveSection(): [string, (href: string) => void] {
         id: item.href.replace("#", ""),
         href: item.href,
       })),
-    []
+    [],
   );
 
   const setSectionManual = React.useCallback((href: string) => {

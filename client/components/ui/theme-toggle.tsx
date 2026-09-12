@@ -7,11 +7,11 @@ const THEME_KEY = "site-theme";
 export const ThemeToggle: React.FC = () => {
   const [isDark, setIsDark] = React.useState<boolean>(() => {
     try {
-      if (typeof window !== 'undefined') {
+      if (typeof window !== "undefined") {
         const stored = localStorage.getItem(THEME_KEY);
         if (stored) return stored === "dark";
-        // Always default to light mode if no preference is stored
-        return false;
+        // Default to system preference if no preference is stored
+        return window.matchMedia("(prefers-color-scheme: dark)").matches;
       }
       return false;
     } catch {
@@ -29,7 +29,7 @@ export const ThemeToggle: React.FC = () => {
         root.classList.remove("dark");
         localStorage.setItem(THEME_KEY, "light");
       }
-    } catch { }
+    } catch {}
   }, [isDark]);
 
   return (
@@ -42,17 +42,27 @@ export const ThemeToggle: React.FC = () => {
       <div
         className={cn(
           "absolute top-[3px] h-[calc(100%-6px)] w-[calc(50%-3px)] bg-background shadow-sm border border-border/50 rounded-full transition-all duration-500 ease-spring",
-          isDark ? "left-[50%]" : "left-[3px]"
+          isDark ? "left-[50%]" : "left-[3px]",
         )}
       />
 
       {/* Sun Icon */}
-      <div className={cn("relative z-10 flex h-full flex-1 items-center justify-center rounded-full transition-colors duration-300", !isDark ? "text-amber-500" : "text-muted-foreground/40")}>
+      <div
+        className={cn(
+          "relative z-10 flex h-full flex-1 items-center justify-center rounded-full transition-colors duration-300",
+          !isDark ? "text-amber-500" : "text-muted-foreground/40",
+        )}
+      >
         <Sun className="h-4 w-4" />
       </div>
 
       {/* Moon Icon */}
-      <div className={cn("relative z-10 flex h-full flex-1 items-center justify-center rounded-full transition-colors duration-300", isDark ? "text-blue-500" : "text-muted-foreground/40")}>
+      <div
+        className={cn(
+          "relative z-10 flex h-full flex-1 items-center justify-center rounded-full transition-colors duration-300",
+          isDark ? "text-blue-500" : "text-muted-foreground/40",
+        )}
+      >
         <Moon className="h-4 w-4" />
       </div>
     </button>

@@ -32,7 +32,7 @@ export const ProjectsSection = () => {
           observer.disconnect();
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     if (sectionRef.current) observer.observe(sectionRef.current);
@@ -40,24 +40,27 @@ export const ProjectsSection = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} id="projects" className="section-base section-padding scroll-mt-24">
-
+    <section
+      ref={sectionRef}
+      id="projects"
+      className="section-base section-padding scroll-mt-24"
+    >
       <div className="mx-auto max-w-6xl px-6">
         <div className="max-w-3xl">
           <h2
             ref={headingRef}
-            className="font-heading font-semibold tracking-tight text-foreground opacity-0"
+            className="font-mono uppercase text-3xl font-bold tracking-tight text-foreground opacity-0"
           >
-            Projects &amp; Supervision
+            Projects
           </h2>
-          <p
-            ref={introRef}
-            className="mt-4 text-foreground/75 opacity-0"
-          >
+          <p ref={introRef} className="mt-4 text-foreground/75 opacity-0">
             {CONTENT_INTROS.projects}
           </p>
         </div>
-        <div ref={gridRef} className="mt-12 grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <div
+          ref={gridRef}
+          className="mt-12 grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+        >
           {PROJECTS.map((project) => (
             <Card
               key={project.title}

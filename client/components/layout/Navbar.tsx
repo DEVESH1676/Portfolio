@@ -10,38 +10,80 @@ export const Navbar = () => {
   const [activeSection, setActiveSection] = useActiveSection();
   const [isScrolled, setIsScrolled] = React.useState(false);
   const [dateStr, setDateStr] = React.useState("");
+  const [timeStr, setTimeStr] = React.useState("");
 
-  // Scroll Detection
+  // Scroll & Time Detection
   React.useEffect(() => {
-    const d = new Date();
-    setDateStr(d.toLocaleDateString('en-US', { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase());
+    const updateTime = () => {
+      const d = new Date();
+      setDateStr(
+        d
+          .toLocaleDateString("en-US", {
+            weekday: "short",
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+          })
+          .toUpperCase(),
+      );
+      setTimeStr(
+        d.toLocaleTimeString("en-US", {
+          hour12: false,
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
+      );
+    };
+
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
 
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      clearInterval(interval);
+    };
   }, []);
 
   const handleNavClick = (href: string) => {
     setActiveSection(href);
   };
 
-
   return (
     <header
       className={cn(
         "fixed z-50 inset-x-0 pointer-events-none transition-all duration-500 ease-spring hidden md:flex items-center justify-center",
-        isScrolled ? "top-3" : "top-6"
+        isScrolled ? "top-3" : "top-6",
       )}
     >
-      {/* Far Left Date - Perfectly vertically aligned by flex items-center of header */}
+      {/* Far Left Date */}
       {dateStr && (
-        <div className={cn(
-          "absolute left-6 lg:left-10 pointer-events-auto transition-opacity duration-500",
-          isScrolled ? "opacity-0 pointer-events-none" : "opacity-100"
-        )}>
-          <span className="text-xs font-mono text-muted-foreground/50 tracking-[0.2em]">{dateStr}</span>
+        <div
+          className={cn(
+            "absolute left-6 lg:left-10 pointer-events-auto transition-opacity duration-500 hidden md:block",
+            isScrolled ? "opacity-0 pointer-events-none" : "opacity-100",
+          )}
+        >
+          <span className="text-xs font-mono text-muted-foreground/50 tracking-[0.2em]">
+            {dateStr}
+          </span>
+        </div>
+      )}
+
+      {/* Far Right Time */}
+      {timeStr && (
+        <div
+          className={cn(
+            "absolute right-6 lg:right-10 pointer-events-auto transition-opacity duration-500 hidden md:block",
+            isScrolled ? "opacity-0 pointer-events-none" : "opacity-100",
+          )}
+        >
+          <span className="text-xs font-mono text-muted-foreground/50 tracking-[0.2em]">
+            {timeStr}
+          </span>
         </div>
       )}
 
@@ -51,7 +93,7 @@ export const Navbar = () => {
           "pointer-events-auto flex items-center px-4 lg:px-6 transition-all duration-500 ease-spring rounded-full border w-auto max-w-[95%] xl:max-w-7xl",
           isScrolled
             ? "py-2 bg-background/50 backdrop-blur-2xl backdrop-saturate-150 shadow-lg border-border/60" // Scrolled (Elite Glass)
-            : "py-3 bg-transparent backdrop-blur-none shadow-none border-transparent" // Top
+            : "py-3 bg-transparent backdrop-blur-none shadow-none border-transparent", // Top
         )}
       >
         {/* LOGO (Left - Animated) */}
@@ -61,10 +103,10 @@ export const Navbar = () => {
             initial={{ letterSpacing: "-0.02em" }}
             whileHover={{
               letterSpacing: "0.05em",
-              textShadow: "0 0 20px rgba(var(--primary), 0.5)"
+              textShadow: "0 0 20px rgba(var(--primary), 0.5)",
             }}
             transition={{ duration: 0.3 }}
-            className="font-heading text-lg font-bold tracking-tight text-foreground md:ml-4 md:mr-6 whitespace-nowrap cursor-pointer"
+            className="font-mono uppercase text-lg font-bold tracking-widest text-foreground md:ml-4 md:mr-6 whitespace-nowrap cursor-pointer"
           >
             Devesh Ghuge
           </motion.a>
@@ -73,8 +115,6 @@ export const Navbar = () => {
         {/* DESKTOP NAV (Center - Framer Motion Pill) */}
         <div className="flex-none flex justify-center">
           <nav className="hidden md:flex items-center gap-1 p-1">
-
-
             {NAV_ITEMS.map((item) => (
               <a
                 key={item.href}
@@ -84,7 +124,7 @@ export const Navbar = () => {
                   "relative group px-3 lg:px-5 py-2 text-xs font-mono uppercase transition-colors duration-300 rounded-full cursor-pointer",
                   activeSection === item.href
                     ? "text-primary font-bold"
-                    : "text-foreground/70 hover:text-foreground font-medium"
+                    : "text-foreground/70 hover:text-foreground font-medium",
                 )}
               >
                 {activeSection === item.href && (
@@ -97,7 +137,10 @@ export const Navbar = () => {
                 {/* Text Expansion Effect */}
                 <motion.span
                   initial={{ letterSpacing: "0.1em" }}
-                  animate={{ letterSpacing: activeSection === item.href ? "0.25em" : "0.1em" }}
+                  animate={{
+                    letterSpacing:
+                      activeSection === item.href ? "0.25em" : "0.1em",
+                  }}
                   transition={{ duration: 0.3, ease: "easeOut" }}
                   className="inline-block whitespace-nowrap"
                 >

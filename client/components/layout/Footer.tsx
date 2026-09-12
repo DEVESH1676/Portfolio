@@ -2,25 +2,18 @@ import { NAV_ITEMS } from "@/data/portfolio";
 
 export const Footer = () => {
   const footerLinks = NAV_ITEMS.filter((item) =>
-    [
-      "#home",
-      "#about",
-      "#publications",
-      "#projects",
-      "#contact",
-    ].includes(item.href),
+    ["#home", "#about", "#publications", "#projects", "#contact"].includes(
+      item.href,
+    ),
   );
 
   return (
     <footer className="section-base text-foreground">
       <div className="mx-auto flex max-w-6xl flex-col gap-8 px-6 py-12 md:flex-row md:items-center md:justify-between">
         <div className="space-y-2">
-          <p className="font-heading text-lg font-semibold">
-            Devesh Ghuge
-          </p>
+          <p className="font-heading text-lg font-semibold">Devesh Ghuge</p>
           <p className="text-foreground/60 max-w-sm mt-4 leading-relaxed">
-            Student and Full Stack Developer at <br />
-            SKNCOE, Pune.
+            Student at SKNCOE.
           </p>
         </div>
         <nav className="flex flex-wrap gap-4">

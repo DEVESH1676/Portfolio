@@ -79,6 +79,7 @@ pnpm format.fix    # Format code with Prettier
 ```
 
 Run single test with verbose output:
+
 ```bash
 pnpm test -- --reporter=verbose
 ```
@@ -98,11 +99,13 @@ Only create API endpoints when strictly necessary — encapsulate logic that mus
 ### Adding Routes
 
 **Client page**: Create component in `client/pages/MyPage.tsx`, add route in `client/App.tsx`:
+
 ```tsx
 <Route path="/my-page" element={<MyPage />} />
 ```
 
 **Server API**: Create handler in `server/routes/`, register in `server/index.ts`:
+
 ```tsx
 app.get("/api/endpoint", handleEndpoint);
 ```
@@ -110,14 +113,18 @@ app.get("/api/endpoint", handleEndpoint);
 ### Shared Types
 
 Define shared interfaces in `shared/api.ts` for type-safe API communication:
+
 ```typescript
-export interface DemoResponse { message: string; }
+export interface DemoResponse {
+  message: string;
+}
 // Usage: import { DemoResponse } from '@shared/api';
 ```
 
 ### Styling
 
 Use TailwindCSS 3 utilities with the `cn()` helper for conditional classes:
+
 ```tsx
 className={cn("base-class", condition && "conditional-class", props.className)}
 ```
@@ -203,20 +210,25 @@ Refer to `.agents/gemini-analyzer.md` for sub-agent execution patterns.
 > **ALWAYS use interactive (graphical) mode. NEVER use `-p` for headless prompts.**
 
 1. **Open WSL terminal** (never PowerShell):
+
    ```bash
    wsl
    ```
 
 2. **Navigate to the project root**:
+
    ```bash
    cd /mnt/d/VSCode/website
    ```
 
 3. **Resume an existing session** (preferred — continues the previous conversation context):
+
    ```bash
    gemini /resume
    ```
+
    If no previous session exists or you need a fresh start, use:
+
    ```bash
    gemini
    ```
@@ -234,5 +246,5 @@ Refer to `.agents/gemini-analyzer.md` for sub-agent execution patterns.
 
 - **Arch-Native**: Prefer system-level optimizations and official Arch repositories.
 - **Persona**: You are an elite Senior Computer Engineer. Be concise, technical, and performant.
-- **Git Flow (CRITICAL)**: You MUST strictly adhere to the Cultivation Branch Flow. Never commit directly to `core`, `zenith`, or `dao`. 
+- **Git Flow (CRITICAL)**: You MUST strictly adhere to the Cultivation Branch Flow. Never commit directly to `core`, `zenith`, or `dao`.
 - **See `GIT.md` for the exact branching hierarchy, commands, and rules you must follow before making any code changes.**

@@ -32,7 +32,7 @@ export const MobileHeader: React.FC = () => {
   React.useEffect(() => {
     if (!navScrollRef.current) return;
     const activeEl = navScrollRef.current.querySelector(
-      `[data-section="${activeSection}"]`
+      `[data-section="${activeSection}"]`,
     ) as HTMLElement | null;
     if (activeEl) {
       activeEl.scrollIntoView({
@@ -56,7 +56,7 @@ export const MobileHeader: React.FC = () => {
           "bg-background/60 backdrop-blur-2xl backdrop-saturate-150",
           "border-b border-border/40",
           "transition-all duration-500",
-          isScrolled && "bg-background/80 shadow-sm"
+          isScrolled && "bg-background/80 shadow-sm",
         )}
       >
         <a
@@ -82,7 +82,6 @@ export const MobileHeader: React.FC = () => {
             CV
           </motion.a> */}
 
-
           <ThemeToggle />
         </div>
       </div>
@@ -94,7 +93,7 @@ export const MobileHeader: React.FC = () => {
           "bg-background/50 backdrop-blur-xl backdrop-saturate-125",
           "border-b border-border/30",
           "transition-all duration-500",
-          isScrolled && "bg-background/70"
+          isScrolled && "bg-background/70",
         )}
       >
         <div
@@ -111,7 +110,7 @@ export const MobileHeader: React.FC = () => {
                 "relative flex-shrink-0 px-3 py-1.5 text-xs font-medium rounded-full transition-colors duration-200",
                 activeSection === item.href
                   ? "text-primary font-semibold"
-                  : "text-foreground/55 active:text-foreground/80"
+                  : "text-foreground/55 active:text-foreground/80",
               )}
             >
               {/* Animated pill indicator */}

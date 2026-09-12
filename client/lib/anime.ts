@@ -88,7 +88,7 @@ export const animateEntrance = (
   const startFrame: Keyframe = {
     transform: "translate3d(0, 0, 0)",
     opacity: 0,
-    filter: opts?.blur ? "blur(6px)" : "none"
+    filter: opts?.blur ? "blur(6px)" : "none",
   };
 
   if (opts?.translateY !== undefined) {
@@ -98,7 +98,7 @@ export const animateEntrance = (
   const endFrame: Keyframe = {
     transform: "translate3d(0, 0, 0)",
     opacity: 1,
-    filter: "blur(0px)"
+    filter: "blur(0px)",
   };
 
   if (opts?.scale !== undefined) {
@@ -110,7 +110,7 @@ export const animateEntrance = (
     easing,
     delay: opts?.delay,
     staggerIndex: opts?.staggerIndex,
-    fill: "forwards"
+    fill: "forwards",
   });
 };
 
@@ -127,7 +127,7 @@ export const animateLineDraw = (
   return runAnime(
     el,
     [{ transform: "scaleY(0)" }, { transform: "scaleY(1)" }],
-    { duration, easing, delay: opts?.delay }
+    { duration, easing, delay: opts?.delay },
   );
 };
 
@@ -139,7 +139,7 @@ export const animateStaggeredChildren = (
     translateY?: number;
     duration?: number;
     baseDelay?: number;
-  }
+  },
 ) => {
   if (!parent) return;
   const children = parent.querySelectorAll(selector);
@@ -162,6 +162,5 @@ export default {
   animateLineDraw,
   animateEntrance,
   animateStaggeredChildren,
-  ANIME
+  ANIME,
 };
-

@@ -4,7 +4,6 @@ export const NAV_ITEMS = [
   { label: "Home", href: "#home" },
   { label: "About", href: "#about" },
   { label: "Skills", href: "#skills" },
-  { label: "Education", href: "#education" },
   { label: "Projects", href: "#projects" },
   { label: "Contact", href: "#contact" },
 ];
@@ -28,12 +27,27 @@ export const QUICK_FACTS = [
 ];
 
 export const SKILLS = [
-  "typescript", "react", "node.js",
-  "gsap", "ui animations",
-  "python", "sql", "bash", "zsh",
-  "arch linux", "wsl", "hyprland",
-  "server hosting", "aws", "cloudflare",
-  "git", "neovim", "gnu toolchain"
+  "typescript",
+  "react",
+  "node.js",
+  "gsap",
+  "ui ux",
+  "python",
+  "sql",
+  "bash",
+  "zsh",
+  "arch linux",
+  "wsl",
+  "hyprland",
+  "devops",
+  "sysadmin",
+  "docker",
+  "docker compose",
+  "traefik",
+  "cloudflare tunnels",
+  "crowdsec",
+  "networking",
+  "git",
 ];
 
 export interface EducationEntry {
@@ -46,45 +60,48 @@ export interface EducationEntry {
 
 export const EDUCATION_TIMELINE: EducationEntry[] = [
   {
-    degree: "B.E. Information Technology",
+    degree: "Bachelor of Engineering (B.E.)",
     institution: "SKNCOE (Sinhgad College of Engineering)",
     year: "2024 - Present",
-    highlight: "Currently in 3rd Year. Pursuing degree in Information Technology.",
+    highlight:
+      "currently in 3rd year majoring in information technology (it). coursework heavily focused on software engineering, data structures, and computer networks.",
     current: true,
   },
   {
-    degree: "Higher Secondary Certificate (HSC)",
+    degree: "Higher Secondary Education",
     institution: "MP International",
-    year: "Completed",
-    highlight: "Focused on foundational sciences and mathematics.",
+    year: "2022 - 2024",
+    highlight: "completed higher secondary education with a core specialization in physics, chemistry, and mathematics (pcm), building a strong analytical foundation for engineering.",
   },
   {
-    degree: "Secondary School Certificate (SSC)",
+    degree: "Secondary Education",
     institution: "Millennium National School",
-    year: "Completed",
-    highlight: "Primary and Secondary Education.",
+    year: "2008 - 2022",
+    highlight: "completed secondary education with a strong emphasis on foundational sciences, sparking an early interest in technology and systems architecture.",
   },
 ];
 
 export const PROJECTS = [
   {
-    title: "hyprland dotfiles",
-    role: "System Customization",
+    title: "advanced self-hosted homelab",
+    role: "DevOps & Sysadmin",
     description:
-      "highly customized arch linux wayland setup. features dual color engines (pywal & matugen), a live 60fps audio visualizer (cava) with gpu glsl shaders, and a fully riced notification center.",
+      "highly automated, secure infrastructure hosting 30+ microservices. built entirely on docker compose with traefik. features scale-to-zero optimization, zero-trust remote access via cloudflare tunnels, and real-time threat defense with crowdsec ips.",
   },
+
   {
-    title: "mechanical movements",
-    role: "Front-end Developer",
+    title: "dynamic hyprland desktop environment",
+    role: "Linux Systems Architect",
     description:
-      "interactive, scroll-driven presentation of classical mechanical movements. built from scratch with react, gsap, and animated svgs.",
+      "heavily scripted, custom desktop environment built on arch linux and the hyprland compositor. features a real-time dual-color engine using pywal and matugen for system-wide theming. engineered custom ui components including a 60fps audio-visualizing waybar, modal rofi menus, and custom bash automation.",
   },
+
   {
-    title: "deveshg.dev",
+    title: "interactive personal portfolio",
     role: "Full Stack Developer",
     description:
-      "full-stack portfolio and personal server environment. built with react and node.js. functions as a live sandbox for web deployments and server-side experiments.",
-  }
+      "high-performance, full-stack portfolio engineered with react, typescript, and node.js. deployed natively on my self-hosted infrastructure, functioning as a continuous integration sandbox for web deployments and backend experiments.",
+  },
 ];
 
 export const CONTACT_LINKS = [
@@ -94,10 +111,15 @@ export const CONTACT_LINKS = [
     icon: "github",
   },
   {
+    label: "Google Developer",
+    href: "https://g.dev/DeveshGhuge",
+    icon: "google",
+  },
+  {
     label: "Email",
-    href: "mailto:dcghuge167@gmail.com",
+    href: "mailto:contact@deveshg.dev",
     icon: "mail",
-  }
+  },
 ];
 
 // Provide a placeholder image URL for now
@@ -110,8 +132,9 @@ export const BIO_DATA = {
     "hey, i'm devesh — a third-year IT engineering student from pune. i focus heavily on full-stack web architectures and linux systems customization.",
   fullBio: [
     "hey, i'm devesh — a third-year IT engineering student at skncoe, pune.",
-    "i spend most of my time building interactive web applications and working with systems customization. my core stack is typescript, react, and node.js, often paired with gsap and svgs for physics-based ui animations.",
-    "my daily workflow lives entirely in open source — arch linux, hyprland, waybar, and the gnu/linux toolchain. when i'm not writing code, i'm usually ricing a linux box, writing custom glsl shaders, or experimenting with server hosting."
+    "i operate at the intersection of systems architecture and full-stack web development. my core web stack is typescript, react, and node.js, often paired with gsap for highly fluid, physics-based user interfaces.",
+    "my daily workflow is rooted entirely in open source. i use arch linux as my daily driver, where i've heavily customized and scripted my own wayland-based desktop environment (hyprland) using bash and dynamic theming engines.",
+    "when i'm not writing frontend code or tweaking my system, i'm architecting my own self-hosted infrastructure. i have a deep passion for devops, networking, and server administration, utilizing tools like docker compose, traefik, and cloudflare tunnels to build secure, zero-trust environments.",
   ],
 };
 

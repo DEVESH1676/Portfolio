@@ -5,11 +5,31 @@ import { MobileHeader } from "@/components/layout/MobileHeader";
 import { HeroSection } from "@/components/sections/Hero";
 
 // Lazy-load below-the-fold sections for faster initial paint
-const AboutSection = React.lazy(() => import("@/components/sections/About").then(m => ({ default: m.AboutSection })));
-const SkillsSection = React.lazy(() => import("@/components/sections/Skills").then(m => ({ default: m.SkillsSection })));
-const EducationSection = React.lazy(() => import("@/components/sections/Education").then(m => ({ default: m.EducationSection })));
-const ProjectsSection = React.lazy(() => import("@/components/sections/Projects").then(m => ({ default: m.ProjectsSection })));
-const ContactSection = React.lazy(() => import("@/components/sections/Contact").then(m => ({ default: m.ContactSection })));
+const AboutSection = React.lazy(() =>
+  import("@/components/sections/About").then((m) => ({
+    default: m.AboutSection,
+  })),
+);
+const SkillsSection = React.lazy(() =>
+  import("@/components/sections/Skills").then((m) => ({
+    default: m.SkillsSection,
+  })),
+);
+const EducationSection = React.lazy(() =>
+  import("@/components/sections/Education").then((m) => ({
+    default: m.EducationSection,
+  })),
+);
+const ProjectsSection = React.lazy(() =>
+  import("@/components/sections/Projects").then((m) => ({
+    default: m.ProjectsSection,
+  })),
+);
+const ContactSection = React.lazy(() =>
+  import("@/components/sections/Contact").then((m) => ({
+    default: m.ContactSection,
+  })),
+);
 
 export default function Index() {
   return (
@@ -21,7 +41,6 @@ export default function Index() {
         <Suspense fallback={null}>
           <AboutSection />
           <SkillsSection />
-          <EducationSection />
           <ProjectsSection />
           <ContactSection />
         </Suspense>

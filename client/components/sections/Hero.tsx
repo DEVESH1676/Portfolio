@@ -1,17 +1,14 @@
-import {
-  DOWNLOAD_CV_URL,
-  BIO_DATA,
-} from "@/data/portfolio";
+import { DOWNLOAD_CV_URL, BIO_DATA } from "@/data/portfolio";
 import * as React from "react";
 import { Button } from "@/components/ui/button";
 import Container from "@/components/ui/container";
 import { animateEntrance, ANIME } from "@/lib/anime";
 import { NeuralBackground } from "@/components/ui/NeuralBackground";
-import { motion } from "framer-motion";
-import { Download } from "lucide-react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { PixelName } from "@/components/ui/PixelName";
 
 export const HeroSection = () => {
+  const sectionRef = React.useRef<HTMLElement>(null);
   const titleRef = React.useRef<HTMLDivElement | null>(null);
   const subtitle1Ref = React.useRef<HTMLParagraphElement | null>(null);
   const subtitle2Ref = React.useRef<HTMLParagraphElement | null>(null);
@@ -28,7 +25,16 @@ export const HeroSection = () => {
   React.useEffect(() => {
     // Date Init
     const d = new Date();
-    setDateStr(d.toLocaleDateString('en-US', { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase());
+    setDateStr(
+      d
+        .toLocaleDateString("en-US", {
+          weekday: "short",
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+        })
+        .toUpperCase(),
+    );
 
     // Premium Academic Staggered Entrance
 
@@ -63,8 +69,6 @@ export const HeroSection = () => {
         blur: true,
       });
 
-
-
     if (ctasRef.current)
       animateEntrance(ctasRef.current, {
         translateY: 12,
@@ -98,16 +102,19 @@ export const HeroSection = () => {
   }, []);
 
   return (
-    <section id="home" className="section-base relative flex min-h-[92vh] flex-col justify-center items-center overflow-hidden pt-24 pb-16 md:pt-28 md:pb-20">
+    <section
+      ref={sectionRef}
+      id="home"
+      className="section-base relative flex min-h-[83vh] flex-col justify-center items-center overflow-hidden py-24"
+    >
       {/* Date moved to Navbar to guarantee perfect vertical alignment */}
 
       <div className="hero-glow" />
       <NeuralBackground />
 
-      <Container className="relative z-10">
+      <div className="relative z-10 w-full px-4 md:px-8 flex flex-col items-center">
         {/* ─── Mobile Hero Action Row ─── */}
         <div className="flex md:hidden items-center justify-center gap-4 mb-6">
-
           {/* Action Buttons — Stacked */}
           <div className="flex flex-col gap-2 flex-1 min-w-0">
             {/* <motion.a
@@ -126,78 +133,22 @@ export const HeroSection = () => {
         </div>
 
         {/* ─── Desktop Layout ─── */}
-        <div className="hidden md:flex flex-col items-center justify-center">
+        <div className="hidden md:flex flex-col items-center justify-center w-full">
           {/* Text Section */}
-          <div className="w-full max-w-3xl flex flex-col items-center text-center">
-            <span
-              ref={badgeRef}
-              className="inline-flex items-center rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-primary mb-10 opacity-0"
-            >
-              Portfolio
-            </span>
-
+          <div className="w-full max-w-7xl flex flex-col items-center text-center">
             <div ref={titleRef} className="w-full flex justify-center">
               <PixelName />
-            </div>
-
-            <p
-              ref={subtitle1Ref}
-              className="mt-2 text-lg font-medium text-primary md:text-xl opacity-0"
-            >
-              {BIO_DATA.role}
-            </p>
-
-            <p
-              ref={subtitle2Ref}
-              className="mt-4 max-w-2xl text-foreground/80 md:text-lg opacity-0 leading-relaxed"
-            >
-              {BIO_DATA.shortBio}
-            </p>
-
-            <div
-              ref={ctasRef}
-              className="mt-10 flex flex-wrap items-center gap-4 justify-center opacity-0"
-            >
-              <Button asChild size="lg" className="h-auto py-3 px-6 md:h-11 md:px-8 text-base">
-                <a href="#projects" className="btn-cta">
-                  View Projects
-                </a>
-              </Button>
-              {/* <Button asChild variant="outline" size="lg" className="h-auto py-3 px-6 md:h-11 md:px-8 text-base">
-                <a
-                  href={DOWNLOAD_CV_URL}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="btn-cta"
-                >
-                  Download CV
-                </a>
-              </Button> */}
             </div>
           </div>
         </div>
 
         {/* ─── Mobile Text Content (no animation refs — renders immediately) ─── */}
         <div className="md:hidden text-center w-full overflow-hidden">
-          <span
-            className="inline-flex items-center rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-primary mb-6"
-          >
-            Portfolio
-          </span>
-
           <div className="w-full flex justify-center scale-90 transform origin-center my-2">
             <PixelName />
           </div>
-
-          <p className="mt-2 text-base font-medium text-primary">
-            {BIO_DATA.role}
-          </p>
-
-          <p className="mt-4 text-sm text-foreground/80 leading-relaxed">
-            {BIO_DATA.shortBio}
-          </p>
         </div>
-      </Container>
+      </div>
     </section>
   );
 };

@@ -36,7 +36,10 @@ export const PixelName: React.FC = () => {
       if (!raw) return;
       cachedPrimaryHsl = raw.includes("%")
         ? raw
-        : raw.split(" ").map((v, i) => (i === 0 ? v : v + "%")).join(" ");
+        : raw
+            .split(" ")
+            .map((v, i) => (i === 0 ? v : v + "%"))
+            .join(" ");
     };
 
     readPrimary();
@@ -73,8 +76,10 @@ export const PixelName: React.FC = () => {
       const imgData = offCtx.getImageData(0, 0, rawWidth, rawHeight).data;
 
       const stride = 1;
-      let minX = Infinity, maxX = -Infinity;
-      let minY = Infinity, maxY = -Infinity;
+      let minX = Infinity,
+        maxX = -Infinity;
+      let minY = Infinity,
+        maxY = -Infinity;
       const rawPoints: { gx: number; gy: number }[] = [];
 
       for (let y = 0; y < rawHeight; y += stride) {
@@ -124,8 +129,16 @@ export const PixelName: React.FC = () => {
 
     const handleResize = () => {
       const parent = canvas.parentElement;
-      const parentWidth = parent?.clientWidth || window.innerWidth;
-      const displayWidth = Math.max(280, Math.min(parentWidth, 750));
+      const viewportWidth = window.innerWidth;
+      const isMobile = viewportWidth < 768;
+
+      // Scale it down to feel more balanced: 85vw on mobile, 60vw on desktop
+      const balancedWidth = isMobile
+        ? viewportWidth * 0.85
+        : viewportWidth * 0.6;
+
+      // Cap at 1200px to ensure it doesn't get overwhelmingly large on wide monitors
+      const displayWidth = Math.max(280, Math.min(balancedWidth, 1200));
 
       const targetWidth = displayWidth * 0.96;
       const cellPitch = targetWidth / Math.max(1, sampledTextWidth);
@@ -176,7 +189,9 @@ export const PixelName: React.FC = () => {
         // Get canvas offset relative to the section (NeuralBackground canvas space)
         const canvasRect = canvas.getBoundingClientRect();
         const section = canvas.closest("section");
-        const sectionRect = section ? section.getBoundingClientRect() : canvasRect;
+        const sectionRect = section
+          ? section.getBoundingClientRect()
+          : canvasRect;
         const toSectionX = canvasRect.left - sectionRect.left;
         const toSectionY = canvasRect.top - sectionRect.top;
 
@@ -199,7 +214,7 @@ export const PixelName: React.FC = () => {
           let magX = 0;
           let magY = 0;
           if (r < influenceRadius && r > 0.001) {
-            const q = 1 - (r / influenceRadius);
+            const q = 1 - r / influenceRadius;
             p.activity = Math.min(p.activity + q * 0.25, 1);
 
             // Gentle magnetic attraction towards cursor (collects towards mouse)
@@ -218,9 +233,12 @@ export const PixelName: React.FC = () => {
           // Check if any actual background neural node is passing behind this exact dot
           for (let n = 0; n < sharedNeuralNodes.length; n++) {
             const node = sharedNeuralNodes[n];
-            const dist = Math.hypot(node.x - globalParticleX, node.y - globalParticleY);
+            const dist = Math.hypot(
+              node.x - globalParticleX,
+              node.y - globalParticleY,
+            );
             if (dist < 26) {
-              const boost = (1 - dist / 26);
+              const boost = 1 - dist / 26;
               // Flash bright on passage
               p.flashIntensity = Math.max(p.flashIntensity, boost);
             }
@@ -247,7 +265,7 @@ export const PixelName: React.FC = () => {
             curX - blockSize / 2,
             curY - blockSize / 2,
             blockSize,
-            blockSize
+            blockSize,
           );
         }
       }
@@ -288,10 +306,7 @@ export const PixelName: React.FC = () => {
 
   return (
     <div className="w-full flex justify-center items-center my-1 overflow-hidden">
-      <canvas
-        ref={canvasRef}
-        className="cursor-crosshair block"
-      />
+      <canvas ref={canvasRef} className="cursor-crosshair block" />
     </div>
   );
 };
