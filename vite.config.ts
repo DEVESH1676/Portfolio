@@ -6,7 +6,7 @@ import path from "node:path";
 import { createServer } from "./server/index";
 
 export default defineConfig(({ command, mode: _mode }) => ({
-  base: command === "build" ? "/Portfolio/" : "/",
+  base: "/",
   server: {
     host: "::",
     port: 8080,
