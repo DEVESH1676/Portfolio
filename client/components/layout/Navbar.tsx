@@ -99,7 +99,7 @@ export const Navbar = () => {
         <div className="flex items-center gap-2 md:ml-4 lg:ml-6 md:mr-1">
           <div className="hidden md:flex items-center gap-2">
             {/* Holographic CV Button (Compact on MD) */}
-            <motion.a
+            {/* <motion.a
               href={DOWNLOAD_CV_URL}
               target="_blank"
               rel="noreferrer"
@@ -114,7 +114,7 @@ export const Navbar = () => {
                   CV
                 </span>
               </div>
-            </motion.a>
+            </motion.a> */}
           </div>
 
           <div className="pl-2 border-l border-border/20 ml-2 hidden md:block">

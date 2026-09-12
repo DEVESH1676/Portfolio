@@ -102,7 +102,7 @@ export const HeroSection = () => {
 
           {/* Action Buttons — Stacked */}
           <div className="flex flex-col gap-2 flex-1 min-w-0">
-            <motion.a
+            {/* <motion.a
               href={DOWNLOAD_CV_URL}
               target="_blank"
               rel="noreferrer"
@@ -113,7 +113,7 @@ export const HeroSection = () => {
             >
               <Download className="h-3.5 w-3.5 text-primary" />
               Download CV
-            </motion.a>
+            </motion.a> */}
           </div>
         </div>
 
@@ -155,7 +155,7 @@ export const HeroSection = () => {
                   View Projects
                 </a>
               </Button>
-              <Button asChild variant="outline" size="lg" className="h-auto py-3 px-6 md:h-11 md:px-8 text-base">
+              {/* <Button asChild variant="outline" size="lg" className="h-auto py-3 px-6 md:h-11 md:px-8 text-base">
                 <a
                   href={DOWNLOAD_CV_URL}
                   target="_blank"
@@ -164,7 +164,7 @@ export const HeroSection = () => {
                 >
                   Download CV
                 </a>
-              </Button>
+              </Button> */}
             </div>
           </div>
         </div>

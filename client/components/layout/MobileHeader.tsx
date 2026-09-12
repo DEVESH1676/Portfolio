@@ -69,7 +69,7 @@ export const MobileHeader: React.FC = () => {
 
         <div className="flex items-center gap-3">
           {/* Compact CV button */}
-          <motion.a
+          {/* <motion.a
             href={DOWNLOAD_CV_URL}
             target="_blank"
             rel="noreferrer"
@@ -80,7 +80,7 @@ export const MobileHeader: React.FC = () => {
           >
             <Download className="h-3 w-3" />
             CV
-          </motion.a>
+          </motion.a> */}
 
 
           <ThemeToggle />
