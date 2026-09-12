@@ -62,6 +62,7 @@ export default {
         heading: ["Satoshi", "sans-serif"],
         body: ["Inter", "sans-serif"],
         sans: ["Inter", "sans-serif"],
+        mono: ['"JetBrains Mono"', "monospace"],
       },
       borderRadius: {
         lg: "var(--radius)",

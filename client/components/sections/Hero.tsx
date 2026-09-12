@@ -23,7 +23,13 @@ export const HeroSection = () => {
   // Mobile refs (separate to avoid conflict with desktop)
   const mobileImgRef = React.useRef<HTMLDivElement | null>(null);
 
+  const [dateStr, setDateStr] = React.useState("");
+
   React.useEffect(() => {
+    // Date Init
+    const d = new Date();
+    setDateStr(d.toLocaleDateString('en-US', { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase());
+
     // Premium Academic Staggered Entrance
 
     if (badgeRef.current)
@@ -93,6 +99,8 @@ export const HeroSection = () => {
 
   return (
     <section id="home" className="section-base relative flex min-h-[92vh] flex-col justify-center items-center overflow-hidden pt-24 pb-16 md:pt-28 md:pb-20">
+      {/* Date moved to Navbar to guarantee perfect vertical alignment */}
+
       <div className="hero-glow" />
       <NeuralBackground />
 
@@ -123,9 +131,9 @@ export const HeroSection = () => {
           <div className="w-full max-w-3xl flex flex-col items-center text-center">
             <span
               ref={badgeRef}
-              className="inline-flex items-center rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-primary mb-2 opacity-0"
+              className="inline-flex items-center rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-primary mb-10 opacity-0"
             >
-              Full Stack Developer Portfolio
+              Portfolio
             </span>
 
             <div ref={titleRef} className="w-full flex justify-center">
@@ -148,7 +156,7 @@ export const HeroSection = () => {
 
             <div
               ref={ctasRef}
-              className="mt-6 flex flex-wrap items-center gap-4 justify-center opacity-0"
+              className="mt-10 flex flex-wrap items-center gap-4 justify-center opacity-0"
             >
               <Button asChild size="lg" className="h-auto py-3 px-6 md:h-11 md:px-8 text-base">
                 <a href="#projects" className="btn-cta">
@@ -172,9 +180,9 @@ export const HeroSection = () => {
         {/* ─── Mobile Text Content (no animation refs — renders immediately) ─── */}
         <div className="md:hidden text-center w-full overflow-hidden">
           <span
-            className="inline-flex items-center rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-primary mb-3"
+            className="inline-flex items-center rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-primary mb-6"
           >
-            Full Stack Developer Portfolio
+            Portfolio
           </span>
 
           <div className="w-full flex justify-center scale-90 transform origin-center my-2">

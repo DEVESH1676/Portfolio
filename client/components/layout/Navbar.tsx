@@ -9,9 +9,13 @@ import { useActiveSection } from "@/hooks/use-active-section";
 export const Navbar = () => {
   const [activeSection, setActiveSection] = useActiveSection();
   const [isScrolled, setIsScrolled] = React.useState(false);
+  const [dateStr, setDateStr] = React.useState("");
 
   // Scroll Detection
   React.useEffect(() => {
+    const d = new Date();
+    setDateStr(d.toLocaleDateString('en-US', { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase());
+
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
@@ -27,97 +31,86 @@ export const Navbar = () => {
   return (
     <header
       className={cn(
-        "fixed z-50 transition-all duration-500 ease-spring",
-        // Hidden on mobile (MobileHeader handles it)
-        "hidden md:block",
-        // Desktop: Floating Glass Pill Position (Refined)
-        "inset-x-0 top-0 md:inset-x-auto md:left-1/2 md:-translate-x-1/2 md:w-auto md:max-w-[95%] xl:max-w-7xl",
-        isScrolled ? "md:top-3" : "md:top-6"
+        "fixed z-50 inset-x-0 pointer-events-none transition-all duration-500 ease-spring hidden md:flex items-center justify-center",
+        isScrolled ? "top-3" : "top-6"
       )}
     >
+      {/* Far Left Date - Perfectly vertically aligned by flex items-center of header */}
+      {dateStr && (
+        <div className={cn(
+          "absolute left-6 lg:left-10 pointer-events-auto transition-opacity duration-500",
+          isScrolled ? "opacity-0 pointer-events-none" : "opacity-100"
+        )}>
+          <span className="text-xs font-mono text-muted-foreground/50 tracking-[0.2em]">{dateStr}</span>
+        </div>
+      )}
+
+      {/* Floating Navbar Pill */}
       <div
         className={cn(
-          "flex items-center justify-between px-4 lg:px-6 transition-all duration-500 ease-spring",
-          // Desktop Container Style (The Morphing Object)
-          "md:rounded-full md:border",
+          "pointer-events-auto flex items-center px-4 lg:px-6 transition-all duration-500 ease-spring rounded-full border w-auto max-w-[95%] xl:max-w-7xl",
           isScrolled
-            ? "py-2 md:bg-background/50 md:backdrop-blur-2xl md:backdrop-saturate-150 md:shadow-lg md:border-border/60" // Scrolled (Elite Glass)
-            : "py-3 md:bg-transparent md:backdrop-blur-none md:shadow-none md:border-transparent" // Top
+            ? "py-2 bg-background/50 backdrop-blur-2xl backdrop-saturate-150 shadow-lg border-border/60" // Scrolled (Elite Glass)
+            : "py-3 bg-transparent backdrop-blur-none shadow-none border-transparent" // Top
         )}
       >
         {/* LOGO (Left - Animated) */}
-        <motion.a
-          href="#home"
-          initial={{ letterSpacing: "-0.02em" }}
-          whileHover={{
-            letterSpacing: "0.02em",
-            textShadow: "0 0 20px rgba(var(--primary), 0.5)"
-          }}
-          transition={{ duration: 0.3 }}
-          className="font-heading text-lg font-bold tracking-tight text-foreground md:ml-4 md:mr-6 whitespace-nowrap cursor-pointer"
-        >
-          Devesh Ghuge
-        </motion.a>
+        <div className="flex-1 flex justify-start items-center">
+          <motion.a
+            href="#home"
+            initial={{ letterSpacing: "-0.02em" }}
+            whileHover={{
+              letterSpacing: "0.05em",
+              textShadow: "0 0 20px rgba(var(--primary), 0.5)"
+            }}
+            transition={{ duration: 0.3 }}
+            className="font-heading text-lg font-bold tracking-tight text-foreground md:ml-4 md:mr-6 whitespace-nowrap cursor-pointer"
+          >
+            Devesh Ghuge
+          </motion.a>
+        </div>
 
         {/* DESKTOP NAV (Center - Framer Motion Pill) */}
-        <nav className="hidden md:flex items-center gap-1 p-1">
+        <div className="flex-none flex justify-center">
+          <nav className="hidden md:flex items-center gap-1 p-1">
 
 
-          {NAV_ITEMS.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              onClick={() => handleNavClick(item.href)}
-              className={cn(
-                "relative group px-3 lg:px-5 py-2 text-sm font-medium transition-colors duration-300 rounded-full cursor-pointer",
-                activeSection === item.href
-                  ? "text-primary font-semibold"
-                  : "text-foreground/70 hover:text-foreground"
-              )}
-            >
-              {activeSection === item.href && (
-                <motion.div
-                  layoutId="navbar-pill"
-                  className="absolute inset-0 bg-primary/10 rounded-full -z-10 shadow-[0_0_10px_rgba(var(--primary),0.2)]"
-                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                />
-              )}
-              {/* Text Expansion Effect */}
-              <motion.span
-                initial={{ letterSpacing: "0em" }}
-                animate={{ letterSpacing: activeSection === item.href ? "0.15em" : "0em" }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
-                className="inline-block whitespace-nowrap"
+            {NAV_ITEMS.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                onClick={() => handleNavClick(item.href)}
+                className={cn(
+                  "relative group px-3 lg:px-5 py-2 text-xs font-mono uppercase transition-colors duration-300 rounded-full cursor-pointer",
+                  activeSection === item.href
+                    ? "text-primary font-bold"
+                    : "text-foreground/70 hover:text-foreground font-medium"
+                )}
               >
-                {item.label}
-              </motion.span>
-            </a>
-          ))}
-        </nav>
+                {activeSection === item.href && (
+                  <motion.div
+                    layoutId="navbar-pill"
+                    className="absolute inset-0 bg-primary/10 rounded-full -z-10 shadow-[0_0_10px_rgba(var(--primary),0.2)]"
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  />
+                )}
+                {/* Text Expansion Effect */}
+                <motion.span
+                  initial={{ letterSpacing: "0.1em" }}
+                  animate={{ letterSpacing: activeSection === item.href ? "0.25em" : "0.1em" }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  className="inline-block whitespace-nowrap"
+                >
+                  {item.label}
+                </motion.span>
+              </a>
+            ))}
+          </nav>
+        </div>
 
         {/* ACTIONS (Right) */}
-        <div className="flex items-center gap-2 md:ml-4 lg:ml-6 md:mr-1">
-          <div className="hidden md:flex items-center gap-2">
-            {/* Holographic CV Button (Compact on MD) */}
-            {/* <motion.a
-              href={DOWNLOAD_CV_URL}
-              target="_blank"
-              rel="noreferrer"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="relative group p-[1px] rounded-full transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] hover:shadow-[0_0_24px_-8px_rgba(var(--primary),0.6)] cursor-pointer"
-            >
-              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary via-violet-500 to-primary bg-[length:400%_400%] animate-gradient-xy opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative flex items-center justify-center bg-background/95 group-hover:bg-background/90 rounded-full px-3 lg:px-5 py-2 h-9 transition-colors">
-                <span className="font-medium flex items-center gap-2 text-sm text-foreground/90 group-hover:text-primary transition-colors">
-                  <Download className="h-3.5 w-3.5 text-primary group-hover:rotate-12 transition-transform duration-300" />
-                  CV
-                </span>
-              </div>
-            </motion.a> */}
-          </div>
-
-          <div className="pl-2 border-l border-border/20 ml-2 hidden md:block">
+        <div className="flex-1 flex justify-end items-center md:ml-4 lg:ml-6 md:mr-1">
+          <div className="hidden md:block">
             <ThemeToggle />
           </div>
 

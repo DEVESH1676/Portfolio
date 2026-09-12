@@ -33,30 +33,29 @@ export const ThemeToggle: React.FC = () => {
   }, [isDark]);
 
   return (
-    <div
+    <button
       onClick={() => setIsDark(!isDark)}
-      className="relative bg-muted/20 border border-primary/10 rounded-full h-9 w-[72px] cursor-pointer transition-colors hover:border-primary/30 hover:bg-muted/30"
-      role="button"
+      className="relative flex shrink-0 items-center justify-between bg-muted/20 border border-primary/10 rounded-full h-9 w-[96px] p-[3px] cursor-pointer transition-colors hover:border-primary/30 hover:bg-muted/30"
       aria-label="Toggle theme"
     >
-      {/* Sliding Pill Background */}
+      {/* Dynamic Sliding Box (Segmented Control) */}
       <div
-        className="absolute top-1 left-1 w-7 h-7 bg-background shadow-sm border border-border/50 rounded-full transition-all duration-500 ease-spring"
-        style={{ transform: isDark ? "translateX(36px)" : "translateX(0px)" }}
+        className={cn(
+          "absolute top-[3px] h-[calc(100%-6px)] w-[calc(50%-3px)] bg-background shadow-sm border border-border/50 rounded-full transition-all duration-500 ease-spring",
+          isDark ? "left-[50%]" : "left-[3px]"
+        )}
       />
 
-      {/* Sun Icon (Light Mode Position) */}
-      <div className={cn("absolute top-1 left-1 z-10 h-7 w-7 flex items-center justify-center rounded-full transition-colors duration-300", !isDark ? "text-amber-500" : "text-muted-foreground/40")}>
+      {/* Sun Icon */}
+      <div className={cn("relative z-10 flex h-full flex-1 items-center justify-center rounded-full transition-colors duration-300", !isDark ? "text-amber-500" : "text-muted-foreground/40")}>
         <Sun className="h-4 w-4" />
       </div>
 
-      {/* Moon Icon (Dark Mode Position) */}
-      <div className={cn("absolute top-1 right-1 z-10 h-7 w-7 flex items-center justify-center rounded-full transition-colors duration-300", isDark ? "text-blue-500" : "text-muted-foreground/40")}>
+      {/* Moon Icon */}
+      <div className={cn("relative z-10 flex h-full flex-1 items-center justify-center rounded-full transition-colors duration-300", isDark ? "text-blue-500" : "text-muted-foreground/40")}>
         <Moon className="h-4 w-4" />
       </div>
-
-      <span className="sr-only">Toggle theme</span>
-    </div>
+    </button>
   );
 };
 

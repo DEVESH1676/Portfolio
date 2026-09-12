@@ -10,6 +10,8 @@ import { NAV_ITEMS } from "@/data/portfolio";
  */
 export function useActiveSection(): [string, (href: string) => void] {
   const [activeSection, setActiveSection] = React.useState<string>("#home");
+  const isManualRef = React.useRef(false);
+  const timeoutRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const observerEntries = React.useMemo(
     () =>
@@ -20,8 +22,19 @@ export function useActiveSection(): [string, (href: string) => void] {
     []
   );
 
+  const setSectionManual = React.useCallback((href: string) => {
+    setActiveSection(href);
+    isManualRef.current = true;
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    timeoutRef.current = setTimeout(() => {
+      isManualRef.current = false;
+    }, 1000);
+  }, []);
+
   React.useEffect(() => {
     const handleActiveSection = () => {
+      if (isManualRef.current) return;
+
       const scrollY = window.scrollY;
       const offset = window.innerHeight * 0.35;
 
@@ -47,5 +60,5 @@ export function useActiveSection(): [string, (href: string) => void] {
     return () => window.removeEventListener("scroll", handleActiveSection);
   }, [observerEntries]);
 
-  return [activeSection, setActiveSection];
+  return [activeSection, setSectionManual];
 }

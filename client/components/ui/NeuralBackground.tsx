@@ -141,21 +141,34 @@ export const NeuralBackground: React.FC = () => {
       }
     };
 
+    // ── Intersection Observer for Performance ──
+    let isVisible = true;
+    const visibilityObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        isVisible = entry.isIntersecting;
+      });
+    }, { threshold: 0 });
+
+    if (canvas.parentElement) {
+      visibilityObserver.observe(canvas.parentElement);
+    }
+
     // ── Draw loop ──
     const draw = () => {
       if (!running) return;
 
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      if (isVisible) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      const primaryColor = cachedPrimaryColor;
-      const nodeBaseOpacity = 0.68;
+        const primaryColor = cachedPrimaryColor;
+        const nodeBaseOpacity = 0.68;
 
-      ctx.lineWidth = 1.35;
+        ctx.lineWidth = 1.35;
 
-      // 1. Update node physics & clear connection lists
-      for (let i = 0; i < nodes.length; i++) {
-        const node = nodes[i];
-        node.connections = [];
+        // 1. Update node physics & clear connection lists
+        for (let i = 0; i < nodes.length; i++) {
+          const node = nodes[i];
+          node.connections = [];
 
         if (!prefersReducedMotion) {
           node.originX += node.vx;
@@ -392,6 +405,7 @@ export const NeuralBackground: React.FC = () => {
           }
         }
       }
+      }
 
       animationFrameId = requestAnimationFrame(draw);
     };
@@ -411,12 +425,14 @@ export const NeuralBackground: React.FC = () => {
 
     const resizeObserver = new ResizeObserver(() => resize());
 
-    if (canvas.parentElement) {
-      resizeObserver.observe(canvas.parentElement);
-    }
+    const parent = canvas.parentElement;
 
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("mouseleave", handleMouseLeave);
+    if (parent) {
+      resizeObserver.observe(parent);
+      visibilityObserver.observe(parent);
+      parent.addEventListener("mousemove", handleMouseMove);
+      parent.addEventListener("mouseleave", handleMouseLeave);
+    }
 
     resize();
     draw();
@@ -424,9 +440,12 @@ export const NeuralBackground: React.FC = () => {
     return () => {
       running = false;
       resizeObserver.disconnect();
+      visibilityObserver.disconnect();
       themeObserver.disconnect();
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("mouseleave", handleMouseLeave);
+      if (parent) {
+        parent.removeEventListener("mousemove", handleMouseMove);
+        parent.removeEventListener("mouseleave", handleMouseLeave);
+      }
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
@@ -435,6 +454,10 @@ export const NeuralBackground: React.FC = () => {
     <canvas
       ref={canvasRef}
       className="absolute inset-0 w-full h-full z-0 pointer-events-none"
+      style={{
+        maskImage: "linear-gradient(to bottom, transparent 0%, black 12%, black 100%)",
+        WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 12%, black 100%)",
+      }}
     />
   );
 };
