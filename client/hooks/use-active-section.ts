@@ -45,12 +45,34 @@ export function useActiveSection(): [string, (href: string) => void] {
       { rootMargin: "-35% 0px -65% 0px" }
     );
 
-    observerEntries.forEach((entry) => {
-      const el = document.getElementById(entry.id);
-      if (el) observer.observe(el);
-    });
+    let timeoutId: ReturnType<typeof setTimeout>;
+    const observed = new Set<string>();
 
-    return () => observer.disconnect();
+    const observeElements = () => {
+      let missing = false;
+      observerEntries.forEach((entry) => {
+        if (observed.has(entry.id)) return;
+        
+        const el = document.getElementById(entry.id);
+        if (el) {
+          observer.observe(el);
+          observed.add(entry.id);
+        } else {
+          missing = true;
+        }
+      });
+      
+      if (missing) {
+        timeoutId = setTimeout(observeElements, 100);
+      }
+    };
+
+    observeElements();
+
+    return () => {
+      clearTimeout(timeoutId);
+      observer.disconnect();
+    };
   }, [observerEntries]);
 
   return [activeSection, setSectionManual];
