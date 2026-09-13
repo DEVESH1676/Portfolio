@@ -4,7 +4,6 @@ import cors from "cors";
 import helmet from "helmet";
 import { handleDemo } from "./routes/demo";
 import { handleTrackEvent } from "./routes/analytics";
-import { ContactRequestSchema } from "../shared/api";
 
 export function createServer() {
   const app = express();
@@ -29,7 +28,6 @@ export function createServer() {
           styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://api.fontshare.com"],
           scriptSrc: ["'self'", "'unsafe-inline'", "https://cloud.umami.is"],
           imgSrc: ["'self'", "data:", "https://"],
-          connectSrc: ["'self'", "https://api.web3forms.com"],
         },
       },
     })
@@ -58,44 +56,6 @@ export function createServer() {
 
   app.get("/api/demo", handleDemo);
   app.post("/api/analytics", handleTrackEvent);
-
-  app.post("/api/contact", async (req, res) => {
-    try {
-      const data = ContactRequestSchema.parse(req.body);
-      console.log(
-        `[Contact] Message from ${data.name} (${data.email}): ${data.message}`,
-      );
-
-      const WEB3FORMS_ACCESS_KEY = process.env.WEB3FORMS_ACCESS_KEY || "YOUR_WEB3FORMS_ACCESS_KEY";
-
-      const response = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({
-          access_key: WEB3FORMS_ACCESS_KEY,
-          name: data.name,
-          email: data.email,
-          subject: data.subject || "Portfolio Enquiry",
-          message: data.message,
-          from_name: "Devesh's Portfolio",
-        }),
-      });
-
-      const result = await response.json();
-
-      if (response.ok && result.success) {
-        res.json({ success: true, message: "Message received" });
-      } else {
-        throw new Error(result.message || "Failed to send via Web3Forms");
-      }
-    } catch (error) {
-      console.error("[Contact API Error]", error);
-      res.status(400).json({ success: false, error: "Invalid payload or delivery failed" });
-    }
-  });
 
   return app;
 }

@@ -1,85 +1,20 @@
 import * as React from "react";
-import { animateEntrance, ANIME } from "@/lib/anime";
+import { animateEntrance } from "@/lib/anime";
 import { NeuralBackground } from "@/components/ui/NeuralBackground";
 import { PixelName } from "@/components/ui/PixelName";
 
 export const HeroSection = () => {
   const sectionRef = React.useRef<HTMLElement>(null);
   const titleRef = React.useRef<HTMLDivElement | null>(null);
-  const subtitle1Ref = React.useRef<HTMLParagraphElement | null>(null);
-  const subtitle2Ref = React.useRef<HTMLParagraphElement | null>(null);
-
-  const ctasRef = React.useRef<HTMLDivElement | null>(null);
-  const badgeRef = React.useRef<HTMLDivElement | null>(null);
-  const imgRef = React.useRef<HTMLDivElement | null>(null);
-
-  // Mobile refs (separate to avoid conflict with desktop)
-  const mobileImgRef = React.useRef<HTMLDivElement | null>(null);
 
   React.useEffect(() => {
     // Premium Academic Staggered Entrance
-
-    if (badgeRef.current)
-      animateEntrance(badgeRef.current, {
-        scale: 1, // Start small handled by CSS or generic entrance? Entrance default is 0.8->1 if scale provided.
-        // Actually animateEntrance logic: if scale provided, it animates from 0.8 to scale.
-        // Let's just use defaults mostly.
-        duration: 800,
-        delay: 0,
-        easing: ANIME.premiumEasing,
-      });
-
     if (titleRef.current)
       animateEntrance(titleRef.current, {
         translateY: 32,
         staggerIndex: 1, // 100ms
         blur: true,
       });
-
-    if (subtitle1Ref.current)
-      animateEntrance(subtitle1Ref.current, {
-        translateY: 24,
-        staggerIndex: 2, // 200ms
-        blur: true,
-      });
-
-    if (subtitle2Ref.current)
-      animateEntrance(subtitle2Ref.current, {
-        translateY: 20,
-        staggerIndex: 3,
-        blur: true,
-      });
-
-    if (ctasRef.current)
-      animateEntrance(ctasRef.current, {
-        translateY: 12,
-        staggerIndex: 5,
-        blur: false, // Buttons better sharp
-      });
-
-    // Desktop image: Intelligent Fade + Subtle Scale
-    if (imgRef.current) {
-      animateEntrance(imgRef.current, {
-        translateY: 40,
-        opacity: 1,
-        duration: 1200,
-        delay: 200,
-        scale: 1,
-        easing: "cubic-bezier(0.2, 0.8, 0.2, 1)",
-      });
-    }
-
-    // Mobile image entrance
-    if (mobileImgRef.current) {
-      animateEntrance(mobileImgRef.current, {
-        translateY: 20,
-        opacity: 1,
-        duration: 800,
-        delay: 100,
-        scale: 1,
-        easing: ANIME.premiumEasing,
-      });
-    }
   }, []);
 
   return (
