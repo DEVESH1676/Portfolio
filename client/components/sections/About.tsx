@@ -107,12 +107,12 @@ export const AboutSection = () => {
         <div className="grid gap-16 lg:grid-cols-[1.2fr_1fr]">
           {/* Left Column: About Me Text */}
           <div>
-            <h2
-              ref={headingRef}
-              className="font-mono uppercase text-4xl font-bold tracking-tight text-foreground md:text-5xl opacity-0"
-            >
-              About Me
-            </h2>
+            <div ref={headingRef} className="opacity-0">
+              <h2 className="font-mono uppercase text-4xl font-bold tracking-tight text-foreground md:text-5xl">
+                About Me
+              </h2>
+              <div className="mt-6 h-1 w-20 bg-primary rounded-full"></div>
+            </div>
             <div
               ref={contentRef}
               className="mt-8 space-y-6 text-base leading-relaxed text-foreground/80 md:text-lg opacity-0"
@@ -125,9 +125,12 @@ export const AboutSection = () => {
 
           {/* Right Column: Education Timeline */}
           <div className="relative pt-2 flex flex-col h-full">
-            <h3 className="font-mono uppercase tracking-tight text-4xl font-bold text-foreground md:text-5xl mb-8 shrink-0">
-              Education
-            </h3>
+            <div className="mb-8 shrink-0">
+              <h3 className="font-mono uppercase tracking-tight text-4xl font-bold text-foreground md:text-5xl">
+                Education
+              </h3>
+              <div className="mt-6 h-1 w-20 bg-primary rounded-full"></div>
+            </div>
             <div className="relative flex-1 pb-4">
               {/* Vertical Line */}
               <div className="absolute left-4 top-4 bottom-4 w-[2px] -translate-x-1/2">

@@ -41,12 +41,12 @@ export const ProjectsSection = () => {
     >
       <div className="mx-auto max-w-6xl px-6">
         <div className="max-w-3xl">
-          <h2
-            ref={headingRef}
-            className="font-mono uppercase text-3xl font-bold tracking-tight text-foreground opacity-0"
-          >
-            Projects
-          </h2>
+          <div ref={headingRef} className="opacity-0">
+            <h2 className="font-mono uppercase text-4xl font-bold tracking-tight text-foreground md:text-5xl">
+              Projects
+            </h2>
+            <div className="mt-6 h-1 w-20 bg-primary rounded-full"></div>
+          </div>
           <p ref={introRef} className="mt-4 text-foreground/75 opacity-0">
             {CONTENT_INTROS.projects}
           </p>

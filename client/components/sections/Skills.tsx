@@ -33,12 +33,12 @@ export const SkillsSection = () => {
       className="section-base section-padding scroll-mt-24"
     >
       <div className="mx-auto max-w-6xl px-6">
-        <h2
-          ref={headingRef}
-          className="font-mono uppercase text-3xl font-bold tracking-tight text-foreground opacity-0 mb-12"
-        >
-          Skills
-        </h2>
+        <div ref={headingRef} className="opacity-0 mb-12">
+          <h2 className="font-mono uppercase text-4xl font-bold tracking-tight text-foreground md:text-5xl">
+            Skills
+          </h2>
+          <div className="mt-6 h-1 w-20 bg-primary rounded-full"></div>
+        </div>
 
         <div ref={wrapperRef} className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {SKILL_CATEGORIES.map((category) => (
