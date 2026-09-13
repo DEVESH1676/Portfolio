@@ -19,81 +19,81 @@ export const AboutSection = () => {
 
   React.useEffect(() => {
     if (isInView) {
-          // About Me Animations
-          if (headingRef.current)
-            animateEntrance(headingRef.current, { translateY: 20 });
-          if (contentRef.current)
-            animateEntrance(contentRef.current, { translateY: 20, delay: 100 });
+      // About Me Animations
+      if (headingRef.current)
+        animateEntrance(headingRef.current, { translateY: 20 });
+      if (contentRef.current)
+        animateEntrance(contentRef.current, { translateY: 20, delay: 100 });
 
-          // Education Timeline Animations
-          const lineDuration = 1800;
-          if (lineRef.current) {
-            animateLineDraw(lineRef.current, {
-              duration: lineDuration,
-              delay: 300,
-              easing: "linear",
-            });
-          }
+      // Education Timeline Animations
+      const lineDuration = 1800;
+      if (lineRef.current) {
+        animateLineDraw(lineRef.current, {
+          duration: lineDuration,
+          delay: 300,
+          easing: "linear",
+        });
+      }
 
-          const baseDelay = 300;
-          const interval = lineDuration / EDUCATION_TIMELINE.length;
+      const baseDelay = 300;
+      const interval = lineDuration / EDUCATION_TIMELINE.length;
 
-          EDUCATION_TIMELINE.forEach((_, index) => {
-            const delay = baseDelay + interval * index;
-            const dot = dotRefs.current[index];
-            if (dot) {
-              animateEntrance(dot, {
-                scale: 1,
-                opacity: 1,
-                delay: delay,
-                duration: 500,
-                easing: "cubic-bezier(0.175, 0.885, 0.32, 1.275)",
-                blur: true,
-              });
-              dot.animate(
-                [
-                  {
-                    transform: "scale(1)",
-                    backgroundColor: "hsl(var(--background))",
-                  },
-                  {
-                    transform: "scale(1.5)",
-                    backgroundColor: "hsl(var(--primary))",
-                    offset: 0.5,
-                  },
-                  {
-                    transform: "scale(1)",
-                    backgroundColor: "hsl(var(--background))",
-                  },
-                ],
-                { duration: 600, delay: delay + 200, easing: "ease-out" },
-              );
-            }
-
-            const connector = connectorRefs.current[index];
-            if (connector) {
-              connector.animate(
-                [{ transform: "scaleX(0)" }, { transform: "scaleX(1)" }],
-                {
-                  duration: 400,
-                  delay: delay + 100,
-                  easing: ANIME.premiumEasing,
-                  fill: "forwards",
-                },
-              );
-            }
-
-            const card = edCardRefs.current[index];
-            if (card) {
-              animateEntrance(card, {
-                translateY: 20,
-                opacity: 1,
-                delay: delay + 150,
-                duration: 800,
-                blur: true,
-              });
-            }
+      EDUCATION_TIMELINE.forEach((_, index) => {
+        const delay = baseDelay + interval * index;
+        const dot = dotRefs.current[index];
+        if (dot) {
+          animateEntrance(dot, {
+            scale: 1,
+            opacity: 1,
+            delay: delay,
+            duration: 500,
+            easing: "cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+            blur: true,
           });
+          dot.animate(
+            [
+              {
+                transform: "scale(1)",
+                backgroundColor: "hsl(var(--background))",
+              },
+              {
+                transform: "scale(1.5)",
+                backgroundColor: "hsl(var(--primary))",
+                offset: 0.5,
+              },
+              {
+                transform: "scale(1)",
+                backgroundColor: "hsl(var(--background))",
+              },
+            ],
+            { duration: 600, delay: delay + 200, easing: "ease-out" },
+          );
+        }
+
+        const connector = connectorRefs.current[index];
+        if (connector) {
+          connector.animate(
+            [{ transform: "scaleX(0)" }, { transform: "scaleX(1)" }],
+            {
+              duration: 400,
+              delay: delay + 100,
+              easing: ANIME.premiumEasing,
+              fill: "forwards",
+            },
+          );
+        }
+
+        const card = edCardRefs.current[index];
+        if (card) {
+          animateEntrance(card, {
+            translateY: 20,
+            opacity: 1,
+            delay: delay + 150,
+            duration: 800,
+            blur: true,
+          });
+        }
+      });
     }
   }, [isInView]);
 
@@ -109,7 +109,7 @@ export const AboutSection = () => {
           <div>
             <h2
               ref={headingRef}
-              className="font-mono uppercase text-3xl font-bold tracking-tight text-foreground opacity-0"
+              className="font-mono uppercase text-4xl font-bold tracking-tight text-foreground md:text-5xl opacity-0"
             >
               About Me
             </h2>
@@ -125,7 +125,7 @@ export const AboutSection = () => {
 
           {/* Right Column: Education Timeline */}
           <div className="relative pt-2 flex flex-col h-full">
-            <h3 className="font-mono uppercase tracking-tight text-3xl font-bold text-foreground mb-8 shrink-0">
+            <h3 className="font-mono uppercase tracking-tight text-4xl font-bold text-foreground md:text-5xl mb-8 shrink-0">
               Education
             </h3>
             <div className="relative flex-1 pb-4">
