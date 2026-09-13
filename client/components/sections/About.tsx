@@ -11,9 +11,6 @@ export const AboutSection = () => {
 
   // Timeline Refs
   const lineRef = React.useRef<HTMLDivElement | null>(null);
-  const dotRefs = React.useRef<Array<HTMLDivElement | null>>([]);
-  const connectorRefs = React.useRef<Array<HTMLDivElement | null>>([]);
-  const edCardRefs = React.useRef<Array<HTMLDivElement | null>>([]);
 
   const isInView = useInView(sectionRef, { once: true, amount: 0.1 });
 
@@ -38,9 +35,14 @@ export const AboutSection = () => {
       const baseDelay = 300;
       const interval = lineDuration / EDUCATION_TIMELINE.length;
 
+      if (!sectionRef.current) return;
+      const dots = Array.from(sectionRef.current.querySelectorAll('.education-dot'));
+      const connectors = Array.from(sectionRef.current.querySelectorAll('.education-connector'));
+      const cards = Array.from(sectionRef.current.querySelectorAll('.education-card'));
+
       EDUCATION_TIMELINE.forEach((_, index) => {
         const delay = baseDelay + interval * index;
-        const dot = dotRefs.current[index];
+        const dot = dots[index] as HTMLElement | undefined;
         if (dot) {
           animateEntrance(dot, {
             scale: 1,
@@ -70,7 +72,7 @@ export const AboutSection = () => {
           );
         }
 
-        const connector = connectorRefs.current[index];
+        const connector = connectors[index] as HTMLElement | undefined;
         if (connector) {
           connector.animate(
             [{ transform: "scaleX(0)" }, { transform: "scaleX(1)" }],
@@ -83,7 +85,7 @@ export const AboutSection = () => {
           );
         }
 
-        const card = edCardRefs.current[index];
+        const card = cards[index] as HTMLElement | undefined;
         if (card) {
           animateEntrance(card, {
             translateY: 20,
@@ -142,7 +144,7 @@ export const AboutSection = () => {
               </div>
 
               <div className="flex flex-col justify-between h-full gap-10">
-                {EDUCATION_TIMELINE.map((entry, index) => {
+                {EDUCATION_TIMELINE.map((entry) => {
                   const isCurrent = entry.current ?? false;
                   return (
                     <div
@@ -152,9 +154,8 @@ export const AboutSection = () => {
                       {/* Dot */}
                       <div className="absolute left-4 -translate-x-1/2 mt-1.5 flex items-center justify-center z-10 w-8 h-8">
                         <div
-                          ref={(el) => (dotRefs.current[index] = el)}
                           className={cn(
-                            "relative flex items-center justify-center rounded-full transition-all duration-500 opacity-0",
+                            "education-dot relative flex items-center justify-center rounded-full transition-all duration-500 opacity-0",
                             isCurrent
                               ? "h-5 w-5 bg-primary shadow-[0_0_12px_-2px_rgba(var(--primary),0.6)]"
                               : "h-3.5 w-3.5 bg-background border-2 border-primary/20 group-hover:border-primary group-hover:scale-110",
@@ -177,16 +178,14 @@ export const AboutSection = () => {
                         </div>
                         {/* Connector */}
                         <div
-                          ref={(el) => (connectorRefs.current[index] = el)}
-                          className="absolute left-1/2 top-1/2 -translate-y-1/2 h-[2px] bg-primary/30 w-8 -z-10 origin-left scale-x-0"
+                          className="education-connector absolute left-1/2 top-1/2 -translate-y-1/2 h-[2px] bg-primary/30 w-8 -z-10 origin-left scale-x-0"
                         />
                       </div>
 
                       {/* Content Card */}
                       <div className="pl-14 w-full">
                         <div
-                          ref={(el) => (edCardRefs.current[index] = el)}
-                          className="opacity-0"
+                          className="education-card opacity-0"
                         >
                           <span className="inline-block px-2.5 py-0.5 mb-2 text-[10px] font-bold uppercase tracking-wider text-primary bg-primary/10 rounded-full border border-primary/10">
                             {entry.year}
