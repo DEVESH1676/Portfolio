@@ -1,4 +1,5 @@
 import React from "react";
+import { useInView } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import { PROJECTS, CONTENT_INTROS } from "@/data/portfolio";
 import { animateEntrance, animateStaggeredChildren } from "@/lib/anime";
@@ -9,10 +10,10 @@ export const ProjectsSection = () => {
   const introRef = React.useRef<HTMLParagraphElement | null>(null);
   const gridRef = React.useRef<HTMLDivElement | null>(null);
 
+  const isInView = useInView(sectionRef, { once: true, amount: 0.1 });
+
   React.useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
+    if (isInView) {
           if (headingRef.current)
             animateEntrance(headingRef.current, { translateY: 24, blur: true });
 
@@ -29,15 +30,8 @@ export const ProjectsSection = () => {
               baseDelay: 200, // Wait for intro
             });
           }
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 },
-    );
-
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
+    }
+  }, [isInView]);
 
   return (
     <section

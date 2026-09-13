@@ -1,10 +1,6 @@
-import { DOWNLOAD_CV_URL, BIO_DATA } from "@/data/portfolio";
 import * as React from "react";
-import { Button } from "@/components/ui/button";
-import Container from "@/components/ui/container";
 import { animateEntrance, ANIME } from "@/lib/anime";
 import { NeuralBackground } from "@/components/ui/NeuralBackground";
-import { motion, useScroll, useTransform } from "framer-motion";
 import { PixelName } from "@/components/ui/PixelName";
 
 export const HeroSection = () => {
@@ -20,22 +16,7 @@ export const HeroSection = () => {
   // Mobile refs (separate to avoid conflict with desktop)
   const mobileImgRef = React.useRef<HTMLDivElement | null>(null);
 
-  const [dateStr, setDateStr] = React.useState("");
-
   React.useEffect(() => {
-    // Date Init
-    const d = new Date();
-    setDateStr(
-      d
-        .toLocaleDateString("en-US", {
-          weekday: "short",
-          day: "2-digit",
-          month: "short",
-          year: "numeric",
-        })
-        .toUpperCase(),
-    );
-
     // Premium Academic Staggered Entrance
 
     if (badgeRef.current)
@@ -105,8 +86,9 @@ export const HeroSection = () => {
     <section
       ref={sectionRef}
       id="home"
-      className="section-base relative flex min-h-[83vh] flex-col justify-center items-center overflow-hidden py-24"
+      className="section-base relative flex min-h-[90vh] flex-col justify-center items-center overflow-hidden py-24"
     >
+      <h1 className="sr-only">Devesh Ghuge — Portfolio</h1>
       {/* Date moved to Navbar to guarantee perfect vertical alignment */}
 
       <div className="hero-glow" />
@@ -117,18 +99,6 @@ export const HeroSection = () => {
         <div className="flex md:hidden items-center justify-center gap-4 mb-6">
           {/* Action Buttons — Stacked */}
           <div className="flex flex-col gap-2 flex-1 min-w-0">
-            {/* <motion.a
-              href={DOWNLOAD_CV_URL}
-              target="_blank"
-              rel="noreferrer"
-              whileTap={{ scale: 0.97 }}
-              className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium
-                bg-background/70 backdrop-blur-md border border-border text-foreground/90
-                shadow-sm active:shadow-none transition-all"
-            >
-              <Download className="h-3.5 w-3.5 text-primary" />
-              Download CV
-            </motion.a> */}
           </div>
         </div>
 

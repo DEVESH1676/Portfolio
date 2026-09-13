@@ -41,7 +41,10 @@ export function runAnime(
   el: HTMLElement,
   keyframes: Keyframe[] | PropertyIndexedKeyframes,
   options?: AnimeOptions,
-): Animation {
+): void {
+  // Cancel existing animations on this element to prevent memory leaks
+  el.getAnimations().forEach((anim) => anim.cancel());
+
   let finalDuration = options?.duration ?? 0;
   let finalDelay = options?.delay ?? 0;
 
@@ -56,15 +59,13 @@ export function runAnime(
     finalDelay = 0;
   }
 
-  const anim = el.animate(keyframes, {
+  el.animate(keyframes, {
     ...options,
     duration: finalDuration,
     delay: finalDelay,
     easing: options?.easing ?? "linear",
     fill: options?.fill ?? "forwards",
   });
-
-  return anim;
 }
 
 export const animateEntrance = (
@@ -79,7 +80,7 @@ export const animateEntrance = (
     staggerIndex?: number;
     blur?: boolean; // New: Blur effect
   },
-): Animation | undefined => {
+): void => {
   if (!el) return;
 
   const duration = opts?.duration ?? ANIME.durations.section;
@@ -105,7 +106,7 @@ export const animateEntrance = (
     startFrame.transform += ` scale(${opts.scale})`;
   }
 
-  return runAnime(el, [startFrame, endFrame], {
+  runAnime(el, [startFrame, endFrame], {
     duration,
     easing,
     delay: opts?.delay,
@@ -117,14 +118,14 @@ export const animateEntrance = (
 export const animateLineDraw = (
   el: HTMLElement,
   opts?: { duration?: number; easing?: string; delay?: number },
-): Animation | undefined => {
+): void => {
   if (!el) return;
   const duration = opts?.duration ?? 800;
   const easing = opts?.easing ?? ANIME.premiumEasing;
 
   el.style.transformOrigin = "top";
 
-  return runAnime(
+  runAnime(
     el,
     [{ transform: "scaleY(0)" }, { transform: "scaleY(1)" }],
     { duration, easing, delay: opts?.delay },

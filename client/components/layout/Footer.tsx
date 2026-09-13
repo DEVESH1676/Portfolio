@@ -1,11 +1,7 @@
 import { NAV_ITEMS } from "@/data/portfolio";
 
 export const Footer = () => {
-  const footerLinks = NAV_ITEMS.filter((item) =>
-    ["#home", "#about", "#publications", "#projects", "#contact"].includes(
-      item.href,
-    ),
-  );
+  const footerLinks = NAV_ITEMS;
 
   return (
     <footer className="section-base text-foreground">

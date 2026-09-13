@@ -20,6 +20,8 @@ export const PixelName: React.FC = () => {
       vy: number;
       activity: number;
       flashIntensity: number;
+      absX?: number;
+      absY?: number;
     }
 
     let particles: VectorNode[] = [];
@@ -58,7 +60,7 @@ export const PixelName: React.FC = () => {
       if (!offCtx) return;
 
       const sampleFontSize = 32;
-      offCtx.font = `900 ${sampleFontSize}px "Inter", "Satoshi", "Segoe UI", sans-serif`;
+      offCtx.font = `900 ${sampleFontSize}px "Inter", "Satoshi", sans-serif`;
       const metrics = offCtx.measureText(text);
       const rawWidth = Math.max(1, Math.ceil(metrics.width));
       const rawHeight = Math.max(1, Math.ceil(sampleFontSize * 1.3));
@@ -68,7 +70,7 @@ export const PixelName: React.FC = () => {
 
       offCtx.fillStyle = "black";
       offCtx.fillRect(0, 0, rawWidth, rawHeight);
-      offCtx.font = `900 ${sampleFontSize}px "Inter", "Satoshi", "Segoe UI", sans-serif`;
+      offCtx.font = `900 ${sampleFontSize}px "Inter", "Satoshi", sans-serif`;
       offCtx.fillStyle = "white";
       offCtx.textBaseline = "top";
       offCtx.fillText(text, 0, 0);
@@ -102,17 +104,68 @@ export const PixelName: React.FC = () => {
       sampledTextWidth = Math.max(1, maxX - minX + 1);
       sampledTextHeight = Math.max(1, maxY - minY + 1);
 
+      // Pre-calculate the new grid dimensions to compute smooth interpolation offsets
+      const viewportWidth = window.innerWidth;
+      const isMobile = viewportWidth < 768;
+      const balancedWidth = isMobile ? viewportWidth * 0.85 : viewportWidth * 0.6;
+      const displayWidth = Math.max(280, Math.min(balancedWidth, 1200));
+      const targetWidth = displayWidth * 0.96;
+      const newCellPitch = targetWidth / Math.max(1, sampledTextWidth);
+      const totalGridWidth = sampledTextWidth * newCellPitch;
+      const totalGridHeight = sampledTextHeight * newCellPitch;
+      const displayHeight = Math.max(60, Math.ceil(totalGridHeight + 12));
+      const newOffsetX = (displayWidth - totalGridWidth) / 2;
+      const newOffsetY = (displayHeight - totalGridHeight) / 2;
+
       const newParticles: VectorNode[] = [];
       for (let i = 0; i < rawPoints.length; i++) {
         const nx = rawPoints[i].gx - minX;
         const ny = rawPoints[i].gy - minY;
+        
+        let initOffsetX = 0;
+        let initOffsetY = 0;
+        let initVx = 0;
+        let initVy = 0;
+
+        // If we are re-sampling (font loaded), interpolate from old absolute positions
+        if (particles.length > 0) {
+          // Use 2D spatial nearest-neighbor mapping instead of 1D index mapping!
+          // This prevents horizontal criss-crossing (smearing) because each new pixel
+          // spawns from the physically closest old pixel on the screen.
+          const newOriginX = newOffsetX + nx * newCellPitch + newCellPitch / 2;
+          const newOriginY = newOffsetY + ny * newCellPitch + newCellPitch / 2;
+
+          let bestOldP = particles[0];
+          let minDist = Infinity;
+
+          for (let j = 0; j < particles.length; j++) {
+            const oldP = particles[j];
+            if (oldP.absX !== undefined && oldP.absY !== undefined) {
+              const dx = oldP.absX - newOriginX;
+              const dy = oldP.absY - newOriginY;
+              const distSq = dx * dx + dy * dy;
+              if (distSq < minDist) {
+                minDist = distSq;
+                bestOldP = oldP;
+              }
+            }
+          }
+          
+          if (bestOldP && bestOldP.absX !== undefined && bestOldP.absY !== undefined) {
+            initOffsetX = bestOldP.absX - newOriginX;
+            initOffsetY = bestOldP.absY - newOriginY;
+            initVx = bestOldP.vx;
+            initVy = bestOldP.vy;
+          }
+        }
+
         newParticles.push({
           x: nx,
           y: ny,
-          offsetX: 0,
-          offsetY: 0,
-          vx: 0,
-          vy: 0,
+          offsetX: initOffsetX,
+          offsetY: initOffsetY,
+          vx: initVx,
+          vy: initVy,
           activity: 0,
           flashIntensity: 0,
         });
@@ -128,7 +181,6 @@ export const PixelName: React.FC = () => {
     let time = 0;
 
     const handleResize = () => {
-      const parent = canvas.parentElement;
       const viewportWidth = window.innerWidth;
       const isMobile = viewportWidth < 768;
 
@@ -162,13 +214,30 @@ export const PixelName: React.FC = () => {
       mouse.y = -1000;
     };
 
+    // ── Intersection Observer for Performance ──
+    let isVisible = true;
+    const visibilityObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          isVisible = entry.isIntersecting;
+        });
+      },
+      { threshold: 0 },
+    );
+
+    if (canvas.parentElement) {
+      visibilityObserver.observe(canvas.parentElement);
+    }
+
     // ── Render loop ──
     const render = () => {
       if (!running) return;
-      time += 0.02;
+      
+      if (isVisible) {
+        time += 0.02;
 
-      const dpr = window.devicePixelRatio;
-      const dWidth = parseFloat(canvas.style.width || "300");
+        const dpr = window.devicePixelRatio;
+        const dWidth = parseFloat(canvas.style.width || "300");
       const dHeight = parseFloat(canvas.style.height || "100");
 
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -206,6 +275,10 @@ export const PixelName: React.FC = () => {
 
           const curX = originX + p.offsetX;
           const curY = originY + p.offsetY;
+          
+          p.absX = curX;
+          p.absY = curY;
+
           const dx = mouse.x - curX;
           const dy = mouse.y - curY;
           const r = Math.hypot(dx, dy);
@@ -233,14 +306,20 @@ export const PixelName: React.FC = () => {
           // Check if any actual background neural node is passing behind this exact dot
           for (let n = 0; n < sharedNeuralNodes.length; n++) {
             const node = sharedNeuralNodes[n];
-            const dist = Math.hypot(
-              node.x - globalParticleX,
-              node.y - globalParticleY,
-            );
-            if (dist < 26) {
-              const boost = 1 - dist / 26;
-              // Flash bright on passage
-              p.flashIntensity = Math.max(p.flashIntensity, boost);
+            // Fast bounding box rejection before heavy Math.hypot
+            if (
+              Math.abs(node.x - globalParticleX) < 26 &&
+              Math.abs(node.y - globalParticleY) < 26
+            ) {
+              const dist = Math.hypot(
+                node.x - globalParticleX,
+                node.y - globalParticleY,
+              );
+              if (dist < 26) {
+                const boost = 1 - dist / 26;
+                // Flash bright on passage
+                p.flashIntensity = Math.max(p.flashIntensity, boost);
+              }
             }
           }
 
@@ -268,6 +347,7 @@ export const PixelName: React.FC = () => {
             blockSize,
           );
         }
+      }
       }
 
       animationFrameId = requestAnimationFrame(render);
@@ -298,6 +378,7 @@ export const PixelName: React.FC = () => {
       cancelAnimationFrame(animationFrameId);
       themeObserver.disconnect();
       resizeObserver.disconnect();
+      visibilityObserver.disconnect();
       window.removeEventListener("resize", handleResize);
       canvas.removeEventListener("mousemove", handleMouseMove);
       canvas.removeEventListener("mouseleave", handleMouseLeave);
@@ -306,7 +387,12 @@ export const PixelName: React.FC = () => {
 
   return (
     <div className="w-full flex justify-center items-center my-1 overflow-hidden">
-      <canvas ref={canvasRef} className="cursor-crosshair block" />
+      <canvas 
+        ref={canvasRef} 
+        role="img" 
+        aria-label="DEVESH" 
+        className="cursor-pointer block" 
+      />
     </div>
   );
 };

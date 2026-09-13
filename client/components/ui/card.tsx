@@ -5,48 +5,16 @@ import { cn } from "@/lib/utils";
 const Card = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => {
-  const localRef = React.useRef<HTMLDivElement | null>(null);
-
-  // support forwarded refs
-  React.useImperativeHandle(ref, () => localRef.current as HTMLDivElement);
-
-  React.useEffect(() => {
-    const el = localRef.current;
-    if (!el) return;
-    let observer: IntersectionObserver | null = null;
-    // animate entrance on scroll into view
-    observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            import("@/lib/anime").then((mod) => {
-              mod.animateEntrance(el as HTMLElement, {
-                translateY: 14,
-                duration: 600,
-              });
-            });
-            observer?.disconnect();
-          }
-        });
-      },
-      { threshold: 0.08 },
-    );
-    observer.observe(el);
-    return () => observer?.disconnect();
-  }, []);
-
-  return (
-    <div
-      ref={localRef}
-      className={cn(
-        "rounded-lg border bg-card text-card-foreground shadow-sm transition-transform duration-200 will-change-transform card-elevate",
-        className,
-      )}
-      {...props}
-    />
-  );
-});
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn(
+      "rounded-lg border bg-card text-card-foreground shadow-sm transition-transform duration-200 will-change-transform card-elevate focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+      className,
+    )}
+    {...props}
+  />
+));
 Card.displayName = "Card";
 
 const CardHeader = React.forwardRef<

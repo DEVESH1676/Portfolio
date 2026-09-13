@@ -57,6 +57,9 @@ export const NeuralBackground: React.FC = () => {
     // ── Cached theme color ──
     let cachedPrimaryColor = "230 60% 60%";
 
+    let prevWidth = window.innerWidth;
+    let prevHeight = window.innerHeight;
+
     const readPrimary = () => {
       const raw = getComputedStyle(document.documentElement)
         .getPropertyValue("--primary")
@@ -78,19 +81,64 @@ export const NeuralBackground: React.FC = () => {
       attributeFilter: ["class"],
     });
 
-    // ── Sizing ──
     const resize = () => {
       const parent = canvas.parentElement;
       const w = parent?.clientWidth || window.innerWidth;
       const h = parent?.clientHeight || window.innerHeight;
-      canvas.width = Math.max(300, w);
-      canvas.height = Math.max(300, h);
-      initNodes();
+      
+      const newWidth = Math.max(300, w);
+      const newHeight = Math.max(300, h);
+
+      if (nodes.length === 0) {
+        canvas.width = newWidth;
+        canvas.height = newHeight;
+        prevWidth = newWidth;
+        prevHeight = newHeight;
+        initNodes();
+        return;
+      }
+
+      const scaleX = newWidth / prevWidth;
+      const scaleY = newHeight / prevHeight;
+
+      canvas.width = newWidth;
+      canvas.height = newHeight;
+
+      // Proportionally scale nodes to new canvas dimensions
+      for (const node of nodes) {
+        node.originX *= scaleX;
+        node.originY *= scaleY;
+        node.x *= scaleX;
+        node.y *= scaleY;
+      }
+
+      // Add new nodes or trim excess to maintain correct density
+      const targetNodeCount = Math.min(150, Math.floor((newWidth * newHeight) / 11500));
+      if (nodes.length < targetNodeCount) {
+        for (let i = nodes.length; i < targetNodeCount; i++) {
+          const x = Math.random() * newWidth;
+          const y = Math.random() * newHeight;
+          const isMajorStar = Math.random() < 0.28;
+          nodes.push({
+            x, y, originX: x, originY: y,
+            vx: (Math.random() - 0.5) * 0.22,
+            vy: (Math.random() - 0.5) * 0.22,
+            size: isMajorStar ? 2.6 : 1.7 + Math.random() * 0.6,
+            magnitude: isMajorStar ? 1 : 0,
+            connections: [],
+          });
+        }
+      } else if (nodes.length > targetNodeCount + 20) {
+        nodes.splice(targetNodeCount);
+      }
+
+      prevWidth = newWidth;
+      prevHeight = newHeight;
     };
 
     const initNodes = () => {
       nodes = [];
-      const nodeCount = Math.floor((canvas.width * canvas.height) / 11500);
+      const nodeCount = Math.min(150, Math.floor((canvas.width * canvas.height) / 11500));
       for (let i = 0; i < nodeCount; i++) {
         const x = Math.random() * canvas.width;
         const y = Math.random() * canvas.height;
@@ -225,11 +273,51 @@ export const NeuralBackground: React.FC = () => {
         const drawnLinks = new Set<string>();
         const ambientDistance = 185;
 
+        // Create Spatial Hash Grid for O(n) distance lookups
+        const bucketSize = ambientDistance;
+        const grid = new Map<string, number[]>();
+
+        for (let i = 0; i < nodes.length; i++) {
+          const node = nodes[i];
+          const bx = Math.floor(node.x / bucketSize);
+          const by = Math.floor(node.y / bucketSize);
+          const key = `${bx},${by}`;
+          let bucket = grid.get(key);
+          if (!bucket) {
+            bucket = [];
+            grid.set(key, bucket);
+          }
+          bucket.push(i);
+        }
+
+        const getNearbyIndices = (node: Node): number[] => {
+          const bx = Math.floor(node.x / bucketSize);
+          const by = Math.floor(node.y / bucketSize);
+          const nearby: number[] = [];
+
+          for (let dx = -1; dx <= 1; dx++) {
+            for (let dy = -1; dy <= 1; dy++) {
+              const bucket = grid.get(`${bx + dx},${by + dy}`);
+              if (bucket) {
+                for (let k = 0; k < bucket.length; k++) {
+                  nearby.push(bucket[k]);
+                }
+              }
+            }
+          }
+          return nearby;
+        };
+
         // 2a. Draw Ambient Light Lines (Faint background neural matrix)
         ctx.lineWidth = 0.9;
         for (let i = 0; i < nodes.length; i++) {
           const node = nodes[i];
-          for (let j = i + 1; j < nodes.length; j++) {
+          const nearby = getNearbyIndices(node);
+
+          for (let k = 0; k < nearby.length; k++) {
+            const j = nearby[k];
+            if (j <= i) continue; // Only process pairs once
+
             const other = nodes[j];
             const dist = Math.hypot(node.x - other.x, node.y - other.y);
 
@@ -251,11 +339,14 @@ export const NeuralBackground: React.FC = () => {
         ctx.lineWidth = 1.45;
         for (let i = 0; i < nodes.length; i++) {
           const node = nodes[i];
+          const nearby = getNearbyIndices(node);
 
           // Find nearest candidates within active connection range
           const candidates: { index: number; dist: number }[] = [];
-          for (let j = 0; j < nodes.length; j++) {
+          for (let k = 0; k < nearby.length; k++) {
+            const j = nearby[k];
             if (i === j) continue;
+            
             const other = nodes[j];
             const dist = Math.hypot(node.x - other.x, node.y - other.y);
             if (dist < connectionDistance) {
@@ -296,8 +387,13 @@ export const NeuralBackground: React.FC = () => {
         // 3. Draw Persistent Long-Range Backbone Bridges (10-15 stable far connections)
         for (let b = 0; b < bridges.length; b++) {
           const bridge = bridges[b];
-          if (bridge.nodeA >= nodes.length || bridge.nodeB >= nodes.length)
+          if (bridge.nodeA >= nodes.length || bridge.nodeB >= nodes.length) {
+            bridge.nodeA = Math.floor(Math.random() * Math.max(1, nodes.length));
+            bridge.nodeB = Math.floor(Math.random() * Math.max(1, nodes.length));
+            bridge.alpha = 0;
+            bridge.targetAlpha = 0;
             continue;
+          }
 
           const nA = nodes[bridge.nodeA];
           const nB = nodes[bridge.nodeB];
@@ -396,7 +492,12 @@ export const NeuralBackground: React.FC = () => {
         // 5. Draw Traveling Synaptic Flash Pulses across active links
         for (let s = 0; s < synapses.length; s++) {
           const syn = synapses[s];
-          if (syn.nodeA >= nodes.length || syn.nodeB >= nodes.length) continue;
+          if (syn.nodeA >= nodes.length || syn.nodeB >= nodes.length) {
+            syn.nodeA = Math.floor(Math.random() * Math.max(1, nodes.length));
+            syn.nodeB = Math.floor(Math.random() * Math.max(1, nodes.length));
+            syn.progress = 0;
+            continue;
+          }
           const nA = nodes[syn.nodeA];
           const nB = nodes[syn.nodeB];
           const d = Math.hypot(nA.x - nB.x, nA.y - nB.y);

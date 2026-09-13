@@ -32,32 +32,25 @@ export function useActiveSection(): [string, (href: string) => void] {
   }, []);
 
   React.useEffect(() => {
-    const handleActiveSection = () => {
-      if (isManualRef.current) return;
-
-      const scrollY = window.scrollY;
-      const offset = window.innerHeight * 0.35;
-
-      let current = observerEntries[0]?.href ?? "#home";
-
-      for (const entry of observerEntries) {
-        const el = document.getElementById(entry.id);
-        if (!el) continue;
-
-        const rect = el.getBoundingClientRect();
-        const top = rect.top + scrollY;
-
-        if (top - offset <= scrollY) {
-          current = entry.href;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (isManualRef.current) return;
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setActiveSection(`#${entry.target.id}`);
+            break;
+          }
         }
-      }
+      },
+      { rootMargin: "-35% 0px -65% 0px" }
+    );
 
-      setActiveSection(current);
-    };
+    observerEntries.forEach((entry) => {
+      const el = document.getElementById(entry.id);
+      if (el) observer.observe(el);
+    });
 
-    handleActiveSection(); // Run once on mount
-    window.addEventListener("scroll", handleActiveSection, { passive: true });
-    return () => window.removeEventListener("scroll", handleActiveSection);
+    return () => observer.disconnect();
   }, [observerEntries]);
 
   return [activeSection, setSectionManual];

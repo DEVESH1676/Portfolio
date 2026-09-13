@@ -26,28 +26,29 @@ export const QUICK_FACTS = [
   },
 ];
 
-export const SKILLS = [
-  "typescript",
-  "react",
-  "node.js",
-  "gsap",
-  "ui ux",
-  "python",
-  "sql",
-  "bash",
-  "zsh",
-  "arch linux",
-  "wsl",
-  "hyprland",
-  "devops",
-  "sysadmin",
-  "docker",
-  "docker compose",
-  "traefik",
-  "cloudflare tunnels",
-  "crowdsec",
-  "networking",
-  "git",
+export const SKILL_CATEGORIES = [
+  {
+    title: "Web & Languages",
+    skills: ["typescript", "react", "node.js", "gsap", "python", "sql", "ui ux"],
+  },
+  {
+    title: "Systems & OS",
+    skills: ["arch linux", "hyprland", "bash", "zsh", "wsl"],
+  },
+  {
+    title: "DevOps & Cloud",
+    skills: [
+      "docker",
+      "docker compose",
+      "traefik",
+      "cloudflare tunnels",
+      "crowdsec",
+      "networking",
+      "git",
+      "devops",
+      "sysadmin",
+    ],
+  },
 ];
 
 export interface EducationEntry {

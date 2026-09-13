@@ -5,7 +5,7 @@ import path from "node:path";
 // Import the createServer function from your server module
 import { createServer } from "./server/index";
 
-export default defineConfig(({ command, mode: _mode }) => ({
+export default defineConfig(({ mode: _mode }) => ({
   base: "/",
   server: {
     host: "::",
@@ -15,7 +15,7 @@ export default defineConfig(({ command, mode: _mode }) => ({
     },
     fs: {
       allow: ["."],
-      deny: [".env", ".env.*", "*.{crt,pem}", "**/.git/**"],
+      deny: [".env", ".env.*", "*.{crt,pem,key,p12,pkcs12,keystore}", "**/.git/**"],
     },
   },
   build: {

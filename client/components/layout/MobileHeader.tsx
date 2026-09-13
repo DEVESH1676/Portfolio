@@ -1,10 +1,9 @@
 import * as React from "react";
 import { motion } from "framer-motion";
-import { NAV_ITEMS, DOWNLOAD_CV_URL } from "@/data/portfolio";
+import { NAV_ITEMS } from "@/data/portfolio";
 import { useActiveSection } from "@/hooks/use-active-section";
 import ThemeToggle from "@/components/ui/theme-toggle";
 import { cn } from "@/lib/utils";
-import { Download } from "lucide-react";
 
 /**
  * MobileHeader — The "Glassmorphic Sandwich"
@@ -34,11 +33,12 @@ export const MobileHeader: React.FC = () => {
     const activeEl = navScrollRef.current.querySelector(
       `[data-section="${activeSection}"]`,
     ) as HTMLElement | null;
-    if (activeEl) {
-      activeEl.scrollIntoView({
+    if (activeEl && navScrollRef.current) {
+      const container = navScrollRef.current;
+      const scrollLeft = activeEl.offsetLeft - container.offsetWidth / 2 + activeEl.offsetWidth / 2;
+      container.scrollTo({
+        left: scrollLeft,
         behavior: "smooth",
-        block: "nearest",
-        inline: "center",
       });
     }
   }, [activeSection]);
@@ -68,19 +68,7 @@ export const MobileHeader: React.FC = () => {
         </a>
 
         <div className="flex items-center gap-3">
-          {/* Compact CV button */}
-          {/* <motion.a
-            href={DOWNLOAD_CV_URL}
-            target="_blank"
-            rel="noreferrer"
-            whileTap={{ scale: 0.95 }}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium
-              bg-primary/10 text-primary border border-primary/20
-              active:bg-primary/20 transition-colors"
-          >
-            <Download className="h-3 w-3" />
-            CV
-          </motion.a> */}
+
 
           <ThemeToggle />
         </div>
@@ -105,9 +93,10 @@ export const MobileHeader: React.FC = () => {
               key={item.href}
               href={item.href}
               data-section={item.href}
+              aria-current={activeSection === item.href ? "page" : undefined}
               onClick={() => handleNavClick(item.href)}
               className={cn(
-                "relative flex-shrink-0 px-3 py-1.5 text-xs font-medium rounded-full transition-colors duration-200",
+                "relative flex-shrink-0 px-3 py-1.5 text-xs font-medium rounded-full transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
                 activeSection === item.href
                   ? "text-primary font-semibold"
                   : "text-foreground/55 active:text-foreground/80",

@@ -35,7 +35,7 @@ export const ThemeToggle: React.FC = () => {
   return (
     <button
       onClick={() => setIsDark(!isDark)}
-      className="relative flex shrink-0 items-center justify-between bg-muted/20 border border-primary/10 rounded-full h-9 w-[96px] p-[3px] cursor-pointer transition-colors hover:border-primary/30 hover:bg-muted/30"
+      className="relative flex shrink-0 items-center justify-between bg-muted/20 border border-primary/10 rounded-full h-9 w-[96px] p-[3px] cursor-pointer transition-colors hover:border-primary/30 hover:bg-muted/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
       aria-label="Toggle theme"
     >
       {/* Dynamic Sliding Box (Segmented Control) */}

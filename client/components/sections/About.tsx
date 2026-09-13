@@ -1,5 +1,6 @@
 import { BIO_DATA, EDUCATION_TIMELINE } from "@/data/portfolio";
 import * as React from "react";
+import { useInView } from "framer-motion";
 import { animateEntrance, animateLineDraw, ANIME } from "@/lib/anime";
 import { cn } from "@/lib/utils";
 
@@ -14,10 +15,10 @@ export const AboutSection = () => {
   const connectorRefs = React.useRef<Array<HTMLDivElement | null>>([]);
   const edCardRefs = React.useRef<Array<HTMLDivElement | null>>([]);
 
+  const isInView = useInView(sectionRef, { once: true, amount: 0.1 });
+
   React.useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
+    if (isInView) {
           // About Me Animations
           if (headingRef.current)
             animateEntrance(headingRef.current, { translateY: 20 });
@@ -93,16 +94,8 @@ export const AboutSection = () => {
               });
             }
           });
-
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 },
-    );
-
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
+    }
+  }, [isInView]);
 
   return (
     <section

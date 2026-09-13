@@ -1,7 +1,6 @@
 /** @import must precede all other statements */
 @import url("https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;700;800&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -40,7 +39,7 @@
 
     --muted: 210 40% 94%;
     /* #F1F5F9 - Crisp Alternate Section */
-    --muted-foreground: 215 25% 35%;
+    --muted-foreground: 215 20% 30%;
 
     --accent: 160 84% 39%;
     --accent-foreground: 222 47% 11%;
@@ -82,7 +81,7 @@
 
   .dark {
     /* "Matte Black" Dark Mode */
-    --background: 0 0% 4%;
+    --background: 0 0% 6%;
     /* Matte Black */
     --foreground: 0 0% 90%;
     /* Soft Off-White */
@@ -132,7 +131,7 @@
     --tag: 150 50% 45%;
     --tag-hover: 150 50% 50%;
 
-    --shadow-elevate: 0 10px 40px -10px rgba(0, 0, 0, 0.7);
+    --shadow-elevate: 0 10px 40px -10px rgba(0, 0, 0, 0.3);
 
     /* Sidebar */
     --sidebar-background: 0 0% 4%;
@@ -150,6 +149,7 @@
     * {
       transition: none !important;
       animation: none !important;
+      will-change: auto !important;
     }
   }
 
@@ -370,7 +370,7 @@
 
 @layer utilities {
   .glass-card {
-    background: rgba(255, 255, 255, 0.7);
+    background: hsl(var(--card) / 0.7);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.5);
     box-shadow:
@@ -400,7 +400,7 @@
   }
 
   .section-alt {
-    background-color: hsl(var(--background));
+    background-color: hsl(var(--muted) / 0.3);
     color: hsl(var(--foreground));
     transition:
       background-color 300ms ease,
@@ -411,23 +411,7 @@
     background-color: hsl(var(--background));
   }
 
-  /* Animated Gradient Keyframes */
-  @keyframes gradient-xy {
-    0%,
-    100% {
-      background-size: 400% 400%;
-      background-position: 0% 0%;
-    }
 
-    50% {
-      background-size: 400% 400%;
-      background-position: 100% 100%;
-    }
-  }
-
-  .animate-gradient-xy {
-    animation: gradient-xy 3s ease infinite;
-  }
 
   /* Premium Card Depth */
   .shadow-premium {
@@ -451,20 +435,5 @@
     display: none;
   }
 
-  /* Orb breathing animation */
-  @keyframes orb-breathe {
-    0%,
-    100% {
-      transform: scale(1);
-      opacity: 0.15;
-    }
-    50% {
-      transform: scale(1.15);
-      opacity: 0.25;
-    }
-  }
 
-  .orb-breathe {
-    animation: orb-breathe 6s ease-in-out infinite;
-  }
 }

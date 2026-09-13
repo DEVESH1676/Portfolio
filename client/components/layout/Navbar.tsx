@@ -1,7 +1,6 @@
 import * as React from "react";
-import { Download } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { NAV_ITEMS, DOWNLOAD_CV_URL } from "@/data/portfolio";
+import { NAV_ITEMS } from "@/data/portfolio";
 import ThemeToggle from "@/components/ui/theme-toggle";
 import { motion } from "framer-motion";
 import { useActiveSection } from "@/hooks/use-active-section";
@@ -9,30 +8,30 @@ import { useActiveSection } from "@/hooks/use-active-section";
 export const Navbar = () => {
   const [activeSection, setActiveSection] = useActiveSection();
   const [isScrolled, setIsScrolled] = React.useState(false);
-  const [dateStr, setDateStr] = React.useState("");
-  const [timeStr, setTimeStr] = React.useState("");
+  const dateRef = React.useRef<HTMLSpanElement>(null);
+  const timeRef = React.useRef<HTMLSpanElement>(null);
 
   // Scroll & Time Detection
   React.useEffect(() => {
     const updateTime = () => {
       const d = new Date();
-      setDateStr(
-        d
+      if (dateRef.current) {
+        dateRef.current.textContent = d
           .toLocaleDateString("en-US", {
             weekday: "short",
             day: "2-digit",
             month: "short",
             year: "numeric",
           })
-          .toUpperCase(),
-      );
-      setTimeStr(
-        d.toLocaleTimeString("en-US", {
+          .toUpperCase();
+      }
+      if (timeRef.current) {
+        timeRef.current.textContent = d.toLocaleTimeString("en-US", {
           hour12: false,
           hour: "2-digit",
           minute: "2-digit",
-        }),
-      );
+        });
+      }
     };
 
     updateTime();
@@ -60,32 +59,24 @@ export const Navbar = () => {
       )}
     >
       {/* Far Left Date */}
-      {dateStr && (
-        <div
-          className={cn(
-            "absolute left-6 lg:left-10 pointer-events-auto transition-opacity duration-500 hidden md:block",
-            isScrolled ? "opacity-0 pointer-events-none" : "opacity-100",
-          )}
-        >
-          <span className="text-xs font-mono text-muted-foreground/50 tracking-[0.2em]">
-            {dateStr}
-          </span>
-        </div>
-      )}
+      <div
+        className={cn(
+          "absolute left-6 lg:left-10 pointer-events-auto transition-opacity duration-500 hidden md:block",
+          isScrolled ? "opacity-0 pointer-events-none" : "opacity-100",
+        )}
+      >
+        <span ref={dateRef} className="text-xs font-mono text-muted-foreground/50 tracking-[0.2em]" />
+      </div>
 
       {/* Far Right Time */}
-      {timeStr && (
-        <div
-          className={cn(
-            "absolute right-6 lg:right-10 pointer-events-auto transition-opacity duration-500 hidden md:block",
-            isScrolled ? "opacity-0 pointer-events-none" : "opacity-100",
-          )}
-        >
-          <span className="text-xs font-mono text-muted-foreground/50 tracking-[0.2em]">
-            {timeStr}
-          </span>
-        </div>
-      )}
+      <div
+        className={cn(
+          "absolute right-6 lg:right-10 pointer-events-auto transition-opacity duration-500 hidden md:block",
+          isScrolled ? "opacity-0 pointer-events-none" : "opacity-100",
+        )}
+      >
+        <span ref={timeRef} className="text-xs font-mono text-muted-foreground/50 tracking-[0.2em]" />
+      </div>
 
       {/* Floating Navbar Pill */}
       <div
@@ -119,6 +110,7 @@ export const Navbar = () => {
               <a
                 key={item.href}
                 href={item.href}
+                aria-current={activeSection === item.href ? "page" : undefined}
                 onClick={() => handleNavClick(item.href)}
                 className={cn(
                   "relative group px-3 lg:px-5 py-2 text-xs font-mono uppercase transition-colors duration-300 rounded-full cursor-pointer",
