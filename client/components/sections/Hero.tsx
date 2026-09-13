@@ -21,7 +21,7 @@ export const HeroSection = () => {
     <section
       ref={sectionRef}
       id="home"
-      className="section-base relative flex min-h-[90vh] flex-col justify-center items-center overflow-hidden py-24"
+      className="section-base relative flex min-h-[100svh] flex-col justify-center items-center overflow-hidden py-24"
     >
       <h1 className="sr-only">Devesh Ghuge — Portfolio</h1>
       {/* Date moved to Navbar to guarantee perfect vertical alignment */}

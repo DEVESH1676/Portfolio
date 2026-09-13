@@ -47,7 +47,7 @@ export const ContactSection = () => {
   const leftColumnRef = useRef<HTMLDivElement>(null);
   const rightColumnRef = useRef<HTMLDivElement>(null);
 
-  const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
+  const isInView = useInView(sectionRef, { once: true, margin: "0px 0px -20% 0px" });
 
   useEffect(() => {
     if (isInView) {

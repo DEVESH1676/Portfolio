@@ -12,7 +12,7 @@ export const AboutSection = () => {
   // Timeline Refs
   const lineRef = React.useRef<HTMLDivElement | null>(null);
 
-  const isInView = useInView(sectionRef, { once: true, amount: 0.1 });
+  const isInView = useInView(sectionRef, { once: true, margin: "0px 0px -20% 0px" });
 
   React.useEffect(() => {
     if (isInView) {
