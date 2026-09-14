@@ -123,8 +123,6 @@ export const CONTACT_LINKS = [
   },
 ];
 
-
-
 export const BIO_DATA = {
   name: "devesh",
   role: "student & developer · systems · web · linux",
