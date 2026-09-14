@@ -123,8 +123,7 @@ export const CONTACT_LINKS = [
   },
 ];
 
-// Provide a placeholder image URL for now
-export const HERO_IMAGE_URL = "/images/placeholder.jpg";
+
 
 export const BIO_DATA = {
   name: "devesh",

@@ -27,7 +27,7 @@ export const Footer = () => {
       <div className="border-t border-border/20">
         <div className="mx-auto flex max-w-6xl flex-col gap-4 px-6 py-6 text-sm text-foreground/70 md:flex-row md:items-center md:justify-between">
           <p className="text-sm text-foreground/60">
-            © 2026 Devesh Ghuge — All rights reserved.
+            &copy; {new Date().getFullYear()} Devesh Ghuge. All rights reserved.
           </p>
           <div className="flex items-center gap-4 text-sm text-foreground/60 font-medium">
             <span></span>

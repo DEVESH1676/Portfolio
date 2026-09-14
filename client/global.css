@@ -153,15 +153,6 @@
     }
   }
 
-  /* Utility for smooth theme transitions */
-  .smooth-theme-transition {
-    transition:
-      background-color 320ms ease,
-      color 320ms ease,
-      border-color 320ms ease,
-      box-shadow 320ms ease;
-  }
-
   /* Force hardware acceleration for timeline line */
   .timeline-line {
     will-change: transform;
