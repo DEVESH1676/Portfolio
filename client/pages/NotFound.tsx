@@ -1,13 +1,13 @@
 import { useEffect } from "react";
-import { useLocation } from "wouter";
+import { useLocation, Link } from "react-router-dom";
 
 export default function NotFound() {
-  const [location] = useLocation();
+  const location = useLocation();
 
   useEffect(() => {
     console.warn(
       "404 Warning: User attempted to access non-existent route:",
-      location
+      location.pathname
     );
   }, [location]);
 
@@ -23,12 +23,12 @@ export default function NotFound() {
           portfolio.
         </p>
         <div className="mt-8 flex justify-center">
-          <a
-            href="/"
+          <Link
+            to="/"
             className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90"
           >
             Go to Homepage
-          </a>
+          </Link>
         </div>
       </div>
     </div>
