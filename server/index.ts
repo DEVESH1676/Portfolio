@@ -4,7 +4,6 @@ import cors from "cors";
 import helmet from "helmet";
 import { rateLimit } from "express-rate-limit";
 import { handleDemo } from "./routes/demo";
-import { handleTrackEvent } from "./routes/analytics";
 
 export function createServer() {
   const app = express();
@@ -27,7 +26,7 @@ export function createServer() {
           defaultSrc: ["'self'"],
           fontSrc: ["'self'", "https://fonts.googleapis.com", "https://api.fontshare.com", "https://fonts.gstatic.com"],
           styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://api.fontshare.com"],
-          scriptSrc: ["'self'", "'unsafe-inline'", "https://cloud.umami.is"],
+          scriptSrc: ["'self'", "'unsafe-inline'"],
           imgSrc: ["'self'", "data:", "https://"],
         },
       },
@@ -66,7 +65,6 @@ export function createServer() {
   });
 
   app.get("/api/demo", handleDemo);
-  app.post("/api/analytics", handleTrackEvent);
 
   return app;
 }

@@ -1,53 +1,49 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script>
-      (function() {
-        try {
-          var theme = localStorage.getItem("site-theme");
-          if (theme === "dark" || (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
-            document.documentElement.classList.add("dark");
-          } else {
-            document.documentElement.classList.remove("dark");
-          }
-        } catch (e) {}
-      })();
-    </script>
-    <title>Devesh Ghuge | Portfolio</title>
-    <meta
-      name="description"
-      content="Portfolio of Devesh Ghuge, a 3rd-year IT student at SKNCOE. Specializing in Web Development, Software Engineering, and Server Hosting."
-    />
-    
-    <!-- Preconnect for fonts -->
-    <link rel="preconnect" href="https://api.fontshare.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://deveshg.dev/" />
-    <meta property="og:title" content="Devesh Ghuge — portfolio" />
-    <meta
-      property="og:description"
-      content="3rd Year IT Student at SKNCOE. Web developer and server enthusiast."
-    />
-    <meta property="og:image" content="/og-image.jpg" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>
+    (function () {
+      try {
+        var theme = localStorage.getItem("site-theme");
+        if (theme === "dark" || (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+          document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+        }
+      } catch (e) { }
+    })();
+  </script>
+  <title>Devesh Ghuge | Portfolio</title>
+  <meta name="description"
+    content="Portfolio of Devesh Ghuge, a 3rd-year IT student at SKNCOE. Specializing in Web Development, Software Engineering, and Server Hosting." />
 
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://deveshg.dev/" />
-    <meta property="twitter:title" content="Devesh Ghuge | Portfolio" />
-    <meta property="twitter:description" content="Personal portfolio of Devesh Ghuge, IT Engineering student and full-stack developer." />
-    <meta property="twitter:image" content="/og-image.jpg" />
+  <!-- Preconnect for fonts -->
+  <link rel="preconnect" href="https://api.fontshare.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
 
-    <!-- Canonical -->
-    <link rel="canonical" href="https://deveshg.dev/" />
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://deveshg.dev/" />
+  <meta property="og:title" content="Devesh Ghuge — portfolio" />
+  <meta property="og:description" content="3rd Year IT Student at SKNCOE. Web developer and server enthusiast." />
+  <meta property="og:image" content="/og-image.jpg" />
 
-    <!-- Structured Data -->
-    <script type="application/ld+json">
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://deveshg.dev/" />
+  <meta property="twitter:title" content="Devesh Ghuge | Portfolio" />
+  <meta property="twitter:description" content="Personal portfolio of Devesh Ghuge, IT Engineering student" />
+  <meta property="twitter:image" content="/og-image.jpg" />
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://deveshg.dev/" />
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "Person",
@@ -62,17 +58,13 @@
       }
     </script>
 
-    <!-- Umami Analytics -->
-    <script
-      defer
-      src="https://cloud.umami.is/script.js"
-      data-website-id="10b928bf-ea38-43b4-80d5-dcf1425f77c2"
-    ></script>
-  </head>
 
-  <body>
-    <div id="root"></div>
+</head>
 
-    <script type="module" src="/client/main.tsx"></script>
-  </body>
+<body>
+  <div id="root"></div>
+
+  <script type="module" src="/client/main.tsx"></script>
+</body>
+
 </html>
